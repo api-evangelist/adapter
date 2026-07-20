@@ -1,0 +1,38 @@
+generated: '2026-07-17'
+method: searched
+source: openapi/adapter-openapi.json + https://api.adapter.com/.well-known/oauth-authorization-server
+docs: https://api.adapter.com/.well-known/oauth-authorization-server
+summary:
+  types:
+  - http
+  - oauth2
+  oauth2_flows:
+  - authorizationCode
+schemes:
+- name: HTTPBasic
+  type: http
+  scheme: basic
+  usage: Protects the documentation endpoints (/docs, /redoc, /openapi.json).
+  sources:
+  - openapi/adapter-openapi.json
+- name: HTTPBearer
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  usage: Primary end-user auth for the Adapter Life API (users/me/*, conversations, assets, oauth-connect).
+  sources:
+  - openapi/adapter-openapi.json
+- name: OAuth2
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://api.adapter.com/v1/oauth2/authorize
+    tokenUrl: https://api.adapter.com/v1/oauth2/token
+    pkce: S256
+    scopes: [mcp:read, offline_access]
+  usage: >-
+    Adapter is itself an OAuth 2.0 authorization server (RFC 8414 metadata at
+    /.well-known/oauth-authorization-server); external apps and agents obtain
+    tokens via the authorization_code + PKCE flow to reach the hosted MCP surface.
+  sources:
+  - https://api.adapter.com/.well-known/oauth-authorization-server
