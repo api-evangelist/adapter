@@ -1,0 +1,501 @@
+openapi: 3.1.0
+info:
+  title: Adapter Adapter API assets API
+  version: 0.1.0
+tags:
+- name: assets
+paths:
+  /users/me/assets/upload:
+    post:
+      tags:
+      - assets
+      summary: Upload File
+      description: Upload a file directly to the server (for files < 20MB)
+      operationId: upload_file_users_me_assets_upload_post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_upload_file_users_me_assets_upload_post'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileUploadResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /users/me/assets/upload-stream:
+    post:
+      tags:
+      - assets
+      summary: Upload File Stream
+      description: Upload a file using streaming (memory-efficient for large files)
+      operationId: upload_file_stream_users_me_assets_upload_stream_post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_upload_file_stream_users_me_assets_upload_stream_post'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileUploadResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /users/me/assets/presigned-url:
+    post:
+      tags:
+      - assets
+      summary: Get Presigned Upload Url
+      description: Generate a presigned URL for direct client-to-storage uploads (useful for larger files)
+      operationId: get_presigned_upload_url_users_me_assets_presigned_url_post
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Body_get_presigned_upload_url_users_me_assets_presigned_url_post'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PresignedUrlResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /users/me/assets/asset/{asset_id}:
+    get:
+      tags:
+      - assets
+      summary: Get File Metadata
+      description: Get metadata for a specific file using asset ID
+      operationId: get_file_metadata_users_me_assets_asset__asset_id__get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: asset_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The asset ID to retrieve metadata for
+          title: Asset Id
+        description: The asset ID to retrieve metadata for
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileUploadResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - assets
+      summary: Delete File
+      description: Delete a file
+      operationId: delete_file_users_me_assets_asset__asset_id__delete
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: asset_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The asset ID to delete
+          title: Asset Id
+        description: The asset ID to delete
+      responses:
+        '204':
+          description: Successful Response
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /users/me/assets/asset/{asset_id}/download:
+    get:
+      tags:
+      - assets
+      summary: Download File
+      description: Download a file directly
+      operationId: download_file_users_me_assets_asset__asset_id__download_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: asset_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The asset ID to download
+          title: Asset Id
+        description: The asset ID to download
+      responses:
+        '200':
+          description: Successful Response
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /users/me/assets/asset/{asset_id}/thumbnail:
+    get:
+      tags:
+      - assets
+      summary: Get Thumbnail
+      description: Download a file's thumbnail directly
+      operationId: get_thumbnail_users_me_assets_asset__asset_id__thumbnail_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: asset_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The asset ID to get thumbnail for
+          title: Asset Id
+        description: The asset ID to get thumbnail for
+      responses:
+        '200':
+          description: Successful Response
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /users/me/assets:
+    get:
+      tags:
+      - assets
+      summary: List User Files
+      description: List all files for the current user
+      operationId: list_user_files_users_me_assets_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 100
+          title: Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FileUploadResponse'
+                title: Response List User Files Users Me Assets Get
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /users/me/assets/email/retrieve:
+    post:
+      tags:
+      - assets
+      summary: Get Email
+      description: Retrieve an email
+      operationId: get_email_users_me_assets_email_retrieve_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetEmailAssetRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEmailAssetResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    Body_upload_file_users_me_assets_upload_post:
+      properties:
+        file:
+          type: string
+          contentMediaType: application/octet-stream
+          title: File
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        generate_preview:
+          type: boolean
+          title: Generate Preview
+          default: false
+      type: object
+      required:
+      - file
+      title: Body_upload_file_users_me_assets_upload_post
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    GetEmailAssetRequest:
+      properties:
+        uri:
+          type: string
+          title: Uri
+      type: object
+      required:
+      - uri
+      title: GetEmailAssetRequest
+    PresignedUrlResponse:
+      properties:
+        url:
+          type: string
+          title: Url
+        file_key:
+          type: string
+          title: File Key
+        asset_id:
+          type: string
+          title: Asset Id
+        expires_at:
+          type: string
+          format: date-time
+          title: Expires At
+        content_type:
+          type: string
+          title: Content Type
+        filename:
+          type: string
+          title: Filename
+      type: object
+      required:
+      - url
+      - file_key
+      - asset_id
+      - expires_at
+      - content_type
+      - filename
+      title: PresignedUrlResponse
+      description: Response model for presigned URL generation
+    GetEmailAssetResponse:
+      properties:
+        parsed_email:
+          title: Parsed Email
+      type: object
+      required:
+      - parsed_email
+      title: GetEmailAssetResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    Body_get_presigned_upload_url_users_me_assets_presigned_url_post:
+      properties:
+        filename:
+          type: string
+          title: Filename
+        content_type:
+          type: string
+          title: Content Type
+      type: object
+      required:
+      - filename
+      - content_type
+      title: Body_get_presigned_upload_url_users_me_assets_presigned_url_post
+    Body_upload_file_stream_users_me_assets_upload_stream_post:
+      properties:
+        file:
+          type: string
+          contentMediaType: application/octet-stream
+          title: File
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        generate_preview:
+          type: boolean
+          title: Generate Preview
+          default: false
+      type: object
+      required:
+      - file
+      title: Body_upload_file_stream_users_me_assets_upload_stream_post
+    FileUploadResponse:
+      properties:
+        filename:
+          type: string
+          title: Filename
+        content_type:
+          type: string
+          title: Content Type
+        asset_id:
+          type: string
+          title: Asset Id
+        file_size:
+          type: integer
+          title: File Size
+        upload_date:
+          type: string
+          format: date-time
+          title: Upload Date
+        url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Url
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        thumbnail_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Thumbnail Url
+      type: object
+      required:
+      - filename
+      - content_type
+      - asset_id
+      - file_size
+      title: FileUploadResponse
+      description: Response model for file uploads
+  securitySchemes:
+    HTTPBasic:
+      type: http
+      scheme: basic
+    HTTPBearer:
+      type: http
+      scheme: bearer

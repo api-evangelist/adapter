@@ -1,0 +1,142 @@
+openapi: 3.1.0
+info:
+  title: Adapter Adapter API radar API
+  version: 0.1.0
+tags:
+- name: radar
+paths:
+  /radar/schema:
+    get:
+      tags:
+      - radar
+      summary: Get Radar Schema
+      operationId: get_radar_schema_radar_schema_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBearer: []
+  /radar/config:
+    get:
+      tags:
+      - radar
+      summary: Get Radar Config
+      operationId: get_radar_config_radar_config_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBearer: []
+    patch:
+      tags:
+      - radar
+      summary: Update Radar Config
+      operationId: update_radar_config_radar_config_patch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RadarConfigRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    RadarConfigRequest:
+      properties:
+        enabled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Enabled
+        notification_config_enabled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Notification Config Enabled
+        notification_rules:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/NotificationRuleRequest'
+            type: array
+          - type: 'null'
+          title: Notification Rules
+      type: object
+      title: RadarConfigRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    NotificationRuleRequest:
+      properties:
+        condition_field:
+          type: string
+          title: Condition Field
+        condition_value:
+          type: string
+          title: Condition Value
+        channel:
+          type: string
+          title: Channel
+      type: object
+      required:
+      - condition_field
+      - condition_value
+      - channel
+      title: NotificationRuleRequest
+  securitySchemes:
+    HTTPBasic:
+      type: http
+      scheme: basic
+    HTTPBearer:
+      type: http
+      scheme: bearer

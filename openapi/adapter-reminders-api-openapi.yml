@@ -1,0 +1,390 @@
+openapi: 3.1.0
+info:
+  title: Adapter Adapter API reminders API
+  version: 0.1.0
+tags:
+- name: reminders
+paths:
+  /users/me/reminders:
+    post:
+      tags:
+      - reminders
+      summary: Create Reminder
+      operationId: create_reminder_users_me_reminders_post
+      security:
+      - HTTPBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReminderRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    get:
+      tags:
+      - reminders
+      summary: List Reminders
+      description: List reminders for the authenticated user
+      operationId: list_reminders_users_me_reminders_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 500
+          minimum: 1
+          description: Maximum number of reminders to return
+          default: 100
+          title: Limit
+        description: Maximum number of reminders to return
+      - name: include_completed
+        in: query
+        required: false
+        schema:
+          type: boolean
+          description: Whether to include completed reminders
+          default: false
+          title: Include Completed
+        description: Whether to include completed reminders
+      - name: include_scheduled
+        in: query
+        required: false
+        schema:
+          type: boolean
+          description: Whether to include scheduled reminders
+          default: true
+          title: Include Scheduled
+        description: Whether to include scheduled reminders
+      - name: expand_recurring
+        in: query
+        required: false
+        schema:
+          type: boolean
+          description: Expand recurring reminders into individual occurrences
+          default: false
+          title: Expand Recurring
+        description: Expand recurring reminders into individual occurrences
+      - name: start_date
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Start date for expanding recurring reminders (ISO format)
+          title: Start Date
+        description: Start date for expanding recurring reminders (ISO format)
+      - name: end_date
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: End date for expanding recurring reminders (ISO format)
+          title: End Date
+        description: End date for expanding recurring reminders (ISO format)
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /users/me/reminders/{reminder_id}:
+    get:
+      tags:
+      - reminders
+      summary: Get Reminder
+      operationId: get_reminder_users_me_reminders__reminder_id__get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: reminder_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Reminder ID or slug
+          title: Reminder Id
+        description: Reminder ID or slug
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - reminders
+      summary: Delete Reminder
+      description: Delete a specific reminder by ID
+      operationId: delete_reminder_users_me_reminders__reminder_id__delete
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: reminder_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: ID of the reminder to delete
+          title: Reminder Id
+        description: ID of the reminder to delete
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    put:
+      tags:
+      - reminders
+      summary: Update Reminder
+      description: Update a specific reminder by ID
+      operationId: update_reminder_users_me_reminders__reminder_id__put
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: reminder_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: ID of the reminder to update
+          title: Reminder Id
+        description: ID of the reminder to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateReminderRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /users/me/tasks:
+    get:
+      tags:
+      - reminders
+      summary: List Task Configs
+      description: List all task configurations for the authenticated user
+      operationId: list_task_configs_users_me_tasks_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    CreateReminderRequest:
+      properties:
+        message:
+          type: string
+          maxLength: 1024
+          title: Message
+          description: Reminder message content
+        channel:
+          anyOf:
+          - type: string
+            enum:
+            - sms
+            - imessage
+            - line
+            - whatsapp
+            - default
+          - type: 'null'
+          title: Channel
+          description: Delivery channel for the reminder
+        execution_timestamp_iso_datestring:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Execution Timestamp Iso Datestring
+          description: Execution timestamp in ISO format for one-time reminders (e.g., '2024-01-15T14:30:00-05:00')
+        cron_string:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Cron String
+          description: Cron string for recurring reminders, minimum interval of 15 minutes
+        scheduled_task:
+          type: boolean
+          title: Scheduled Task
+          description: Optional scheduled task identifier associated with the reminder
+          default: false
+        category:
+          type: string
+          enum:
+          - health
+          - travel
+          - personal
+          - leisure
+          - work
+          - generic
+          title: Category
+          description: 'Category for the reminder. Valid values: ''health'', ''travel'', ''personal'', ''leisure'', ''work'', ''generic''. Defaults to ''generic'''
+          default: generic
+        task_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Task Key
+          description: Optional task key to associate reminder with a task (e.g., 'meeting_prep#user@example.com')
+        creator_org_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Creator Org Id
+          description: Optional organization ID that created the reminder
+        creator_user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Creator User Id
+          description: Optional user ID who created the reminder
+      type: object
+      required:
+      - message
+      title: CreateReminderRequest
+      description: Request model for creating a new reminder
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    UpdateReminderRequest:
+      properties:
+        status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status
+          description: 'New status for the reminder. ''paused'' only valid for recurring reminders. Valid values: ''pending'', ''paused'''
+        execution_timestamp_iso_datestring:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Execution Timestamp Iso Datestring
+          description: New execution timestamp in ISO format. Only valid for one-time reminders, not recurring ones. (e.g., '2024-01-15T14:30:00-05:00')
+        message:
+          anyOf:
+          - type: string
+            maxLength: 1024
+          - type: 'null'
+          title: Message
+          description: New message content for the reminder. Cannot be updated for reminders with status 'scheduled'.
+        channel:
+          anyOf:
+          - type: string
+            enum:
+            - sms
+            - imessage
+            - line
+            - whatsapp
+            - default
+          - type: 'null'
+          title: Channel
+          description: 'New channel for the reminder. Valid values: ''sms'', ''imessage'', ''line'', ''whatsapp'''
+        cron_string:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Cron String
+          description: New updated cron string, minimum interval of 15 minutes
+        category:
+          anyOf:
+          - type: string
+            enum:
+            - health
+            - travel
+            - personal
+            - leisure
+            - work
+            - generic
+          - type: 'null'
+          title: Category
+          description: 'New category for the reminder. Valid values: ''health'', ''travel'', ''personal'', ''leisure'', ''work'', ''generic'''
+      type: object
+      title: UpdateReminderRequest
+      description: Request model for updating an existing reminder
+  securitySchemes:
+    HTTPBasic:
+      type: http
+      scheme: basic
+    HTTPBearer:
+      type: http
+      scheme: bearer

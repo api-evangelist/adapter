@@ -1,0 +1,25 @@
+generated: '2026-07-17'
+method: searched
+source: openapi/adapter-openapi.json + https://api.adapter.com/.well-known/oauth-authorization-server
+standards:
+- id: oauth2
+  conforms: true
+  evidence: RFC 8414 authorization-server metadata published; authorization_code + refresh_token grants exposed.
+- id: oauth2-pkce
+  conforms: true
+  evidence: code_challenge_methods_supported = [S256].
+- id: rfc8414-authorization-server-metadata
+  conforms: true
+  evidence: /.well-known/oauth-authorization-server returns 200 with full metadata.
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration returns 404.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors use FastAPI JSON, not application/problem+json.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: No /.well-known/security.txt served.
+- id: mcp
+  conforms: true
+  evidence: OAuth scope mcp:read advertised; OAuth-gated /v1/mcp route present.

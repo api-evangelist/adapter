@@ -1,0 +1,27 @@
+openapi: 3.1.0
+info:
+  title: Adapter Adapter API Sendblue API
+  version: 0.1.0
+tags:
+- name: Sendblue
+paths:
+  /sendblue/webhook/status:
+    post:
+      summary: Sb Status Webhook
+      operationId: sb_status_webhook_sendblue_webhook_status_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - Sendblue
+components:
+  securitySchemes:
+    HTTPBasic:
+      type: http
+      scheme: basic
+    HTTPBearer:
+      type: http
+      scheme: bearer

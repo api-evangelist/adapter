@@ -1,0 +1,30 @@
+generated: '2026-07-17'
+method: searched
+source: live probe of /.well-known/ on adapter.com + api.adapter.com hosts
+hosts:
+- host: https://api.adapter.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: adapter-oauth-authorization-server.json
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+- host: https://adapter.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+notes: >-
+  api.adapter.com publishes an RFC 8414 OAuth 2.0 Authorization Server Metadata
+  document advertising authorization_code + refresh_token grants, PKCE (S256),
+  and scopes mcp:read + offline_access (indicating a hosted MCP surface). No
+  OIDC discovery, security.txt, or api-catalog documents were served.

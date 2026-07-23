@@ -1,0 +1,39 @@
+openapi: 3.1.0
+info:
+  title: Adapter Adapter API Whatsapp API
+  version: 0.1.0
+tags:
+- name: Whatsapp
+paths:
+  /whatsapp/webhook:
+    post:
+      summary: Whatsapp Webhook
+      operationId: whatsapp_webhook_whatsapp_webhook_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - Whatsapp
+  /whatsapp/status:
+    post:
+      summary: Whatsapp Status
+      operationId: whatsapp_status_whatsapp_status_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - Whatsapp
+components:
+  securitySchemes:
+    HTTPBasic:
+      type: http
+      scheme: basic
+    HTTPBearer:
+      type: http
+      scheme: bearer

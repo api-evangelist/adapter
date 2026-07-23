@@ -1,0 +1,30 @@
+openapi: 3.1.0
+info:
+  title: Adapter Adapter API Openapi.json API
+  version: 0.1.0
+tags:
+- name: Openapi.json
+paths:
+  /openapi.json:
+    get:
+      summary: Get Openapi Endpoint
+      description: Secured OpenAPI schema endpoint.
+      operationId: get_openapi_endpoint_openapi_json_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBasic: []
+      tags:
+      - Openapi.json
+components:
+  securitySchemes:
+    HTTPBasic:
+      type: http
+      scheme: basic
+    HTTPBearer:
+      type: http
+      scheme: bearer

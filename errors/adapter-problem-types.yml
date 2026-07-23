@@ -1,0 +1,29 @@
+generated: '2026-07-17'
+method: derived
+source: openapi/adapter-openapi.json
+format: json
+envelope: >-
+  FastAPI-style JSON. Validation errors (422) use {"detail":[{loc,msg,type}]}
+  (HTTPValidationError/ValidationError schemas). Other errors return a JSON body
+  with a description; no application/problem+json (RFC 9457) media type is declared.
+problems:
+- status: 401
+  title: Unauthorized
+  meaning: Missing or invalid bearer token / credentials.
+- status: 403
+  title: Forbidden
+  meaning: Authenticated but not permitted to perform the operation.
+- status: 404
+  title: Not Found
+  meaning: The referenced resource (asset, conversation, job) does not exist.
+- status: 409
+  title: Conflict
+  meaning: Conflicting state (e.g. a conversation operation that cannot proceed in the current state).
+- status: 422
+  title: Validation Error
+  schema: HTTPValidationError
+  meaning: Request body/params failed validation; detail[] lists field-level errors.
+- status: 500
+  title: Internal Server Error
+  meaning: Unexpected server-side error.
+notes: Status codes derived from OpenAPI responses across all operations; titles are the standard HTTP reason phrases as used in-spec.

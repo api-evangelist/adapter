@@ -1,0 +1,35 @@
+generated: '2026-07-17'
+method: derived
+source: openapi/adapter-openapi.json
+authentication:
+  style: bearer
+  detail: HTTP Bearer (JWT) for end-user API calls; HTTP Basic guards the docs endpoints; OAuth 2.0 (authorization_code + PKCE) for external app/agent + MCP access.
+  see: authentication/adapter-authentication.yml
+pagination:
+  style: limit-offset
+  params: [limit, offset]
+  detail: >-
+    List endpoints (e.g. GET /users/me/conversations, GET /users/me/assets) accept
+    integer limit (default 10-100) and offset query parameters. No cursor pagination
+    or Link headers observed in the spec.
+idempotency:
+  supported: false
+  detail: >-
+    No Idempotency-Key request header or parameter is declared. Some endpoints are
+    described as idempotent by nature (feedback overwrites previous feedback), but there
+    is no client-supplied idempotency-key contract for safe retries of writes.
+versioning:
+  style: uri-path
+  detail: Production API is served under /v1 (https://api.adapter.com/v1). The published OpenAPI info.version is 0.1.0.
+  see: lifecycle/adapter-lifecycle.yml
+error_envelope:
+  detail: FastAPI JSON; 422 uses {"detail":[{loc,msg,type}]}; not RFC 9457 problem+json.
+  see: errors/adapter-problem-types.yml
+request_tracing:
+  detail: No documented request-id / correlation header observed in the spec.
+rate_limit_signaling:
+  detail: No rate-limit response headers documented in the spec.
+streaming:
+  detail: >-
+    Conversation completions support Server-Sent Events (stream=true default) with a
+    durable reconnect endpoint (GET .../stream/{session_id}) backed by Redis.

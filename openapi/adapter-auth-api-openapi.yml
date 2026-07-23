@@ -1,0 +1,1001 @@
+openapi: 3.1.0
+info:
+  title: Adapter Adapter API auth API
+  version: 0.1.0
+tags:
+- name: auth
+paths:
+  /auth/login:
+    post:
+      tags:
+      - auth
+      summary: Auth0 Login
+      operationId: auth0_login_auth_login_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /auth/refresh:
+    post:
+      tags:
+      - auth
+      summary: Auth Refresh
+      operationId: auth_refresh_auth_refresh_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRefreshRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /auth/logout:
+    post:
+      tags:
+      - auth
+      summary: Logout
+      description: Logout user and invalidate all sessions across devices.
+      operationId: logout_auth_logout_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogoutResponse'
+      security:
+      - HTTPBearer: []
+  /auth/verify/email:
+    post:
+      tags:
+      - auth
+      summary: Verify Email
+      description: Verify a user's email using a verification token
+      operationId: verify_email_auth_verify_email_post
+      parameters:
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Token
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /auth/users/me/initiate-delete:
+    post:
+      tags:
+      - auth
+      summary: Delete User
+      description: Request deletion of the currently authenticated user
+      operationId: delete_user_auth_users_me_initiate_delete_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBearer: []
+  /auth/users/me:
+    get:
+      tags:
+      - auth
+      summary: Get Current User
+      description: Fetch details of the currently authenticated user
+      operationId: get_current_user_auth_users_me_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBearer: []
+    patch:
+      tags:
+      - auth
+      summary: Update Current User
+      description: Update details of the currently authenticated user and return updated user state
+      operationId: update_current_user_auth_users_me_patch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /auth/users/me/settings:
+    get:
+      tags:
+      - auth
+      summary: Get Current User Settings
+      description: Fetch user settings for the currently authenticated user
+      operationId: get_current_user_settings_auth_users_me_settings_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSettings'
+      security:
+      - HTTPBearer: []
+    patch:
+      tags:
+      - auth
+      summary: Update Current User Settings
+      operationId: update_current_user_settings_auth_users_me_settings_patch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserSettingsRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSettings'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /auth/users/me/connected-accounts:
+    get:
+      tags:
+      - auth
+      summary: List Connected Accounts
+      operationId: list_connected_accounts_auth_users_me_connected_accounts_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBearer: []
+  /auth/users/me/disconnect-account:
+    post:
+      tags:
+      - auth
+      summary: Disconnect Account
+      description: Delete a connected account for the authenticated user
+      operationId: disconnect_account_auth_users_me_disconnect_account_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DisconnectAccountRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /auth/users/me/idp-data:
+    get:
+      tags:
+      - auth
+      summary: Get User Idp Data
+      description: Get user IDP data including email and identities
+      operationId: get_user_idp_data_auth_users_me_idp_data_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBearer: []
+  /auth/users/me/phone/send-verification:
+    post:
+      tags:
+      - auth
+      summary: Send Phone Verification
+      description: Send verification code to the user's phone
+      operationId: send_phone_verification_auth_users_me_phone_send_verification_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendPhoneVerificationRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /auth/users/me/phone/verify:
+    post:
+      tags:
+      - auth
+      summary: Verify Phone
+      description: Verify user's phone with passcode
+      operationId: verify_phone_auth_users_me_phone_verify_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyPhoneRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /auth/users/me/phone/verification-status:
+    get:
+      tags:
+      - auth
+      summary: Check Phone Verification Status
+      description: Check if user's phone is verified
+      operationId: check_phone_verification_status_auth_users_me_phone_verification_status_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerificationStatusResponse'
+      security:
+      - HTTPBearer: []
+  /auth/verify/email/verified:
+    post:
+      tags:
+      - auth
+      summary: Email Verification Status
+      description: Poll endpoint for email verification for the authenticated user
+      operationId: email_verification_status_auth_verify_email_verified_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailVerifiedRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /auth/verify/email/resend:
+    post:
+      tags:
+      - auth
+      summary: Resend Email Verification
+      description: Resend email verification to the authenticated user
+      operationId: resend_email_verification_auth_verify_email_resend_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResendEmailRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /auth/users/me/email/verification-status:
+    get:
+      tags:
+      - auth
+      summary: Check Email Verification Status
+      description: Check if user's email is verified
+      operationId: check_email_verification_status_auth_users_me_email_verification_status_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerificationStatusResponse'
+      security:
+      - HTTPBearer: []
+  /auth/users/me/onboarding/verify-phone:
+    get:
+      tags:
+      - auth
+      summary: Verify Phone Onboarding
+      description: Update details of the currently authenticated user
+      operationId: verify_phone_onboarding_auth_users_me_onboarding_verify_phone_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBearer: []
+  /auth/users/me/password/reset:
+    post:
+      tags:
+      - auth
+      summary: Reset Current User Password
+      description: Request password reset for the current user
+      operationId: reset_current_user_password_auth_users_me_password_reset_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBearer: []
+  /auth/validate-invite:
+    post:
+      tags:
+      - auth
+      summary: Validate Invitation
+      description: 'Validate and use an invitation code.
+
+
+        Accepts either:
+
+        - A raw invitation code (e.g., "ABC123")
+
+        - A JWT token from a magic link (e.g., "eyJ0eXAi...")
+
+
+        Once validated, the code is marked as used and the user''s status is updated to REGISTERED.'
+      operationId: validate_invitation_auth_validate_invite_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidateInviteRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateInviteResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /auth/users/me/invites:
+    get:
+      tags:
+      - auth
+      summary: Get User Invite Codes
+      description: 'Get invitation codes for the user.
+
+        Returns only unused codes (available to share) and stats.'
+      operationId: get_user_invite_codes_auth_users_me_invites_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInvitesResponse'
+      security:
+      - HTTPBearer: []
+  /auth/complete-onboarding:
+    get:
+      tags:
+      - auth
+      summary: Complete Onboarding
+      description: 'Complete user onboarding by verifying they have a connected account and updating
+
+        their account status from ''registered'' to ''active''.
+
+
+        Requirements:
+
+        - User must have at least one connected account
+
+        - User''s current status must be ''registered'' (no other transitions allowed)'
+      operationId: complete_onboarding_auth_complete_onboarding_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompleteOnboardingResponse'
+      security:
+      - HTTPBearer: []
+  /auth/generate-magic-link:
+    post:
+      tags:
+      - auth
+      summary: Generate Magic Link
+      description: 'Generate a magic link for an invitation code.
+
+
+        This creates a signed JWT token containing the invite code that expires in 7 days.
+
+        The token can be shared via URL and automatically validates the user on signup.
+
+
+        Example magic link: https://yourapp.com/signup?token=<jwt_token>'
+      operationId: generate_magic_link_auth_generate_magic_link_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateMagicLinkRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateMagicLinkResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /auth/check-invite:
+    post:
+      tags:
+      - auth
+      summary: Check Invite Code
+      description: 'Check if an invitation code or magic link token is valid.
+
+
+        This endpoint does NOT require authentication and can be called before signup.
+
+        It accepts either:
+
+        - A raw invitation code (e.g., "ABC123")
+
+        - A JWT token from a magic link (e.g., "eyJ0eXAi...")
+
+
+        Returns validation status without consuming the invite code.'
+      operationId: check_invite_code_auth_check_invite_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckInviteRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckInviteResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    Vendor:
+      type: string
+      enum:
+      - google
+      - microsoft
+      title: Vendor
+    CheckInviteResponse:
+      properties:
+        valid:
+          type: boolean
+          title: Valid
+        message:
+          type: string
+          title: Message
+        invitation_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Invitation Code
+      type: object
+      required:
+      - valid
+      - message
+      title: CheckInviteResponse
+    VerificationStatusResponse:
+      properties:
+        is_verified:
+          type: boolean
+          title: Is Verified
+      type: object
+      required:
+      - is_verified
+      title: VerificationStatusResponse
+    GenerateMagicLinkRequest:
+      properties:
+        invitation_code:
+          type: string
+          title: Invitation Code
+      type: object
+      required:
+      - invitation_code
+      title: GenerateMagicLinkRequest
+    CheckInviteRequest:
+      properties:
+        code:
+          type: string
+          title: Code
+      type: object
+      required:
+      - code
+      title: CheckInviteRequest
+    LogoutResponse:
+      properties:
+        message:
+          type: string
+          title: Message
+        success:
+          type: boolean
+          title: Success
+      type: object
+      required:
+      - message
+      - success
+      title: LogoutResponse
+    EmailVerifiedRequest:
+      properties:
+        token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Token
+      type: object
+      title: EmailVerifiedRequest
+    ResendEmailRequest:
+      properties:
+        token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Token
+      type: object
+      title: ResendEmailRequest
+    VerifyPhoneRequest:
+      properties:
+        passcode:
+          type: string
+          title: Passcode
+      type: object
+      required:
+      - passcode
+      title: VerifyPhoneRequest
+    CompleteOnboardingResponse:
+      properties:
+        success:
+          type: boolean
+          title: Success
+        message:
+          type: string
+          title: Message
+        account_status:
+          type: string
+          title: Account Status
+      type: object
+      required:
+      - success
+      - message
+      - account_status
+      title: CompleteOnboardingResponse
+    SendPhoneVerificationRequest:
+      properties:
+        phone_number:
+          type: string
+          title: Phone Number
+      type: object
+      required:
+      - phone_number
+      title: SendPhoneVerificationRequest
+    ValidateInviteResponse:
+      properties:
+        success:
+          type: boolean
+          title: Success
+        message:
+          type: string
+          title: Message
+        onboarding_step:
+          type: string
+          title: Onboarding Step
+      type: object
+      required:
+      - success
+      - message
+      - onboarding_step
+      title: ValidateInviteResponse
+    UserResponse:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+        email:
+          type: string
+          title: Email
+        phone_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phone Number
+        given_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Given Name
+        family_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Family Name
+        email_verified:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Email Verified
+        phone_verified:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Phone Verified
+        totp_verified:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Totp Verified
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+          default: {}
+      type: object
+      required:
+      - user_id
+      - email
+      title: UserResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    UpdateUserSettingsRequest:
+      properties:
+        account_status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Account Status
+        mobile_enabled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Mobile Enabled
+        enabled_channels:
+          anyOf:
+          - items: {}
+            type: array
+            uniqueItems: true
+          - type: 'null'
+          title: Enabled Channels
+        primary_channel:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Primary Channel
+      type: object
+      title: UpdateUserSettingsRequest
+    AuthRefreshRequest:
+      properties:
+        refresh_token:
+          type: string
+          title: Refresh Token
+      type: object
+      required:
+      - refresh_token
+      title: AuthRefreshRequest
+    GenerateMagicLinkResponse:
+      properties:
+        magic_link:
+          type: string
+          title: Magic Link
+        expires_in_days:
+          type: integer
+          title: Expires In Days
+        invitation_code:
+          type: string
+          title: Invitation Code
+      type: object
+      required:
+      - magic_link
+      - expires_in_days
+      - invitation_code
+      title: GenerateMagicLinkResponse
+    LoginRequest:
+      properties:
+        user_access_token:
+          type: string
+          title: User Access Token
+      type: object
+      required:
+      - user_access_token
+      title: LoginRequest
+    DisconnectAccountRequest:
+      properties:
+        accountEmail:
+          type: string
+          title: Accountemail
+        accountVendor:
+          $ref: '#/components/schemas/Vendor'
+      type: object
+      required:
+      - accountEmail
+      - accountVendor
+      title: DisconnectAccountRequest
+    UserInvitesResponse:
+      properties:
+        codes:
+          items:
+            type: string
+          type: array
+          title: Codes
+        total_invites:
+          type: integer
+          title: Total Invites
+        invites_used:
+          type: integer
+          title: Invites Used
+      type: object
+      required:
+      - codes
+      - total_invites
+      - invites_used
+      title: UserInvitesResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    UserSettings:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+        account_status:
+          type: string
+          enum:
+          - active
+          - inactive
+          - deleting
+          title: Account Status
+          default: active
+        mobile_enabled:
+          type: boolean
+          title: Mobile Enabled
+          default: true
+        enabled_channels:
+          items:
+            type: string
+            enum:
+            - SMS
+            - iMessage
+            - WhatsApp
+            - LINE
+          type: array
+          uniqueItems: true
+          title: Enabled Channels
+          default:
+          - SMS
+        primary_channel:
+          type: string
+          enum:
+          - SMS
+          - iMessage
+          - WhatsApp
+          - LINE
+          title: Primary Channel
+          default: SMS
+        channel_info:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/ChannelInfo'
+            type: object
+          - type: 'null'
+          title: Channel Info
+      type: object
+      required:
+      - user_id
+      title: UserSettings
+    UpdateUserRequest:
+      properties:
+        given_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Given Name
+        family_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Family Name
+        phone_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phone Number
+        email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Email
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+      type: object
+      title: UpdateUserRequest
+    ValidateInviteRequest:
+      properties:
+        invitation_code:
+          type: string
+          title: Invitation Code
+      type: object
+      required:
+      - invitation_code
+      title: ValidateInviteRequest
+    ChannelInfo:
+      properties:
+        qr_code:
+          type: string
+          title: Qr Code
+        deep_link:
+          type: string
+          title: Deep Link
+        contact_name:
+          type: string
+          title: Contact Name
+        contact_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Contact Number
+      type: object
+      title: ChannelInfo
+      description: Channel-specific information like QR codes and contact details.
+  securitySchemes:
+    HTTPBasic:
+      type: http
+      scheme: basic
+    HTTPBearer:
+      type: http
+      scheme: bearer

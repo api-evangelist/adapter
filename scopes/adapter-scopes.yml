@@ -1,0 +1,23 @@
+generated: '2026-07-17'
+method: searched
+source: https://api.adapter.com/.well-known/oauth-authorization-server
+docs: https://api.adapter.com/.well-known/oauth-authorization-server
+schemes:
+- name: OAuth2
+  source: https://api.adapter.com/.well-known/oauth-authorization-server
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://api.adapter.com/v1/oauth2/authorize
+    tokenUrl: https://api.adapter.com/v1/oauth2/token
+    pkce: S256
+    token_endpoint_auth_methods: [none]
+    client_id_metadata_document_supported: true
+scopes:
+- scope: mcp:read
+  description: Read access to the Adapter hosted MCP server (agent/tool access to cognition queries).
+  flows: [authorizationCode]
+  sources: [https://api.adapter.com/.well-known/oauth-authorization-server]
+- scope: offline_access
+  description: Issue a refresh token so an agent can maintain long-lived access without re-consent.
+  flows: [authorizationCode]
+  sources: [https://api.adapter.com/.well-known/oauth-authorization-server]

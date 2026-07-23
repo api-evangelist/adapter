@@ -1,0 +1,99 @@
+openapi: 3.1.0
+info:
+  title: Adapter Adapter API Users API
+  version: 0.1.0
+tags:
+- name: Users
+paths:
+  /users/me/messages:
+    post:
+      summary: Query Messages
+      operationId: query_messages_users_me_messages_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryMessageRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      tags:
+      - Users
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    QueryMessageRequest:
+      properties:
+        participant_id:
+          type: string
+          title: Participant Id
+        limit:
+          type: integer
+          title: Limit
+          default: 100
+        channel:
+          type: string
+          title: Channel
+        start_timestamp:
+          type: string
+          format: date-time
+          title: Start Timestamp
+        end_timestamp:
+          type: string
+          format: date-time
+          title: End Timestamp
+      type: object
+      title: QueryMessageRequest
+  securitySchemes:
+    HTTPBasic:
+      type: http
+      scheme: basic
+    HTTPBearer:
+      type: http
+      scheme: bearer

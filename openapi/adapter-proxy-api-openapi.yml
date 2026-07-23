@@ -1,0 +1,551 @@
+openapi: 3.1.0
+info:
+  title: Adapter Adapter API proxy API
+  version: 0.1.0
+tags:
+- name: proxy
+paths:
+  /users/me/suggestions:
+    get:
+      tags:
+      - proxy
+      summary: Get Suggestions
+      description: Sample existing suggestions
+      operationId: get_suggestions_users_me_suggestions_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/PromptSuggestion'
+                type: array
+                title: Response Get Suggestions Users Me Suggestions Get
+      security:
+      - HTTPBearer: []
+  /users/me/suggestions/generate:
+    post:
+      tags:
+      - proxy
+      summary: Generate New Suggestions
+      description: Generate new suggestions explicitly
+      operationId: generate_new_suggestions_users_me_suggestions_generate_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: max_suggestions
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: Maximum number of suggestions to generate
+          title: Max Suggestions
+        description: Maximum number of suggestions to generate
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PromptSuggestion'
+                title: Response Generate New Suggestions Users Me Suggestions Generate Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /users/me/analysis:
+    get:
+      tags:
+      - proxy
+      summary: Get Analysis
+      description: Create a new intention with an initial message
+      operationId: get_analysis_users_me_analysis_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBearer: []
+  /users/me/memories:
+    get:
+      tags:
+      - proxy
+      summary: Get Memories
+      description: Create a new intention with an initial message
+      operationId: get_memories_users_me_memories_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBearer: []
+  /users/me/graph/memories:
+    get:
+      tags:
+      - proxy
+      summary: Get Graph Memories
+      description: Get memories from graph
+      operationId: get_graph_memories_users_me_graph_memories_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBearer: []
+  /users/me/jobs/{trigger_event_id}:
+    get:
+      tags:
+      - proxy
+      summary: Get Job From Trigger Event
+      description: Get a specific job by ID
+      operationId: get_job_from_trigger_event_users_me_jobs__trigger_event_id__get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: trigger_event_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the job to retrieve
+          title: Trigger Event Id
+        description: The ID of the job to retrieve
+      - name: include_results
+        in: query
+        required: false
+        schema:
+          type: boolean
+          description: Include job results in response
+          default: true
+          title: Include Results
+        description: Include job results in response
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /users/me/job/{job_id}:
+    get:
+      tags:
+      - proxy
+      summary: Get Job By Id
+      description: Get a specific job by ID
+      operationId: get_job_by_id_users_me_job__job_id__get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: job_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the job to retrieve
+          title: Job Id
+        description: The ID of the job to retrieve
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /users/me/knowledge:
+    get:
+      tags:
+      - proxy
+      summary: Get Preferences
+      description: Get a specific job by ID
+      operationId: get_preferences_users_me_knowledge_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBearer: []
+  /users/me/onboarding-stats/{account_name}:
+    get:
+      tags:
+      - proxy
+      summary: Get Onboarding Stats
+      description: Get onboarding stats for a specific account
+      operationId: get_onboarding_stats_users_me_onboarding_stats__account_name__get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: account_name
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The account name
+          title: Account Name
+        description: The account name
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /users/me:
+    get:
+      tags:
+      - proxy
+      summary: Get User
+      description: Get current user info
+      operationId: get_user_users_me_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBearer: []
+  /users/me/generate:
+    post:
+      tags:
+      - proxy
+      summary: Generate
+      operationId: generate_users_me_generate_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /image:
+    get:
+      tags:
+      - proxy
+      summary: Proxy Image
+      description: Proxy external images to avoid CORS issues
+      operationId: proxy_image_image_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: url
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Url
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /users/me/weather:
+    get:
+      tags:
+      - proxy
+      summary: Get Weather
+      description: Get weather for the user's current location - prioritizes recent location pings, falls back to IP geolocation
+      operationId: get_weather_users_me_weather_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: city
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Override city for localhost testing
+          title: City
+        description: Override city for localhost testing
+      - name: state
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Override state for localhost testing
+          title: State
+        description: Override state for localhost testing
+      - name: country
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Override country for localhost testing
+          title: Country
+        description: Override country for localhost testing
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WeatherResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    WeatherCurrent:
+      properties:
+        time:
+          type: string
+          title: Time
+        temperature_2m:
+          type: number
+          title: Temperature 2M
+        weather_code:
+          type: integer
+          title: Weather Code
+        weather_description:
+          type: string
+          title: Weather Description
+      type: object
+      required:
+      - time
+      - temperature_2m
+      - weather_code
+      - weather_description
+      title: WeatherCurrent
+    WeatherResponse:
+      properties:
+        city:
+          type: string
+          title: City
+        state:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: State
+        country:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Country
+        latitude:
+          type: number
+          title: Latitude
+        longitude:
+          type: number
+          title: Longitude
+        current:
+          $ref: '#/components/schemas/WeatherCurrent'
+        hourly:
+          $ref: '#/components/schemas/WeatherHourly'
+        temperature_unit:
+          type: string
+          title: Temperature Unit
+          default: celsius
+        cached:
+          type: boolean
+          title: Cached
+          default: false
+      type: object
+      required:
+      - city
+      - latitude
+      - longitude
+      - current
+      - hourly
+      title: WeatherResponse
+    WeatherHourly:
+      properties:
+        time:
+          items:
+            type: string
+          type: array
+          title: Time
+        temperature_2m:
+          items:
+            type: number
+          type: array
+          title: Temperature 2M
+        weather_code:
+          items:
+            type: integer
+          type: array
+          title: Weather Code
+        weather_description:
+          items:
+            type: string
+          type: array
+          title: Weather Description
+      type: object
+      required:
+      - time
+      - temperature_2m
+      - weather_code
+      - weather_description
+      title: WeatherHourly
+    PromptSuggestion:
+      properties:
+        uuid:
+          type: string
+          title: Uuid
+        request:
+          type: string
+          title: Request
+        short_request:
+          type: string
+          title: Short Request
+        suggestion_type:
+          type: string
+          title: Suggestion Type
+        date:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Date
+        time:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Time
+        user_location:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Location
+        refs:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Refs
+        completable:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Completable
+      type: object
+      required:
+      - uuid
+      - request
+      - short_request
+      - suggestion_type
+      title: PromptSuggestion
+      description: Suggestion model for the API.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    GenerateRequest:
+      properties:
+        system_prompt:
+          type: string
+          title: System Prompt
+        user_message:
+          type: string
+          title: User Message
+        work_mode:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Work Mode
+        provider:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Provider
+          default: xai
+      type: object
+      required:
+      - system_prompt
+      - user_message
+      title: GenerateRequest
+  securitySchemes:
+    HTTPBasic:
+      type: http
+      scheme: basic
+    HTTPBearer:
+      type: http
+      scheme: bearer

@@ -1,0 +1,27 @@
+openapi: 3.1.0
+info:
+  title: Adapter Adapter API API
+  version: 0.1.0
+tags:
+- name: Adapter API
+paths:
+  /:
+    get:
+      summary: Health Check
+      operationId: health_check__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - Adapter API
+components:
+  securitySchemes:
+    HTTPBasic:
+      type: http
+      scheme: basic
+    HTTPBearer:
+      type: http
+      scheme: bearer

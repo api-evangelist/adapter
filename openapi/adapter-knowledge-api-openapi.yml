@@ -1,0 +1,1225 @@
+openapi: 3.1.0
+info:
+  title: Adapter Adapter API knowledge API
+  version: 0.1.0
+tags:
+- name: knowledge
+paths:
+  /users/me/knowledge/sync:
+    post:
+      tags:
+      - knowledge
+      summary: Sync Knowledge
+      description: 'Manually sync data (email, calendar) - given a date, userid and optionally user accounts.
+
+        If no account_names provided, syncs all connected accounts.'
+      operationId: sync_knowledge_users_me_knowledge_sync_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SyncDataRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not found
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /users/me/knowledge/sync/deep:
+    post:
+      tags:
+      - knowledge
+      summary: Deep Sync Calendars
+      description: 'Perform a deep calendar sync across all user calendars.
+
+
+        This endpoint uses the syncUserCalendars GraphQL mutation to perform a comprehensive
+
+        sync of all calendars for the authenticated user. It identifies missing and cancelled
+
+        events across all calendar accounts.
+
+
+        Use this endpoint for:
+
+        - Deeper sync operations when you need detailed sync results
+
+        - Syncing multiple days or date ranges
+
+        - Performing dry runs to see what would be synced without making changes
+
+
+        The response includes detailed information about:
+
+        - Total missing events across all calendars
+
+        - Total cancelled events across all calendars
+
+        - Per-calendar sync statistics
+
+        - Any errors encountered during sync'
+      operationId: deep_sync_calendars_users_me_knowledge_sync_deep_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeepSyncCalendarRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not found
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /users/me/knowledge/life_radar:
+    get:
+      tags:
+      - knowledge
+      summary: List Radar
+      description: List life radar events for the authenticated user
+      operationId: list_radar_users_me_knowledge_life_radar_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          description: Maximum number of events to return
+          default: 50
+          title: Limit
+        description: Maximum number of events to return
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          description: Offset for pagination
+          default: 0
+          title: Offset
+        description: Offset for pagination
+      - name: status
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Filter by status (active, pending, in_progress, completed, cancelled, expired)
+          title: Status
+        description: Filter by status (active, pending, in_progress, completed, cancelled, expired)
+      - name: start_date
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Filter events from this date (ISO format)
+          title: Start Date
+        description: Filter events from this date (ISO format)
+      - name: end_date
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Filter events to this date (ISO format)
+          title: End Date
+        description: Filter events to this date (ISO format)
+      - name: after_cursor
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Cursor for GraphQL pagination
+          title: After Cursor
+        description: Cursor for GraphQL pagination
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListRadarResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not found
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - knowledge
+      summary: Delete All Radar Events
+      description: Delete all life radar events for the authenticated user
+      operationId: delete_all_radar_events_users_me_knowledge_life_radar_delete
+      security:
+      - HTTPBearer: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Delete All Radar Events Users Me Knowledge Life Radar Delete
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not found
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+  /users/me/knowledge/calendar:
+    get:
+      tags:
+      - knowledge
+      summary: List Calendar Events
+      operationId: list_calendar_events_users_me_knowledge_calendar_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          description: Maximum number of events to return
+          default: 50
+          title: Limit
+        description: Maximum number of events to return
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          description: Offset for pagination
+          default: 0
+          title: Offset
+        description: Offset for pagination
+      - name: status
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Filter by status (active, pending, in_progress, completed, cancelled, expired)
+          title: Status
+        description: Filter by status (active, pending, in_progress, completed, cancelled, expired)
+      - name: start_date
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Filter events from this date (ISO format)
+          title: Start Date
+        description: Filter events from this date (ISO format)
+      - name: end_date
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Filter events to this date (ISO format)
+          title: End Date
+        description: Filter events to this date (ISO format)
+      - name: after_cursor
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Cursor for GraphQL pagination
+          title: After Cursor
+        description: Cursor for GraphQL pagination
+      - name: primary_only
+        in: query
+        required: false
+        schema:
+          type: boolean
+          description: If true (default), only return events from primary calendars. If false, return events from all calendars (primary and non-primary).
+          default: true
+          title: Primary Only
+        description: If true (default), only return events from primary calendars. If false, return events from all calendars (primary and non-primary).
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response List Calendar Events Users Me Knowledge Calendar Get
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not found
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /users/me/knowledge/contacts:
+    get:
+      tags:
+      - knowledge
+      summary: List Contacts
+      description: 'List contacts for the authenticated user
+
+
+        Returns all contacts associated with the user, sorted by last seen date (most recent first).
+
+        Contacts are synthesized from email communications, calendar events, and other sources.
+
+
+        - **limit**: Maximum number of contacts per page (default: 100)
+
+        - **max_pages**: Maximum number of pages to fetch (default: fetch all)
+
+        - **search**: Optional search filter for name, email, or organization'
+      operationId: list_contacts_users_me_knowledge_contacts_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          description: Maximum number of contacts per page
+          default: 100
+          title: Limit
+        description: Maximum number of contacts per page
+      - name: max_pages
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: Maximum number of pages to fetch
+          title: Max Pages
+        description: Maximum number of pages to fetch
+      - name: search
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Search by name, email, or organization
+          title: Search
+        description: Search by name, email, or organization
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not found
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /users/me/knowledge/life_radar/{id}/status:
+    patch:
+      tags:
+      - knowledge
+      summary: Update Radar Event Status
+      description: Update a life radar event's status, suggested date, or suggested time
+      operationId: update_radar_event_status_users_me_knowledge_life_radar__id__status_patch
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Life radar event id
+          title: Id
+        description: Life radar event id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLifeRadarEventRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LifeRadarEventResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not found
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /users/me/knowledge/{activity_type}:
+    get:
+      tags:
+      - knowledge
+      summary: Get Activity By Type
+      description: 'Get activity data by type for the authenticated user
+
+
+        Supported activity types:
+
+        - flights: Flight history
+
+        - hotels: Hotel history
+
+        - dining: Dining history
+
+        - events: Event history
+
+        - rides: Ride service history (Uber, Lyft, etc.)
+
+        - spend: Purchase/spend history'
+      operationId: get_activity_by_type_users_me_knowledge__activity_type__get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: activity_type
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: ^(flights|hotels|dining|events|rides|spend)$
+          description: Type of activity
+          title: Activity Type
+        description: Type of activity
+      - name: start_date
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Start date (ISO format)
+          title: Start Date
+        description: Start date (ISO format)
+      - name: end_date
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: End date (ISO format)
+          title: End Date
+        description: End date (ISO format)
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          description: Maximum number of records per page
+          default: 100
+          title: Limit
+        description: Maximum number of records per page
+      - name: max_pages
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: Maximum number of pages to fetch
+          title: Max Pages
+        description: Maximum number of pages to fetch
+      - name: deduplicate
+        in: query
+        required: false
+        schema:
+          type: boolean
+          description: 'Apply intelligent deduplication (spend only, default: true)'
+          default: true
+          title: Deduplicate
+        description: 'Apply intelligent deduplication (spend only, default: true)'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Get Activity By Type Users Me Knowledge  Activity Type  Get
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not found
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /users/me/knowledge/aggregate/event-entities:
+    get:
+      tags:
+      - knowledge
+      summary: Get Event Entities
+      operationId: get_event_entities_users_me_knowledge_aggregate_event_entities_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: start_date
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Start date (ISO format)
+          title: Start Date
+        description: Start date (ISO format)
+      - name: end_date
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: End date (ISO format)
+          title: End Date
+        description: End date (ISO format)
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          description: Maximum number of records per page
+          default: 100
+          title: Limit
+        description: Maximum number of records per page
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Get Event Entities Users Me Knowledge Aggregate Event Entities Get
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not found
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /users/me/knowledge/perspective:
+    post:
+      tags:
+      - knowledge
+      summary: Generate Perspective
+      description: 'Generate a daily perspective analysis for the authenticated user
+
+
+        This endpoint analyzes the user''s calendar events, radar events, flights,
+
+        hotels, and dining reservations for the specified date and provides:
+
+        - Insights about the day''s structure and priorities
+
+        - Recommendations for optimizing time and focus
+
+        - Analysis of conflicts and opportunities
+
+
+        The analysis is powered by LLM and returns structured insights and
+
+        recommendations formatted for mobile-first UI consumption.
+
+
+        Results are cached for 2 hours to improve performance.'
+      operationId: generate_perspective_users_me_knowledge_perspective_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PerspectiveRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PerspectiveAnalysisResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not found
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /users/me/knowledge/graph/root:
+    get:
+      tags:
+      - knowledge
+      summary: Get User Graph Root
+      operationId: get_user_graph_root_users_me_knowledge_graph_root_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not found
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+      security:
+      - HTTPBearer: []
+  /users/me/knowledge/global-entities:
+    post:
+      tags:
+      - knowledge
+      summary: Query Global Entities
+      description: Query global, non-private entities using GraphQL.
+      operationId: query_global_entities_users_me_knowledge_global_entities_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GraphQLQueryRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GraphQLQueryResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not found
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    SourceCalendarEvent:
+      properties:
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Title
+        startDatetime:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Startdatetime
+        endDatetime:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Enddatetime
+        location:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Location
+      type: object
+      title: SourceCalendarEvent
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    RadarEvent:
+      properties:
+        id:
+          type: string
+          title: Id
+        title:
+          type: string
+          title: Title
+        description:
+          type: string
+          title: Description
+        significance:
+          type: string
+          title: Significance
+        urgency:
+          type: string
+          title: Urgency
+        suggestedDate:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Suggesteddate
+        suggestedTime:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Suggestedtime
+        timeNeeded:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Timeneeded
+        opportunityWindow:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Opportunitywindow
+        actionItems:
+          items:
+            type: string
+          type: array
+          title: Actionitems
+        category:
+          type: string
+          title: Category
+        status:
+          type: string
+          title: Status
+        accountEmail:
+          type: string
+          title: Accountemail
+        createdAt:
+          type: string
+          title: Createdat
+        updatedAt:
+          type: string
+          title: Updatedat
+        synthesizedAt:
+          type: string
+          title: Synthesizedat
+        sourceEmails:
+          items:
+            $ref: '#/components/schemas/SourceEmail'
+          type: array
+          title: Sourceemails
+        sourceCalendarEvents:
+          items:
+            $ref: '#/components/schemas/SourceCalendarEvent'
+          type: array
+          title: Sourcecalendarevents
+        relevantPersons:
+          items:
+            $ref: '#/components/schemas/RelevantPerson'
+          type: array
+          title: Relevantpersons
+      type: object
+      required:
+      - id
+      - title
+      - description
+      - significance
+      - urgency
+      - category
+      - status
+      - accountEmail
+      - createdAt
+      - updatedAt
+      - synthesizedAt
+      title: RadarEvent
+    PerspectiveRequest:
+      properties:
+        date:
+          type: string
+          title: Date
+          description: Date to analyze in YYYY-MM-DD format
+        work_mode:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Work Mode
+          description: Work mode for LLM (ludicrous, beast, or default) not sure what this si
+        focus_areas:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Focus Areas
+          description: Optional focus areas for analysi,not used propbably
+      type: object
+      required:
+      - date
+      title: PerspectiveRequest
+    GraphQLQueryRequest:
+      properties:
+        query:
+          type: string
+          title: Query
+          description: GraphQL query string
+        variables:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Variables
+          description: Optional GraphQL query variables
+      type: object
+      required:
+      - query
+      title: GraphQLQueryRequest
+    PerspectiveInsight:
+      properties:
+        type:
+          type: string
+          title: Type
+          description: 'Type: observation, pattern, trend, concern, opportunity'
+        title:
+          type: string
+          title: Title
+        description:
+          type: string
+          title: Description
+        confidence:
+          type: string
+          title: Confidence
+          description: 'Confidence level: high, medium, low'
+      type: object
+      required:
+      - type
+      - title
+      - description
+      - confidence
+      title: PerspectiveInsight
+    RelevantPerson:
+      properties:
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        displayName:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Displayname
+        primaryEmailAddress:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Primaryemailaddress
+        organization:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Organization
+        jobTitle:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Jobtitle
+      type: object
+      title: RelevantPerson
+    LifeRadarEventResponse:
+      properties:
+        event:
+          $ref: '#/components/schemas/RadarEvent'
+        message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Message
+      type: object
+      required:
+      - event
+      title: LifeRadarEventResponse
+    SyncDataRequest:
+      properties:
+        account_names:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Account Names
+          description: Account names to sync. If not provided, will sync all connected accounts.
+        date:
+          type: string
+          title: Date
+          description: Date to sync in YYYY-MM-DD format
+        event_types:
+          items:
+            type: string
+          type: array
+          title: Event Types
+          description: Event types to sync
+          default:
+          - email
+          - calendar
+      type: object
+      title: SyncDataRequest
+    DeepSyncCalendarRequest:
+      properties:
+        start_date:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Date
+          description: Start date for sync in YYYY-MM-DD format
+        end_date:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Date
+          description: End date for sync in YYYY-MM-DD format
+        dry_run:
+          type: boolean
+          title: Dry Run
+          description: If true, performs a dry run without making changes
+          default: false
+        relabel_events:
+          type: boolean
+          title: Relabel Events
+          description: If true, relabels events during sync
+          default: false
+      type: object
+      title: DeepSyncCalendarRequest
+    UpdateLifeRadarEventRequest:
+      properties:
+        status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status
+        suggested_date:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Suggested Date
+        suggested_time:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Suggested Time
+      type: object
+      title: UpdateLifeRadarEventRequest
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    PerspectiveMetadata:
+      properties:
+        generated_at:
+          type: string
+          title: Generated At
+        analysis_duration_ms:
+          type: integer
+          title: Analysis Duration Ms
+          default: 0
+        data_points_analyzed:
+          type: integer
+          title: Data Points Analyzed
+          default: 0
+      type: object
+      required:
+      - generated_at
+      title: PerspectiveMetadata
+    ListRadarResponse:
+      properties:
+        events:
+          items:
+            $ref: '#/components/schemas/RadarEvent'
+          type: array
+          title: Events
+        totalCount:
+          type: integer
+          title: Totalcount
+          default: 0
+        limit:
+          type: integer
+          title: Limit
+        offset:
+          type: integer
+          title: Offset
+        hasMore:
+          type: boolean
+          title: Hasmore
+          default: false
+        pageInfo:
+          additionalProperties: true
+          type: object
+          title: Pageinfo
+        error:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error
+      type: object
+      required:
+      - limit
+      - offset
+      title: ListRadarResponse
+    SourceEmail:
+      properties:
+        blobURI:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Bloburi
+        subject:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Subject
+        sender:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sender
+        threadId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Threadid
+        emailTimestamp:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Emailtimestamp
+      type: object
+      title: SourceEmail
+    PerspectiveRecommendation:
+      properties:
+        type:
+          type: string
+          title: Type
+          description: 'Type: action, optimization, prevention, enhancement'
+        title:
+          type: string
+          title: Title
+        description:
+          type: string
+          title: Description
+        priority:
+          type: string
+          title: Priority
+          description: 'Priority: high, medium, low'
+        effort:
+          type: string
+          title: Effort
+          description: 'Effort level: minimal, moderate, significant'
+      type: object
+      required:
+      - type
+      - title
+      - description
+      - priority
+      - effort
+      title: PerspectiveRecommendation
+    PerspectiveAnalysisResponse:
+      properties:
+        analysis_type:
+          type: string
+          title: Analysis Type
+        summary:
+          type: string
+          title: Summary
+        insights:
+          items:
+            $ref: '#/components/schemas/PerspectiveInsight'
+          type: array
+          title: Insights
+        recommendations:
+          items:
+            $ref: '#/components/schemas/PerspectiveRecommendation'
+          type: array
+          title: Recommendations
+        metadata:
+          $ref: '#/components/schemas/PerspectiveMetadata'
+      type: object
+      required:
+      - analysis_type
+      - summary
+      - insights
+      - recommendations
+      - metadata
+      title: PerspectiveAnalysisResponse
+    GraphQLQueryResponse:
+      properties:
+        data:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Data
+          description: GraphQL response data
+        errors:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Errors
+          description: GraphQL errors if any
+      type: object
+      title: GraphQLQueryResponse
+  securitySchemes:
+    HTTPBasic:
+      type: http
+      scheme: basic
+    HTTPBearer:
+      type: http
+      scheme: bearer

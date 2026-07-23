@@ -1,0 +1,120 @@
+openapi: 3.1.0
+info:
+  title: Adapter Adapter API life API
+  version: 0.1.0
+tags:
+- name: life
+paths:
+  /users/me/life/ask:
+    post:
+      tags:
+      - life
+      summary: Life Ask
+      operationId: life_ask_users_me_life_ask_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LifeAskRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LifeAskResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    LifeAskRequest:
+      properties:
+        message:
+          type: string
+          maxLength: 4000
+          minLength: 1
+          title: Message
+          description: The message for your Adapter agent, exactly as you would text it.
+        session_id:
+          anyOf:
+          - type: string
+            pattern: ^[A-Za-z0-9_-]{1,64}$
+          - type: 'null'
+          title: Session Id
+          description: Optional caller-chosen session id. Requests with the same session_id share conversation history (kept for 7 days). Omit for a one-shot, stateless ask.
+      type: object
+      required:
+      - message
+      title: LifeAskRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    LifeAskResponse:
+      properties:
+        responses:
+          items:
+            type: string
+          type: array
+          title: Responses
+          description: Each text message the agent produced, in order.
+        answer:
+          type: string
+          title: Answer
+          description: All response messages joined into a single string.
+        session_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Session Id
+          description: Echo of the session id this turn was recorded under, if any.
+      type: object
+      required:
+      - responses
+      - answer
+      title: LifeAskResponse
+  securitySchemes:
+    HTTPBasic:
+      type: http
+      scheme: basic
+    HTTPBearer:
+      type: http
+      scheme: bearer

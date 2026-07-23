@@ -1,0 +1,31 @@
+openapi: 3.1.0
+info:
+  title: Adapter Adapter API Redoc API
+  version: 0.1.0
+tags:
+- name: Redoc
+paths:
+  /redoc:
+    get:
+      summary: Get Redoc Documentation
+      description: Secured ReDoc documentation.
+      operationId: get_redoc_documentation_redoc_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            text/html:
+              schema:
+                type: string
+      security:
+      - HTTPBasic: []
+      tags:
+      - Redoc
+components:
+  securitySchemes:
+    HTTPBasic:
+      type: http
+      scheme: basic
+    HTTPBearer:
+      type: http
+      scheme: bearer

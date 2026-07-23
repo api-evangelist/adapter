@@ -1,0 +1,38 @@
+openapi: 3.1.0
+info:
+  title: Adapter Adapter API Oauth API
+  version: 0.1.0
+tags:
+- name: Oauth
+paths:
+  /oauth/insta:
+    get:
+      summary: Insta Oauth
+      operationId: insta_oauth_oauth_insta_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - Oauth
+    post:
+      summary: Insta Oauth
+      operationId: insta_oauth_oauth_insta_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - Oauth
+components:
+  securitySchemes:
+    HTTPBasic:
+      type: http
+      scheme: basic
+    HTTPBearer:
+      type: http
+      scheme: bearer

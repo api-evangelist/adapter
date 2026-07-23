@@ -1,0 +1,254 @@
+openapi: 3.1.0
+info:
+  title: Adapter Adapter API oauth2 API
+  version: 0.1.0
+tags:
+- name: oauth2
+paths:
+  /oauth2/authorize:
+    get:
+      tags:
+      - oauth2
+      summary: Authorize Consent
+      description: 'Human-facing consent screen. The external app sends the user here (this is
+
+        the `authorize_url` the connecting app redirects to); on Allow the page calls
+
+        POST /oauth2/authorize and forwards the browser to the returned redirect_url.
+
+
+        If the user isn''t signed in, the page runs an interactive Auth0 login whose
+
+        callback returns to THIS url with `?code=...` (the original OAuth params are
+
+        carried client-side in Auth0 `appState`). In that callback case we render the
+
+        shell and let the JS restore the params — so client_id/redirect_uri are optional.'
+      operationId: authorize_consent_oauth2_authorize_get
+      parameters:
+      - name: client_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Id
+      - name: redirect_uri
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Redirect Uri
+      - name: scope
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Scope
+      - name: state
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: State
+      - name: response_type
+        in: query
+        required: false
+        schema:
+          type: string
+          default: code
+          title: Response Type
+      - name: code
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            text/html:
+              schema:
+                type: string
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+      - oauth2
+      summary: Authorize
+      description: 'Mint a one-time authorization code for an OAuth client on behalf of the
+
+        authenticated user. Called by the Adapter consent page; the browser should be
+
+        redirected to the returned URL.'
+      operationId: authorize_oauth2_authorize_post
+      security:
+      - HTTPBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorizeRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizeResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /oauth2/token:
+    post:
+      tags:
+      - oauth2
+      summary: Token
+      description: OAuth2 token endpoint. Supports authorization_code and refresh_token grants.
+      operationId: token_oauth2_token_post
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Body_token_oauth2_token_post'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    AuthorizeRequest:
+      properties:
+        client_id:
+          type: string
+          title: Client Id
+        redirect_uri:
+          type: string
+          title: Redirect Uri
+        scope:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Scope
+        state:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: State
+      type: object
+      required:
+      - client_id
+      - redirect_uri
+      title: AuthorizeRequest
+    AuthorizeResponse:
+      properties:
+        redirect_url:
+          type: string
+          title: Redirect Url
+      type: object
+      required:
+      - redirect_url
+      title: AuthorizeResponse
+    Body_token_oauth2_token_post:
+      properties:
+        grant_type:
+          type: string
+          title: Grant Type
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+        redirect_uri:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Redirect Uri
+        refresh_token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Refresh Token
+        client_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Id
+        client_secret:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Secret
+      type: object
+      required:
+      - grant_type
+      title: Body_token_oauth2_token_post
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+  securitySchemes:
+    HTTPBasic:
+      type: http
+      scheme: basic
+    HTTPBearer:
+      type: http
+      scheme: bearer

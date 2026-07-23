@@ -1,0 +1,12 @@
+generated: '2026-07-17'
+method: generated
+source: openapi/adapter-openapi.json
+skills:
+- file: adapter-converse.md
+  name: Converse with the Adapter Life assistant
+  api: openapi/adapter-openapi.json
+  operations: [create_conversation_users_me_conversations_post, send_message_users_me_conversations__conversation_id__completion_post, get_conversation_users_me_conversations__conversation_id__get, stop_response_users_me_conversations__conversation_id__stop_response_post]
+- file: adapter-connect-account.md
+  name: Connect a third-party account via OAuth
+  api: openapi/adapter-openapi.json
+  operations: [initiate_oauth_oauth2_connect_initiate_post, oauth_callback_oauth2_connect_callback_post, list_connected_accounts_auth_users_me_connected_accounts_get, disconnect_account_auth_users_me_disconnect_account_post]

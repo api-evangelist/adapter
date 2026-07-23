@@ -1,0 +1,288 @@
+openapi: 3.1.0
+info:
+  title: Adapter Adapter API oauth-connect API
+  version: 0.1.0
+tags:
+- name: oauth-connect
+paths:
+  /oauth2-connect/initiate:
+    post:
+      tags:
+      - oauth-connect
+      summary: Initiate Oauth
+      description: Initiate OAuth flow for any provider
+      operationId: initiate_oauth_oauth2_connect_initiate_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OAuthInitiateRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /oauth2-connect/callback:
+    post:
+      tags:
+      - oauth-connect
+      summary: Oauth Callback
+      description: 'POST callback -
+
+        Frontend handles OAuth redirect, then POSTs to this endpoint'
+      operationId: oauth_callback_oauth2_connect_callback_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OAuthCallbackRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthCallbackResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /oauth2-connect/callback/{provider}:
+    get:
+      tags:
+      - oauth-connect
+      summary: Oauth Callback Get
+      description: "GET callback - \nDirect OAuth provider redirect endpoint for specific provider\nExample: /oauth2-connect/callback/google"
+      operationId: oauth_callback_get_oauth2_connect_callback__provider__get
+      parameters:
+      - name: provider
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Provider
+      - name: code
+        in: query
+        required: false
+        schema:
+          type: string
+          title: Code
+      - name: error
+        in: query
+        required: false
+        schema:
+          type: string
+          title: Error
+      - name: state
+        in: query
+        required: false
+        schema:
+          type: string
+          title: State
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    OAuthResponse:
+      properties:
+        authorization_url:
+          type: string
+          title: Authorization Url
+        oauth_state:
+          type: string
+          title: Oauth State
+        provider:
+          type: string
+          title: Provider
+      type: object
+      required:
+      - authorization_url
+      - oauth_state
+      - provider
+      title: OAuthResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    OAuthCallbackRequest:
+      properties:
+        code:
+          type: string
+          title: Code
+        state:
+          type: string
+          title: State
+        provider:
+          $ref: '#/components/schemas/OAuthProvider'
+      type: object
+      required:
+      - code
+      - state
+      - provider
+      title: OAuthCallbackRequest
+    OAuthCallbackResponse:
+      properties:
+        success:
+          type: boolean
+          title: Success
+        provider:
+          type: string
+          title: Provider
+        email:
+          type: string
+          title: Email
+        account_connected:
+          type: boolean
+          title: Account Connected
+          default: false
+        onboarding_triggered:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Onboarding Triggered
+        onboarding_status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Onboarding Status
+        is_initial_onboarding:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Initial Onboarding
+      type: object
+      required:
+      - success
+      - provider
+      - email
+      title: OAuthCallbackResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    OAuthProvider:
+      type: string
+      enum:
+      - google
+      - microsoft
+      - github
+      - slack
+      - twitter
+      title: OAuthProvider
+    OnboardingConfig:
+      properties:
+        start_date:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Date
+        include_labels:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Include Labels
+        include_domains:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Include Domains
+      type: object
+      title: OnboardingConfig
+      description: Configuration for auto-onboarding after OAuth success
+    OAuthInitiateRequest:
+      properties:
+        provider:
+          $ref: '#/components/schemas/OAuthProvider'
+        scopes:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Scopes
+        provider_params:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Provider Params
+        onboarding_config:
+          anyOf:
+          - $ref: '#/components/schemas/OnboardingConfig'
+          - type: 'null'
+        auto_execute:
+          type: boolean
+          title: Auto Execute
+          default: false
+        is_initial_onboarding:
+          type: boolean
+          title: Is Initial Onboarding
+          default: false
+      type: object
+      required:
+      - provider
+      title: OAuthInitiateRequest
+  securitySchemes:
+    HTTPBasic:
+      type: http
+      scheme: basic
+    HTTPBearer:
+      type: http
+      scheme: bearer

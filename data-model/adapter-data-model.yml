@@ -1,0 +1,69 @@
+generated: '2026-07-17'
+method: derived
+source: openapi/adapter-openapi.json
+notes: >-
+  Entity graph derived from the Adapter Life OpenAPI operation paths and component
+  schemas (88 schemas). Adapter's core product is a cognition/knowledge-graph API;
+  the entities below reflect the consumer "Adapter Life" harness surface.
+entities:
+- name: User
+  schemas: [UserResponse, UserSettings, UpdateUserRequest]
+  path_root: /auth/users/me
+  relationships:
+  - has_many: Conversation
+    via: user
+  - has_many: Asset
+    via: user
+  - has_many: ConnectedAccount
+    via: user
+- name: Conversation
+  schemas: [ConversationResponse, ConversationSummary, CreateConversationRequest, ConversationConfig]
+  path_root: /users/me/conversations
+  relationships:
+  - belongs_to: User
+    via: user
+  - has_many: Message
+    via: conversation_id
+- name: Message
+  schemas: [CompletionRequest, QueryMessageRequest]
+  path_root: /users/me/conversations/{conversation_id}/completion
+  relationships:
+  - belongs_to: Conversation
+    via: conversation_id
+- name: Asset
+  schemas: [FileUploadResponse, FileAttachment, PresignedUrlResponse, GetEmailAssetResponse]
+  path_root: /users/me/assets
+  relationships:
+  - belongs_to: User
+    via: user
+- name: ConnectedAccount
+  schemas: [OAuthProvider, OAuthResponse, OAuthCallbackResponse, DisconnectAccountRequest]
+  path_root: /auth/users/me/connected-accounts
+  relationships:
+  - belongs_to: User
+    via: user
+- name: Memory
+  schemas: []
+  path_root: /users/me/memories
+  notes: Cognition graph memories surfaced via /users/me/memories and /users/me/graph/memories.
+  relationships:
+  - belongs_to: User
+    via: user
+- name: Reminder
+  schemas: [CreateReminderRequest, UpdateReminderRequest]
+  path_root: /users/me
+  relationships:
+  - belongs_to: User
+    via: user
+- name: RadarEvent
+  schemas: [RadarEvent, RadarConfigRequest, LifeRadarEventResponse, ListRadarResponse]
+  path_root: /users/me
+  relationships:
+  - belongs_to: User
+    via: user
+- name: Job
+  schemas: [NextBestActionResponse, NextBestActionSuggestion]
+  path_root: /users/me/job
+  relationships:
+  - belongs_to: User
+    via: user

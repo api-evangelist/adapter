@@ -1,0 +1,52 @@
+generated: '2026-07-17'
+method: searched
+status: published
+source: https://api.adapter.com/.well-known/oauth-authorization-server
+server:
+  name: adapter
+  transport: http
+  url: https://api.adapter.com/v1/mcp
+  auth:
+    type: oauth2
+    flow: authorizationCode
+    pkce: S256
+    authorization_endpoint: https://api.adapter.com/v1/oauth2/authorize
+    token_endpoint: https://api.adapter.com/v1/oauth2/token
+    scopes: [mcp:read, offline_access]
+evidence:
+- The OAuth 2.0 Authorization Server Metadata at api.adapter.com advertises scope mcp:read.
+- GET https://api.adapter.com/v1/mcp returns 307 -> /v1/mcp/ (route present); the endpoint is
+  OAuth-protected, so the tool list could not be enumerated unauthenticated.
+notes: >-
+  Adapter exposes a hosted, OAuth-gated MCP server for agent access to its cognition
+  layer (memory / knowledge-graph queries). Tools below are DERIVED candidates from the
+  public Adapter Life OpenAPI operations, not a live listing from the protected server.
+tools:
+- name: create_conversation
+  description: Create a conversation slot to interact with the assistant.
+  status: candidate
+  source_operation: openapi/adapter-openapi.json#create_conversation_users_me_conversations_post
+- name: send_message
+  description: Send a message / completion to a conversation.
+  status: candidate
+  source_operation: openapi/adapter-openapi.json#send_message_users_me_conversations__conversation_id__completion_post
+- name: list_conversations
+  description: List the user's conversations.
+  status: candidate
+  source_operation: openapi/adapter-openapi.json#list_conversations_users_me_conversations_get
+- name: query_messages
+  description: Query across the user's messages.
+  status: candidate
+  source_operation: openapi/adapter-openapi.json#query_messages_users_me_messages_post
+- name: get_memories
+  description: Retrieve the user's memories (cognition graph).
+  status: candidate
+  source_operation: openapi/adapter-openapi.json#get_memories_users_me_memories_get
+- name: get_graph_memories
+  description: Retrieve memories from the knowledge graph.
+  status: candidate
+  source_operation: openapi/adapter-openapi.json#get_graph_memories_users_me_graph_memories_get
+- name: list_user_files
+  description: List assets the user has uploaded.
+  status: candidate
+  source_operation: openapi/adapter-openapi.json#list_user_files_users_me_assets_get

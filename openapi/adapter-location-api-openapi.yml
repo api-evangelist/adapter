@@ -1,0 +1,169 @@
+openapi: 3.1.0
+info:
+  title: Adapter Adapter API location API
+  version: 0.1.0
+tags:
+- name: location
+paths:
+  /users/me/location:
+    post:
+      tags:
+      - location
+      summary: Ping Location
+      operationId: ping_location_users_me_location_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationPing'
+        required: true
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    LocationPing:
+      properties:
+        device_type:
+          type: string
+          title: Device Type
+          description: ' (browser, mobile_ios, mobile_android, sms)'
+        user_id:
+          type: string
+          title: User Id
+          description: ID of the user this location belongs to
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+          description: Client-reported timestamp of the location
+        server_timestamp:
+          type: string
+          format: date-time
+          title: Server Timestamp
+          description: Server-recorded timestamp of when data was received
+        latitude:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Latitude
+          description: Latitude coordinate
+        longitude:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Longitude
+          description: Longitude coordinate
+        accuracy:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Accuracy
+          description: Accuracy of the location in meters
+        altitude:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Altitude
+          description: Altitude in meters
+        speed:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Speed
+          description: Speed in meters per second
+        heading:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Heading
+          description: Direction of travel in degrees
+        device_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Device Id
+          description: Unique identifier for the device
+        address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Address
+          description: Generic address string representation of the location
+        timezone:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Timezone
+          description: Timezone identifier for the location
+        app_version:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: App Version
+          description: Version of the client application
+        additional_data:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Additional Data
+          description: Flexible container for any additional data provided by specific clients
+      additionalProperties: true
+      type: object
+      required:
+      - device_type
+      - user_id
+      - timestamp
+      title: LocationPing
+      description: Model for receiving location data from clients with minimal validation for fast ingestion
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+  securitySchemes:
+    HTTPBasic:
+      type: http
+      scheme: basic
+    HTTPBearer:
+      type: http
+      scheme: bearer

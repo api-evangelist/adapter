@@ -1,0 +1,62 @@
+openapi: 3.1.0
+info:
+  title: Adapter Adapter API Webhook API
+  version: 0.1.0
+tags:
+- name: Webhook
+paths:
+  /webhook/insta:
+    get:
+      summary: Insta Webhook Validate
+      operationId: insta_webhook_validate_webhook_insta_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - Webhook
+    post:
+      summary: Insta Webhook
+      operationId: insta_webhook_webhook_insta_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - Webhook
+  /webhook/loop:
+    post:
+      summary: Loop Webhook
+      operationId: loop_webhook_webhook_loop_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - Webhook
+  /webhook/auth0:
+    post:
+      summary: Auth0 Webhook
+      operationId: auth0_webhook_webhook_auth0_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - Webhook
+components:
+  securitySchemes:
+    HTTPBasic:
+      type: http
+      scheme: basic
+    HTTPBearer:
+      type: http
+      scheme: bearer

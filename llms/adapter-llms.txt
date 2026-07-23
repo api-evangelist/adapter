@@ -1,0 +1,28 @@
+# Adapter
+
+> Adapter is a cognition API that gives AI models and agents persistent memory and a continuously-updated knowledge graph over connected data sources, returning evidence-based, cited answers. Founded by Adam Ghetti (Austin, TX), GV-backed. The company ships "Adapter Life," a consumer assistant harness reachable over iMessage/WhatsApp, on top of the Adapter primitives.
+
+## APIs
+- [Adapter Life API (OpenAPI 3.1)](https://raw.githubusercontent.com/api-evangelist/adapter/refs/heads/main/openapi/adapter-openapi.json): Conversations, assets, connected accounts, memories, reminders, and messaging webhooks. Base URL https://api.adapter.com/v1.
+
+## Auth & agent access
+- [Authentication profile](https://raw.githubusercontent.com/api-evangelist/adapter/refs/heads/main/authentication/adapter-authentication.yml): HTTP Bearer (JWT) for users; OAuth 2.0 authorization_code + PKCE for apps/agents.
+- [OAuth scopes](https://raw.githubusercontent.com/api-evangelist/adapter/refs/heads/main/scopes/adapter-scopes.yml): mcp:read, offline_access.
+- [MCP server](https://raw.githubusercontent.com/api-evangelist/adapter/refs/heads/main/mcp/adapter-mcp.yml): hosted, OAuth-gated MCP endpoint at https://api.adapter.com/v1/mcp.
+- [Well-known](https://raw.githubusercontent.com/api-evangelist/adapter/refs/heads/main/well-known/adapter-well-known.yml): RFC 8414 OAuth authorization-server metadata.
+
+## Conventions & semantics
+- [API conventions](https://raw.githubusercontent.com/api-evangelist/adapter/refs/heads/main/conventions/adapter-conventions.yml): limit/offset pagination, SSE streaming, bearer auth, no idempotency-key contract.
+- [Error catalog](https://raw.githubusercontent.com/api-evangelist/adapter/refs/heads/main/errors/adapter-problem-types.yml): 401/403/404/409/422/500, FastAPI JSON envelope.
+- [Data model](https://raw.githubusercontent.com/api-evangelist/adapter/refs/heads/main/data-model/adapter-data-model.yml): User, Conversation, Message, Asset, ConnectedAccount, Memory.
+- [Lifecycle](https://raw.githubusercontent.com/api-evangelist/adapter/refs/heads/main/lifecycle/adapter-lifecycle.yml): v1, early access.
+
+## Skills
+- [Agent skills](https://raw.githubusercontent.com/api-evangelist/adapter/refs/heads/main/skills/_index.yml): converse, connect-account.
+
+## Docs
+- [Adapter](https://www.adapter.com): product site.
+- [Get access](https://www.adapter.com/get-access): invite-gated onboarding.
+- [Blog](https://www.adapter.com/blog)
+- [Terms of Service](https://www.adapter.com/terms-of-service)
+- [Privacy Policy](https://www.adapter.com/privacy-policy)
