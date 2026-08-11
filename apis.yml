@@ -308,7 +308,7 @@ maintainers:
   email: info@apis.io
 common:
 - type: OpenAPI
-  url: openapi/adapter-openapi.json
+  url: openapi/_original/adapter-openapi.json
 - type: MCPServer
   url: mcp/adapter-mcp.yml
 - type: WellKnown
