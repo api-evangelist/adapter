@@ -1,0 +1,89 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Adapter Adapter API oauth-connect API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "oauth-connect",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Initiate Oauth",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/oauth2-connect/initiate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Initiate OAuth flow for any provider"
+        },
+        {
+          "info": {
+            "name": "Oauth Callback",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/oauth2-connect/callback",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "POST callback -\nFrontend handles OAuth redirect, then POSTs to this endpoint"
+        },
+        {
+          "info": {
+            "name": "Oauth Callback Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/oauth2-connect/callback/:provider",
+            "params": [
+              {
+                "name": "provider",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "code",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "error",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "GET callback - \nDirect OAuth provider redirect endpoint for specific provider\nExample: /oauth2-connect/callback/google"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

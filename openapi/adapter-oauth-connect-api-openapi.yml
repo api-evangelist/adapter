@@ -68,7 +68,8 @@ paths:
       tags:
       - oauth-connect
       summary: Oauth Callback Get
-      description: "GET callback - \nDirect OAuth provider redirect endpoint for specific provider\nExample: /oauth2-connect/callback/google"
+      description: "GET callback - \nDirect OAuth provider redirect endpoint for specific provider\nExample:\
+        \ /oauth2-connect/callback/google"
       operationId: oauth_callback_get_oauth2_connect_callback__provider__get
       parameters:
       - name: provider
@@ -286,3 +287,6 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
+servers:
+- url: https://api.adapter.com
+  description: Base URL reconciled from apis.yml

@@ -1,0 +1,374 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Adapter Adapter API conversations API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "conversations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Available Models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/conversations/models",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Available Models"
+        },
+        {
+          "info": {
+            "name": "List Conversations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/conversations",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "include_job_status",
+                "value": "",
+                "type": "query",
+                "description": "Include job status info"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List conversations for the current user with job status"
+        },
+        {
+          "info": {
+            "name": "Create Conversation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/users/me/conversations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create an empty conversation slot with frontend-provided UUID.\nThis allows frontend to navigate immediately before any AI processing."
+        },
+        {
+          "info": {
+            "name": "Send Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/users/me/conversations/:conversation_id/completion",
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "stream",
+                "value": "",
+                "type": "query",
+                "description": "Whether to stream the response"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Send a message to a conversation.\n\n- stream=true (default): Returns a streaming response with SSE\n- stream=false: Returns a complete Conversation object with the response"
+        },
+        {
+          "info": {
+            "name": "Get Conversation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/conversations/:conversation_id",
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a conversation by ID with all messages and active stream info"
+        },
+        {
+          "info": {
+            "name": "Update Conversation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.adapter.com/users/me/conversations/:conversation_id",
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update a conversation's name or metadata"
+        },
+        {
+          "info": {
+            "name": "Delete Conversation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.adapter.com/users/me/conversations/:conversation_id",
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a conversation"
+        },
+        {
+          "info": {
+            "name": "Get Message Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/conversations/:conversation_id/messages/:message_id/status",
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "message_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get current status of AI response generation for a message"
+        },
+        {
+          "info": {
+            "name": "Reconnect To Stream",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/conversations/:conversation_id/stream/:session_id",
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Reconnect to a durable stream at any time.\n\n- Gets exactly what client hasn't seen yet\n- Works even if original connection was lost\n- Works even after server restart (data persists in Redis)"
+        },
+        {
+          "info": {
+            "name": "Stop Response",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/users/me/conversations/:conversation_id/stop_response",
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Stop the currently generating response in this conversation"
+        },
+        {
+          "info": {
+            "name": "Get Conversation Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/conversations/:conversation_id/jobs",
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get job status summary for a conversation"
+        },
+        {
+          "info": {
+            "name": "Generate Next Best Action",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/users/me/conversations/:conversation_id/nba",
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "message_id",
+                "value": "",
+                "type": "query",
+                "description": "Optional message ID to analyze up to. If not provided, uses entire conversation."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Generate next best action suggestion for a conversation.\n\nAnalyzes the conversation up to the specified message (or entire conversation if message_id not provided) to identify:\n- Automation opportunities (e.g., setting reminders, saving preferences)\n- Information to remember for future interactions\n\nReturns a JSON structure with suggestion details."
+        },
+        {
+          "info": {
+            "name": "Submit Conversation Feedback",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/users/me/conversations/:conversation_id/feedback",
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Submit feedback for a conversation.\nIdempotent - overwrites previous feedback."
+        },
+        {
+          "info": {
+            "name": "Submit Message Feedback",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/users/me/conversations/:conversation_id/messages/:message_id/feedback",
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "message_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Submit feedback for a specific message.\nIdempotent - overwrites previous feedback."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

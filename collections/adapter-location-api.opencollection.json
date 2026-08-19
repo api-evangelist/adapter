@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Adapter Adapter API location API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "location",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Ping Location",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/users/me/location",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Ping Location"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

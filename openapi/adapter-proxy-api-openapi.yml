@@ -293,7 +293,8 @@ paths:
       tags:
       - proxy
       summary: Get Weather
-      description: Get weather for the user's current location - prioritizes recent location pings, falls back to IP geolocation
+      description: Get weather for the user's current location - prioritizes recent location pings, falls
+        back to IP geolocation
       operationId: get_weather_users_me_weather_get
       security:
       - HTTPBearer: []
@@ -549,3 +550,6 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
+servers:
+- url: https://api.adapter.com
+  description: Base URL reconciled from apis.yml

@@ -48,7 +48,8 @@ components:
             pattern: ^[A-Za-z0-9_-]{1,64}$
           - type: 'null'
           title: Session Id
-          description: Optional caller-chosen session id. Requests with the same session_id share conversation history (kept for 7 days). Omit for a one-shot, stateless ask.
+          description: Optional caller-chosen session id. Requests with the same session_id share conversation
+            history (kept for 7 days). Omit for a one-shot, stateless ask.
       type: object
       required:
       - message
@@ -118,3 +119,6 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
+servers:
+- url: https://api.adapter.com
+  description: Base URL reconciled from apis.yml

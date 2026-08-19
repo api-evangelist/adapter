@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Adapter Adapter API API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Adapter API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Health Check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/"
+          },
+          "docs": "Health Check"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

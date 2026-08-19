@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Adapter Adapter API management API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kill User Sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/management/sessions/kill",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Invalidate all sessions for a user.\n\nCalled by Auth0 Actions on password change (M2M JWT auth).\nSets a user-scoped denylist timestamp — any access token with iat before\nthis timestamp will be rejected by the shared auth dependency."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

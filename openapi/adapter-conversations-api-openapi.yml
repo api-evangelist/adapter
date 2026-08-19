@@ -466,7 +466,8 @@ paths:
       description: 'Generate next best action suggestion for a conversation.
 
 
-        Analyzes the conversation up to the specified message (or entire conversation if message_id not provided) to identify:
+        Analyzes the conversation up to the specified message (or entire conversation if message_id not
+        provided) to identify:
 
         - Automation opportunities (e.g., setting reminders, saving preferences)
 
@@ -951,3 +952,6 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
+servers:
+- url: https://api.adapter.com
+  description: Base URL reconciled from apis.yml

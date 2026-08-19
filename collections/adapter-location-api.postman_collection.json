@@ -1,0 +1,189 @@
+{
+  "item": [
+    {
+      "id": "507f6637-a148-4408-ae70-0d857e09b519",
+      "name": "location",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f50240a3-abfb-4c1f-882b-2f2988b30660",
+          "name": "Ping Location",
+          "request": {
+            "name": "Ping Location",
+            "description": {},
+            "url": {
+              "path": [
+                "users",
+                "me",
+                "location"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device_type\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"timestamp\": \"<dateTime>\",\n  \"server_timestamp\": \"<dateTime>\",\n  \"latitude\": \"<number>\",\n  \"longitude\": \"<number>\",\n  \"accuracy\": \"<number>\",\n  \"altitude\": \"<number>\",\n  \"speed\": \"<number>\",\n  \"heading\": \"<number>\",\n  \"device_id\": \"<string>\",\n  \"address\": \"<string>\",\n  \"timezone\": \"<string>\",\n  \"app_version\": \"<string>\",\n  \"additional_data\": {\n    \"key_0\": 7808,\n    \"key_1\": \"string\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1f6fe947-121c-45ad-bb18-8b2158ce2a75",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "me",
+                    "location"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"device_type\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"timestamp\": \"<dateTime>\",\n  \"server_timestamp\": \"<dateTime>\",\n  \"latitude\": \"<number>\",\n  \"longitude\": \"<number>\",\n  \"accuracy\": \"<number>\",\n  \"altitude\": \"<number>\",\n  \"speed\": \"<number>\",\n  \"heading\": \"<number>\",\n  \"device_id\": \"<string>\",\n  \"address\": \"<string>\",\n  \"timezone\": \"<string>\",\n  \"app_version\": \"<string>\",\n  \"additional_data\": {\n    \"key_0\": 3512.363984540743\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9b5f0baf-4fe1-431a-a8ac-6747c86358b0",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "me",
+                    "location"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"device_type\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"timestamp\": \"<dateTime>\",\n  \"server_timestamp\": \"<dateTime>\",\n  \"latitude\": \"<number>\",\n  \"longitude\": \"<number>\",\n  \"accuracy\": \"<number>\",\n  \"altitude\": \"<number>\",\n  \"speed\": \"<number>\",\n  \"heading\": \"<number>\",\n  \"device_id\": \"<string>\",\n  \"address\": \"<string>\",\n  \"timezone\": \"<string>\",\n  \"app_version\": \"<string>\",\n  \"additional_data\": {\n    \"key_0\": 3512.363984540743\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.adapter.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "dca97bc1-13c6-43bd-99d7-5198f421f2d2",
+    "name": "Adapter Adapter API location API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

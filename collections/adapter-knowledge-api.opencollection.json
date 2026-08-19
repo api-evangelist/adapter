@@ -1,0 +1,386 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Adapter Adapter API knowledge API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "knowledge",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Sync Knowledge",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/users/me/knowledge/sync",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Manually sync data (email, calendar) - given a date, userid and optionally user accounts.\nIf no account_names provided, syncs all connected accounts."
+        },
+        {
+          "info": {
+            "name": "Deep Sync Calendars",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/users/me/knowledge/sync/deep",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Perform a deep calendar sync across all user calendars.\n\nThis endpoint uses the syncUserCalendars GraphQL mutation to perform a comprehensive\nsync of all calendars for the authenticated user. It identifies missing and cancelled\nevents across all calendar accounts.\n\nUse this endpoint for:\n- Deeper sync operations when you need detailed sync results\n- Syncing multiple days or date ranges\n- Performing dry runs to see what would be synced without making changes\n\nThe response includes detailed inform"
+        },
+        {
+          "info": {
+            "name": "List Radar",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/knowledge/life_radar",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of events to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by status (active, pending, in_progress, completed, cancelled, expired)"
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter events from this date (ISO format)"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter events to this date (ISO format)"
+              },
+              {
+                "name": "after_cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for GraphQL pagination"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List life radar events for the authenticated user"
+        },
+        {
+          "info": {
+            "name": "Delete All Radar Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.adapter.com/users/me/knowledge/life_radar",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete all life radar events for the authenticated user"
+        },
+        {
+          "info": {
+            "name": "List Calendar Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/knowledge/calendar",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of events to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by status (active, pending, in_progress, completed, cancelled, expired)"
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter events from this date (ISO format)"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter events to this date (ISO format)"
+              },
+              {
+                "name": "after_cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for GraphQL pagination"
+              },
+              {
+                "name": "primary_only",
+                "value": "",
+                "type": "query",
+                "description": "If true (default), only return events from primary calendars. If false, return events from all calendars (primary and non-primary)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List Calendar Events"
+        },
+        {
+          "info": {
+            "name": "List Contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/knowledge/contacts",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of contacts per page"
+              },
+              {
+                "name": "max_pages",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of pages to fetch"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search by name, email, or organization"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List contacts for the authenticated user\n\nReturns all contacts associated with the user, sorted by last seen date (most recent first).\nContacts are synthesized from email communications, calendar events, and other sources.\n\n- **limit**: Maximum number of contacts per page (default: 100)\n- **max_pages**: Maximum number of pages to fetch (default: fetch all)\n- **search**: Optional search filter for name, email, or organization"
+        },
+        {
+          "info": {
+            "name": "Update Radar Event Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.adapter.com/users/me/knowledge/life_radar/:id/status",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Life radar event id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update a life radar event's status, suggested date, or suggested time"
+        },
+        {
+          "info": {
+            "name": "Get Activity By Type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/knowledge/:activity_type",
+            "params": [
+              {
+                "name": "activity_type",
+                "value": "",
+                "type": "path",
+                "description": "Type of activity"
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Start date (ISO format)"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "End date (ISO format)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of records per page"
+              },
+              {
+                "name": "max_pages",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of pages to fetch"
+              },
+              {
+                "name": "deduplicate",
+                "value": "",
+                "type": "query",
+                "description": "Apply intelligent deduplication (spend only, default: true)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get activity data by type for the authenticated user\n\nSupported activity types:\n- flights: Flight history\n- hotels: Hotel history\n- dining: Dining history\n- events: Event history\n- rides: Ride service history (Uber, Lyft, etc.)\n- spend: Purchase/spend history"
+        },
+        {
+          "info": {
+            "name": "Get Event Entities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/knowledge/aggregate/event-entities",
+            "params": [
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Start date (ISO format)"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "End date (ISO format)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of records per page"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Event Entities"
+        },
+        {
+          "info": {
+            "name": "Generate Perspective",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/users/me/knowledge/perspective",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Generate a daily perspective analysis for the authenticated user\n\nThis endpoint analyzes the user's calendar events, radar events, flights,\nhotels, and dining reservations for the specified date and provides:\n- Insights about the day's structure and priorities\n- Recommendations for optimizing time and focus\n- Analysis of conflicts and opportunities\n\nThe analysis is powered by LLM and returns structured insights and\nrecommendations formatted for mobile-first UI consumption.\n\nResults are cached fo"
+        },
+        {
+          "info": {
+            "name": "Get User Graph Root",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/knowledge/graph/root",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get User Graph Root"
+        },
+        {
+          "info": {
+            "name": "Query Global Entities",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/users/me/knowledge/global-entities",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Query global, non-private entities using GraphQL."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

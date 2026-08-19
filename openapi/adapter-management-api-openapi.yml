@@ -92,3 +92,6 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
+servers:
+- url: https://api.adapter.com
+  description: Base URL reconciled from apis.yml

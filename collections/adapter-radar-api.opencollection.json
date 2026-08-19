@@ -1,0 +1,67 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Adapter Adapter API radar API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "radar",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Radar Schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/radar/schema",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Radar Schema"
+        },
+        {
+          "info": {
+            "name": "Get Radar Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/radar/config",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Radar Config"
+        },
+        {
+          "info": {
+            "name": "Update Radar Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.adapter.com/radar/config",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update Radar Config"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

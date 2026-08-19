@@ -1,0 +1,178 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Adapter Adapter API reminders API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "reminders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Reminders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/reminders",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of reminders to return"
+              },
+              {
+                "name": "include_completed",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include completed reminders"
+              },
+              {
+                "name": "include_scheduled",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include scheduled reminders"
+              },
+              {
+                "name": "expand_recurring",
+                "value": "",
+                "type": "query",
+                "description": "Expand recurring reminders into individual occurrences"
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Start date for expanding recurring reminders (ISO format)"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "End date for expanding recurring reminders (ISO format)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List reminders for the authenticated user"
+        },
+        {
+          "info": {
+            "name": "Create Reminder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/users/me/reminders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create Reminder"
+        },
+        {
+          "info": {
+            "name": "Get Reminder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/reminders/:reminder_id",
+            "params": [
+              {
+                "name": "reminder_id",
+                "value": "",
+                "type": "path",
+                "description": "Reminder ID or slug"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Reminder"
+        },
+        {
+          "info": {
+            "name": "Update Reminder",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.adapter.com/users/me/reminders/:reminder_id",
+            "params": [
+              {
+                "name": "reminder_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the reminder to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update a specific reminder by ID"
+        },
+        {
+          "info": {
+            "name": "Delete Reminder",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.adapter.com/users/me/reminders/:reminder_id",
+            "params": [
+              {
+                "name": "reminder_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the reminder to delete"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a specific reminder by ID"
+        },
+        {
+          "info": {
+            "name": "List Task Configs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/tasks",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all task configurations for the authenticated user"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

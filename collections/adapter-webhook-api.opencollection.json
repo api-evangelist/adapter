@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Adapter Adapter API Webhook API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Webhook",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Insta Webhook Validate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/webhook/insta"
+          },
+          "docs": "Insta Webhook Validate"
+        },
+        {
+          "info": {
+            "name": "Insta Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/webhook/insta"
+          },
+          "docs": "Insta Webhook"
+        },
+        {
+          "info": {
+            "name": "Loop Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/webhook/loop"
+          },
+          "docs": "Loop Webhook"
+        },
+        {
+          "info": {
+            "name": "Auth0 Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/webhook/auth0"
+          },
+          "docs": "Auth0 Webhook"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

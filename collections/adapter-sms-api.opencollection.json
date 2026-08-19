@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Adapter Adapter API Sms API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sms",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Sms Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/sms/webhook",
+            "headers": [
+              {
+                "name": "x-twilio-signature",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Sms Webhook"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Adapter Adapter API Whatsapp API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Whatsapp",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Whatsapp Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/whatsapp/webhook"
+          },
+          "docs": "Whatsapp Webhook"
+        },
+        {
+          "info": {
+            "name": "Whatsapp Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/whatsapp/status"
+          },
+          "docs": "Whatsapp Status"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

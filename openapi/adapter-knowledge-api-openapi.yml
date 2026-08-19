@@ -296,10 +296,12 @@ paths:
         required: false
         schema:
           type: boolean
-          description: If true (default), only return events from primary calendars. If false, return events from all calendars (primary and non-primary).
+          description: If true (default), only return events from primary calendars. If false, return
+            events from all calendars (primary and non-primary).
           default: true
           title: Primary Only
-        description: If true (default), only return events from primary calendars. If false, return events from all calendars (primary and non-primary).
+        description: If true (default), only return events from primary calendars. If false, return events
+          from all calendars (primary and non-primary).
       responses:
         '200':
           description: Successful Response
@@ -1223,3 +1225,6 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
+servers:
+- url: https://api.adapter.com
+  description: Base URL reconciled from apis.yml

@@ -1,0 +1,282 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Adapter Adapter API proxy API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "proxy",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Suggestions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/suggestions",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sample existing suggestions"
+        },
+        {
+          "info": {
+            "name": "Generate New Suggestions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/users/me/suggestions/generate",
+            "params": [
+              {
+                "name": "max_suggestions",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of suggestions to generate"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Generate new suggestions explicitly"
+        },
+        {
+          "info": {
+            "name": "Get Analysis",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/analysis",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new intention with an initial message"
+        },
+        {
+          "info": {
+            "name": "Get Memories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/memories",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new intention with an initial message"
+        },
+        {
+          "info": {
+            "name": "Get Graph Memories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/graph/memories",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get memories from graph"
+        },
+        {
+          "info": {
+            "name": "Get Job From Trigger Event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/jobs/:trigger_event_id",
+            "params": [
+              {
+                "name": "trigger_event_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the job to retrieve"
+              },
+              {
+                "name": "include_results",
+                "value": "",
+                "type": "query",
+                "description": "Include job results in response"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a specific job by ID"
+        },
+        {
+          "info": {
+            "name": "Get Job By Id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/job/:job_id",
+            "params": [
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the job to retrieve"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a specific job by ID"
+        },
+        {
+          "info": {
+            "name": "Get Preferences",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/knowledge",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a specific job by ID"
+        },
+        {
+          "info": {
+            "name": "Get Onboarding Stats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/onboarding-stats/:account_name",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "The account name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get onboarding stats for a specific account"
+        },
+        {
+          "info": {
+            "name": "Get User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get current user info"
+        },
+        {
+          "info": {
+            "name": "Generate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/users/me/generate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Generate"
+        },
+        {
+          "info": {
+            "name": "Proxy Image",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/image",
+            "params": [
+              {
+                "name": "url",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Proxy external images to avoid CORS issues"
+        },
+        {
+          "info": {
+            "name": "Get Weather",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/weather",
+            "params": [
+              {
+                "name": "city",
+                "value": "",
+                "type": "query",
+                "description": "Override city for localhost testing"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Override state for localhost testing"
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "Override country for localhost testing"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get weather for the user's current location - prioritizes recent location pings, falls back to IP geolocation"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

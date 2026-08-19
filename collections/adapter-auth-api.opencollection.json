@@ -1,0 +1,424 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Adapter Adapter API auth API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Auth0 Login",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/auth/login",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Auth0 Login"
+        },
+        {
+          "info": {
+            "name": "Auth Refresh",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/auth/refresh",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Auth Refresh"
+        },
+        {
+          "info": {
+            "name": "Logout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/auth/logout",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Logout user and invalidate all sessions across devices."
+        },
+        {
+          "info": {
+            "name": "Verify Email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/auth/verify/email",
+            "params": [
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Verify a user's email using a verification token"
+        },
+        {
+          "info": {
+            "name": "Delete User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/auth/users/me/initiate-delete",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Request deletion of the currently authenticated user"
+        },
+        {
+          "info": {
+            "name": "Get Current User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/auth/users/me",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch details of the currently authenticated user"
+        },
+        {
+          "info": {
+            "name": "Update Current User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.adapter.com/auth/users/me",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update details of the currently authenticated user and return updated user state"
+        },
+        {
+          "info": {
+            "name": "Get Current User Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/auth/users/me/settings",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch user settings for the currently authenticated user"
+        },
+        {
+          "info": {
+            "name": "Update Current User Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.adapter.com/auth/users/me/settings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update Current User Settings"
+        },
+        {
+          "info": {
+            "name": "List Connected Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/auth/users/me/connected-accounts",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List Connected Accounts"
+        },
+        {
+          "info": {
+            "name": "Disconnect Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/auth/users/me/disconnect-account",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a connected account for the authenticated user"
+        },
+        {
+          "info": {
+            "name": "Get User Idp Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/auth/users/me/idp-data",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get user IDP data including email and identities"
+        },
+        {
+          "info": {
+            "name": "Send Phone Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/auth/users/me/phone/send-verification",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Send verification code to the user's phone"
+        },
+        {
+          "info": {
+            "name": "Verify Phone",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/auth/users/me/phone/verify",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Verify user's phone with passcode"
+        },
+        {
+          "info": {
+            "name": "Check Phone Verification Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/auth/users/me/phone/verification-status",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Check if user's phone is verified"
+        },
+        {
+          "info": {
+            "name": "Email Verification Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/auth/verify/email/verified",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Poll endpoint for email verification for the authenticated user"
+        },
+        {
+          "info": {
+            "name": "Resend Email Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/auth/verify/email/resend",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Resend email verification to the authenticated user"
+        },
+        {
+          "info": {
+            "name": "Check Email Verification Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/auth/users/me/email/verification-status",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Check if user's email is verified"
+        },
+        {
+          "info": {
+            "name": "Verify Phone Onboarding",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/auth/users/me/onboarding/verify-phone",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update details of the currently authenticated user"
+        },
+        {
+          "info": {
+            "name": "Reset Current User Password",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/auth/users/me/password/reset",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Request password reset for the current user"
+        },
+        {
+          "info": {
+            "name": "Validate Invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/auth/validate-invite",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Validate and use an invitation code.\n\nAccepts either:\n- A raw invitation code (e.g., \"ABC123\")\n- A JWT token from a magic link (e.g., \"eyJ0eXAi...\")\n\nOnce validated, the code is marked as used and the user's status is updated to REGISTERED."
+        },
+        {
+          "info": {
+            "name": "Get User Invite Codes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/auth/users/me/invites",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get invitation codes for the user.\nReturns only unused codes (available to share) and stats."
+        },
+        {
+          "info": {
+            "name": "Complete Onboarding",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/auth/complete-onboarding",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Complete user onboarding by verifying they have a connected account and updating\ntheir account status from 'registered' to 'active'.\n\nRequirements:\n- User must have at least one connected account\n- User's current status must be 'registered' (no other transitions allowed)"
+        },
+        {
+          "info": {
+            "name": "Generate Magic Link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/auth/generate-magic-link",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Generate a magic link for an invitation code.\n\nThis creates a signed JWT token containing the invite code that expires in 7 days.\nThe token can be shared via URL and automatically validates the user on signup.\n\nExample magic link: https://yourapp.com/signup?token=<jwt_token>"
+        },
+        {
+          "info": {
+            "name": "Check Invite Code",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/auth/check-invite",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Check if an invitation code or magic link token is valid.\n\nThis endpoint does NOT require authentication and can be called before signup.\nIt accepts either:\n- A raw invitation code (e.g., \"ABC123\")\n- A JWT token from a magic link (e.g., \"eyJ0eXAi...\")\n\nReturns validation status without consuming the invite code."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

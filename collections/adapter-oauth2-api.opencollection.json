@@ -1,0 +1,95 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Adapter Adapter API oauth2 API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "oauth2",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authorize Consent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/oauth2/authorize",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "redirect_uri",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "response_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "code",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Human-facing consent screen. The external app sends the user here (this is\nthe `authorize_url` the connecting app redirects to); on Allow the page calls\nPOST /oauth2/authorize and forwards the browser to the returned redirect_url.\n\nIf the user isn't signed in, the page runs an interactive Auth0 login whose\ncallback returns to THIS url with `?code=...` (the original OAuth params are\ncarried client-side in Auth0 `appState`). In that callback case we render the\nshell and let the JS restore the para"
+        },
+        {
+          "info": {
+            "name": "Authorize",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/oauth2/authorize",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Mint a one-time authorization code for an OAuth client on behalf of the\nauthenticated user. Called by the Adapter consent page; the browser should be\nredirected to the returned URL."
+        },
+        {
+          "info": {
+            "name": "Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/oauth2/token",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "OAuth2 token endpoint. Supports authorization_code and refresh_token grants."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

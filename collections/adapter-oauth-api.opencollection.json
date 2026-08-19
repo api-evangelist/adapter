@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Adapter Adapter API Oauth API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Oauth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Insta Oauth",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/oauth/insta"
+          },
+          "docs": "Insta Oauth"
+        },
+        {
+          "info": {
+            "name": "Insta Oauth",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/oauth/insta"
+          },
+          "docs": "Insta Oauth"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Adapter Adapter API Imessage API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Imessage",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Imessage Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/imessage/webhook",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Imessage Webhook"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,208 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Adapter Adapter API assets API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "assets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload File",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/users/me/assets/upload",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Upload a file directly to the server (for files < 20MB)"
+        },
+        {
+          "info": {
+            "name": "Upload File Stream",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/users/me/assets/upload-stream",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Upload a file using streaming (memory-efficient for large files)"
+        },
+        {
+          "info": {
+            "name": "Get Presigned Upload Url",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/users/me/assets/presigned-url",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Generate a presigned URL for direct client-to-storage uploads (useful for larger files)"
+        },
+        {
+          "info": {
+            "name": "Get File Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/assets/asset/:asset_id",
+            "params": [
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "The asset ID to retrieve metadata for"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get metadata for a specific file using asset ID"
+        },
+        {
+          "info": {
+            "name": "Delete File",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.adapter.com/users/me/assets/asset/:asset_id",
+            "params": [
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "The asset ID to delete"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a file"
+        },
+        {
+          "info": {
+            "name": "Download File",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/assets/asset/:asset_id/download",
+            "params": [
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "The asset ID to download"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Download a file directly"
+        },
+        {
+          "info": {
+            "name": "Get Thumbnail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/assets/asset/:asset_id/thumbnail",
+            "params": [
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "The asset ID to get thumbnail for"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Download a file's thumbnail directly"
+        },
+        {
+          "info": {
+            "name": "List User Files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/users/me/assets",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all files for the current user"
+        },
+        {
+          "info": {
+            "name": "Get Email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/users/me/assets/email/retrieve",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve an email"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

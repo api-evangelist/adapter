@@ -275,7 +275,8 @@ components:
           - work
           - generic
           title: Category
-          description: 'Category for the reminder. Valid values: ''health'', ''travel'', ''personal'', ''leisure'', ''work'', ''generic''. Defaults to ''generic'''
+          description: 'Category for the reminder. Valid values: ''health'', ''travel'', ''personal'',
+            ''leisure'', ''work'', ''generic''. Defaults to ''generic'''
           default: generic
         task_key:
           anyOf:
@@ -333,20 +334,23 @@ components:
           - type: string
           - type: 'null'
           title: Status
-          description: 'New status for the reminder. ''paused'' only valid for recurring reminders. Valid values: ''pending'', ''paused'''
+          description: 'New status for the reminder. ''paused'' only valid for recurring reminders. Valid
+            values: ''pending'', ''paused'''
         execution_timestamp_iso_datestring:
           anyOf:
           - type: string
           - type: 'null'
           title: Execution Timestamp Iso Datestring
-          description: New execution timestamp in ISO format. Only valid for one-time reminders, not recurring ones. (e.g., '2024-01-15T14:30:00-05:00')
+          description: New execution timestamp in ISO format. Only valid for one-time reminders, not recurring
+            ones. (e.g., '2024-01-15T14:30:00-05:00')
         message:
           anyOf:
           - type: string
             maxLength: 1024
           - type: 'null'
           title: Message
-          description: New message content for the reminder. Cannot be updated for reminders with status 'scheduled'.
+          description: New message content for the reminder. Cannot be updated for reminders with status
+            'scheduled'.
         channel:
           anyOf:
           - type: string
@@ -377,7 +381,8 @@ components:
             - generic
           - type: 'null'
           title: Category
-          description: 'New category for the reminder. Valid values: ''health'', ''travel'', ''personal'', ''leisure'', ''work'', ''generic'''
+          description: 'New category for the reminder. Valid values: ''health'', ''travel'', ''personal'',
+            ''leisure'', ''work'', ''generic'''
       type: object
       title: UpdateReminderRequest
       description: Request model for updating an existing reminder
@@ -388,3 +393,6 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
+servers:
+- url: https://api.adapter.com
+  description: Base URL reconciled from apis.yml

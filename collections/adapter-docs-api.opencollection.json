@@ -1,0 +1,34 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Adapter Adapter API Docs API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Docs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Swagger Documentation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/docs",
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Secured Swagger UI documentation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Adapter Adapter API Line API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Line",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Line Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.adapter.com/line/webhook",
+            "headers": [
+              {
+                "name": "x-line-signature",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Line Webhook"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

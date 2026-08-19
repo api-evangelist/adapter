@@ -1,0 +1,34 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Adapter Adapter API Redoc API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Redoc",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Redoc Documentation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.adapter.com/redoc",
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Secured ReDoc documentation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
