@@ -124,7 +124,7 @@ apis:
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
   tags:
-  - Imessage
+  - iMessage
   tags_raw:
   - Imessage
   properties:
@@ -248,7 +248,7 @@ apis:
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
   tags:
-  - radar
+  - Radar
   tags_raw:
   - radar
   properties:
@@ -282,7 +282,7 @@ apis:
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
   tags:
-  - reranking
+  - Reranking
   tags_raw:
   - reranking
   properties:
@@ -350,7 +350,7 @@ apis:
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
   tags:
-  - Whatsapp
+  - WhatsApp
   tags_raw:
   - Whatsapp
   properties:
