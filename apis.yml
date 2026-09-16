@@ -41,7 +41,7 @@ accessModel:
   method: derived
 specificationVersion: '0.23'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-09-16'
 tags:
 - Company
 - Artificial Intelligence
@@ -63,7 +63,7 @@ tags_raw:
 image: https://framerusercontent.com/images/jeqjDUjgYoFJr6KfWmg7Kvi2Rs.png
 apis:
 - aid: adapter:adapter-adapter-api-api
-  name: Adapter Adapter API API
+  name: Adapter API
   description: The Adapter API API from Adapter — 1 operation(s) for adapter api.
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
@@ -369,7 +369,10 @@ common:
   url: openapi/_original/adapter-openapi.json
 - type: X-MCPServerCandidate
   url: mcp/adapter-mcp.yml
-  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate
+    — a tool list derived from the published API contracts, not an existing server. The scorer already
+    read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type
+    surfaces with a server that does not exist.'
 - type: WellKnown
   url: well-known/adapter-well-known.yml
 - type: Authentication
