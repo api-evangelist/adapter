@@ -186,18 +186,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/adapter-management-api-openapi.yml
-- aid: adapter:adapter-oauth-api
-  name: Adapter Oauth API
-  description: The Oauth API from Adapter — 1 operation(s) for oauth.
-  humanURL: https://www.adapter.com
-  baseURL: https://api.adapter.com
-  tags:
-  - Authentication
-  tags_raw:
-  - Oauth
-  properties:
-  - type: OpenAPI
-    url: openapi/adapter-oauth-api-openapi.yml
 - aid: adapter:adapter-oauth-connect-api
   name: Adapter oauth-connect API
   description: The oauth-connect API from Adapter — 3 operation(s) for oauth-connect.
@@ -208,18 +196,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/adapter-oauth-connect-api-openapi.yml
-- aid: adapter:adapter-oauth2-api
-  name: Adapter oauth2 API
-  description: The oauth2 API from Adapter — 2 operation(s) for oauth2.
-  humanURL: https://www.adapter.com
-  baseURL: https://api.adapter.com
-  tags:
-  - Authentication
-  tags_raw:
-  - oauth2
-  properties:
-  - type: OpenAPI
-    url: openapi/adapter-oauth2-api-openapi.yml
 - aid: adapter:adapter-openapi-json-api
   name: Adapter Openapi.json API
   description: The Openapi.json API from Adapter — 1 operation(s) for openapi.json.
@@ -344,18 +320,36 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/adapter-webhook-api-openapi.yml
-- aid: adapter:adapter-whatsapp-api
-  name: Adapter Whatsapp API
-  description: The Whatsapp API from Adapter — 2 operation(s) for whatsapp.
+- aid: adapter:adapter-oauth-api
+  name: Adapter OAUTH API
+  description: The Oauth API from Adapter — 1 operation(s) for oauth.
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
   tags:
-  - WhatsApp
-  tags_raw:
-  - Whatsapp
+  - Oauth
   properties:
   - type: OpenAPI
-    url: openapi/adapter-whatsapp-api-openapi.yml
+    url: openapi/adapter-oauth-api-openapi.yml
+- aid: adapter:adapter-oauth2-api
+  name: Adapter Oauth2 API
+  description: The oauth2 API from Adapter — 2 operation(s) for oauth2.
+  humanURL: https://www.adapter.com
+  baseURL: https://api.adapter.com
+  tags:
+  - oauth2
+  properties:
+  - type: OpenAPI
+    url: openapi/adapter-oauth2-api-openapi.yml
+- aid: adapter:adapter-whats-app-api
+  name: Adapter Whats App API
+  description: The Whats App API from Adapter — 2 operation(s) for whats app.
+  humanURL: https://www.adapter.com
+  baseURL: https://api.adapter.com
+  tags:
+  - Whats App
+  properties:
+  - type: OpenAPI
+    url: openapi/adapter-whats-app-api-openapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
