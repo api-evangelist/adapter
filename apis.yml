@@ -326,6 +326,8 @@ apis:
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
   tags:
+  - Authentication
+  tags_raw:
   - Oauth
   properties:
   - type: OpenAPI
@@ -336,6 +338,8 @@ apis:
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
   tags:
+  - Authentication
+  tags_raw:
   - oauth2
   properties:
   - type: OpenAPI
@@ -346,6 +350,8 @@ apis:
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
   tags:
+  - WhatsApp
+  tags_raw:
   - Whats App
   properties:
   - type: OpenAPI
