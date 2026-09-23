@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Adapter Adapter API Users API
+  title: Adapter Users API
   version: 0.1.0
 tags:
 - name: Users
@@ -33,6 +33,28 @@ paths:
       - Users
 components:
   schemas:
+    QueryMessageRequest:
+      properties:
+        participant_id:
+          type: string
+          title: Participant Id
+        limit:
+          type: integer
+          title: Limit
+          default: 100
+        channel:
+          type: string
+          title: Channel
+        start_timestamp:
+          type: string
+          format: date-time
+          title: Start Timestamp
+        end_timestamp:
+          type: string
+          format: date-time
+          title: End Timestamp
+      type: object
+      title: QueryMessageRequest
     HTTPValidationError:
       properties:
         detail:
@@ -68,28 +90,6 @@ components:
       - msg
       - type
       title: ValidationError
-    QueryMessageRequest:
-      properties:
-        participant_id:
-          type: string
-          title: Participant Id
-        limit:
-          type: integer
-          title: Limit
-          default: 100
-        channel:
-          type: string
-          title: Channel
-        start_timestamp:
-          type: string
-          format: date-time
-          title: Start Timestamp
-        end_timestamp:
-          type: string
-          format: date-time
-          title: End Timestamp
-      type: object
-      title: QueryMessageRequest
   securitySchemes:
     HTTPBasic:
       type: http
@@ -97,6 +97,3 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
-servers:
-- url: https://api.adapter.com
-  description: Base URL reconciled from apis.yml

@@ -1,14 +1,14 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Adapter Adapter API conversations API
+  title: Adapter Conversations API
   version: 0.1.0
 tags:
-- name: conversations
+- name: Conversations
 paths:
   /users/me/conversations/models:
     get:
       tags:
-      - conversations
+      - Conversations
       summary: Get Available Models
       operationId: get_available_models_users_me_conversations_models_get
       responses:
@@ -30,7 +30,7 @@ paths:
   /users/me/conversations:
     post:
       tags:
-      - conversations
+      - Conversations
       summary: Create Conversation
       description: 'Create an empty conversation slot with frontend-provided UUID.
 
@@ -67,7 +67,7 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
     get:
       tags:
-      - conversations
+      - Conversations
       summary: List Conversations
       description: List conversations for the current user with job status
       operationId: list_conversations_users_me_conversations_get
@@ -127,7 +127,7 @@ paths:
   /users/me/conversations/{conversation_id}/completion:
     post:
       tags:
-      - conversations
+      - Conversations
       summary: Send Message
       description: 'Send a message to a conversation.
 
@@ -183,7 +183,7 @@ paths:
   /users/me/conversations/{conversation_id}:
     get:
       tags:
-      - conversations
+      - Conversations
       summary: Get Conversation
       description: Get a conversation by ID with all messages and active stream info
       operationId: get_conversation_users_me_conversations__conversation_id__get
@@ -218,7 +218,7 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
     patch:
       tags:
-      - conversations
+      - Conversations
       summary: Update Conversation
       description: Update a conversation's name or metadata
       operationId: update_conversation_users_me_conversations__conversation_id__patch
@@ -259,7 +259,7 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
     delete:
       tags:
-      - conversations
+      - Conversations
       summary: Delete Conversation
       description: Delete a conversation
       operationId: delete_conversation_users_me_conversations__conversation_id__delete
@@ -292,7 +292,7 @@ paths:
   /users/me/conversations/{conversation_id}/messages/{message_id}/status:
     get:
       tags:
-      - conversations
+      - Conversations
       summary: Get Message Status
       description: Get current status of AI response generation for a message
       operationId: get_message_status_users_me_conversations__conversation_id__messages__message_id__status_get
@@ -334,7 +334,7 @@ paths:
   /users/me/conversations/{conversation_id}/stream/{session_id}:
     get:
       tags:
-      - conversations
+      - Conversations
       summary: Reconnect To Stream
       description: 'Reconnect to a durable stream at any time.
 
@@ -383,7 +383,7 @@ paths:
   /users/me/conversations/{conversation_id}/stop_response:
     post:
       tags:
-      - conversations
+      - Conversations
       summary: Stop Response
       description: Stop the currently generating response in this conversation
       operationId: stop_response_users_me_conversations__conversation_id__stop_response_post
@@ -425,7 +425,7 @@ paths:
   /users/me/conversations/{conversation_id}/jobs:
     get:
       tags:
-      - conversations
+      - Conversations
       summary: Get Conversation Jobs
       description: Get job status summary for a conversation
       operationId: get_conversation_jobs_users_me_conversations__conversation_id__jobs_get
@@ -461,13 +461,12 @@ paths:
   /users/me/conversations/{conversation_id}/nba:
     post:
       tags:
-      - conversations
+      - Conversations
       summary: Generate Next Best Action
       description: 'Generate next best action suggestion for a conversation.
 
 
-        Analyzes the conversation up to the specified message (or entire conversation if message_id not
-        provided) to identify:
+        Analyzes the conversation up to the specified message (or entire conversation if message_id not provided) to identify:
 
         - Automation opportunities (e.g., setting reminders, saving preferences)
 
@@ -519,7 +518,7 @@ paths:
   /users/me/conversations/{conversation_id}/feedback:
     post:
       tags:
-      - conversations
+      - Conversations
       summary: Submit Conversation Feedback
       description: 'Submit feedback for a conversation.
 
@@ -564,7 +563,7 @@ paths:
   /users/me/conversations/{conversation_id}/messages/{message_id}/feedback:
     post:
       tags:
-      - conversations
+      - Conversations
       summary: Submit Message Feedback
       description: 'Submit feedback for a specific message.
 
@@ -614,221 +613,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ConversationConfig:
-      properties:
-        agent:
-          type: string
-          title: Agent
-          default: default
-        multimodal_enabled:
-          type: boolean
-          title: Multimodal Enabled
-          default: false
-        provider:
-          type: string
-          title: Provider
-          default: adapter-ensemble-3p-1
-        enable_extended_thinking:
-          type: boolean
-          title: Enable Extended Thinking
-          default: false
-        thinking_budget_tokens:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Thinking Budget Tokens
-      type: object
-      title: ConversationConfig
-    NextBestActionSuggestion:
-      properties:
-        title:
-          type: string
-          title: Title
-          default: ''
-        description:
-          type: string
-          title: Description
-          default: ''
-        action_type:
-          type: string
-          title: Action Type
-          default: none
-        confidence:
-          type: string
-          title: Confidence
-          default: low
-      type: object
-      title: NextBestActionSuggestion
-      description: Suggestion details for next best action
-    FeedbackRequest:
-      properties:
-        rating:
-          type: integer
-          maximum: 1.0
-          minimum: 0.0
-          title: Rating
-          description: 0 for negative, 1 for positive
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Optional feedback note
-      type: object
-      required:
-      - rating
-      title: FeedbackRequest
-      description: User feedback on a conversation or message
-    ConversationSummary:
-      properties:
-        uuid:
-          type: string
-          title: Uuid
-        display_name:
-          type: string
-          title: Display Name
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-        metadata:
-          anyOf:
-          - {}
-          - type: 'null'
-          title: Metadata
-        has_active_jobs:
-          type: boolean
-          title: Has Active Jobs
-          default: false
-      type: object
-      required:
-      - uuid
-      - display_name
-      - created_at
-      - updated_at
-      title: ConversationSummary
-      description: A simplified version for list views
-    CompletionRequest:
-      properties:
-        prompt:
-          type: string
-          title: Prompt
-        parent_message_uuid:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Parent Message Uuid
-        attachments:
-          items:
-            $ref: '#/components/schemas/FileAttachment'
-          type: array
-          title: Attachments
-          default: []
-        provider:
-          type: string
-          title: Provider
-          default: adapter-ensemble-3p-1
-      type: object
-      required:
-      - prompt
-      title: CompletionRequest
-      description: Send message to existing conversation
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    StopResponseRequest:
-      properties:
-        stop_uuid:
-          type: string
-          title: Stop Uuid
-      type: object
-      required:
-      - stop_uuid
-      title: StopResponseRequest
-      description: Stop AI message generation
-    CreateConversationRequest:
-      properties:
-        uuid:
-          type: string
-          title: Uuid
-        name:
-          type: string
-          title: Name
-          default: ''
-        metadata:
-          anyOf:
-          - $ref: '#/components/schemas/ConversationConfig'
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metadata
-        message:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Message
-        attachments:
-          items:
-            $ref: '#/components/schemas/FileAttachment'
-          type: array
-          title: Attachments
-          default: []
-      type: object
-      required:
-      - uuid
-      title: CreateConversationRequest
-    UpdateConversationRequest:
-      properties:
-        display_name:
-          anyOf:
-          - type: string
-            maxLength: 256
-          - type: 'null'
-          title: Display Name
-        metadata:
-          anyOf:
-          - {}
-          - type: 'null'
-          title: Metadata
-      type: object
-      title: UpdateConversationRequest
-      description: Request to update a conversation
     FileAttachment:
       properties:
         filename:
@@ -888,6 +672,231 @@ components:
       - filename
       - content_type
       title: FileAttachment
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    StopResponseRequest:
+      properties:
+        stop_uuid:
+          type: string
+          title: Stop Uuid
+      type: object
+      required:
+      - stop_uuid
+      title: StopResponseRequest
+      description: Stop AI message generation
+    NextBestActionResponse:
+      properties:
+        has_suggestion:
+          type: boolean
+          title: Has Suggestion
+          default: false
+        suggestion_type:
+          type: string
+          title: Suggestion Type
+          default: none
+        thinking:
+          type: string
+          title: Thinking
+          default: ''
+        suggestion:
+          $ref: '#/components/schemas/NextBestActionSuggestion'
+      type: object
+      title: NextBestActionResponse
+      description: Response from next best action generation
+    CompletionRequest:
+      properties:
+        prompt:
+          type: string
+          title: Prompt
+        parent_message_uuid:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Parent Message Uuid
+        attachments:
+          items:
+            $ref: '#/components/schemas/FileAttachment'
+          type: array
+          title: Attachments
+          default: []
+        provider:
+          type: string
+          title: Provider
+          default: adapter-ensemble-3p-1
+      type: object
+      required:
+      - prompt
+      title: CompletionRequest
+      description: Send message to existing conversation
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    UpdateConversationRequest:
+      properties:
+        display_name:
+          anyOf:
+          - type: string
+            maxLength: 256
+          - type: 'null'
+          title: Display Name
+        metadata:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Metadata
+      type: object
+      title: UpdateConversationRequest
+      description: Request to update a conversation
+    NextBestActionSuggestion:
+      properties:
+        title:
+          type: string
+          title: Title
+          default: ''
+        description:
+          type: string
+          title: Description
+          default: ''
+        action_type:
+          type: string
+          title: Action Type
+          default: none
+        confidence:
+          type: string
+          title: Confidence
+          default: low
+      type: object
+      title: NextBestActionSuggestion
+      description: Suggestion details for next best action
+    ConversationConfig:
+      properties:
+        agent:
+          type: string
+          title: Agent
+          default: default
+        multimodal_enabled:
+          type: boolean
+          title: Multimodal Enabled
+          default: false
+        provider:
+          type: string
+          title: Provider
+          default: adapter-ensemble-3p-1
+        enable_extended_thinking:
+          type: boolean
+          title: Enable Extended Thinking
+          default: false
+        thinking_budget_tokens:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Thinking Budget Tokens
+      type: object
+      title: ConversationConfig
+    CreateConversationRequest:
+      properties:
+        uuid:
+          type: string
+          title: Uuid
+        name:
+          type: string
+          title: Name
+          default: ''
+        metadata:
+          anyOf:
+          - $ref: '#/components/schemas/ConversationConfig'
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+        message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Message
+        attachments:
+          items:
+            $ref: '#/components/schemas/FileAttachment'
+          type: array
+          title: Attachments
+          default: []
+      type: object
+      required:
+      - uuid
+      title: CreateConversationRequest
+    ConversationSummary:
+      properties:
+        uuid:
+          type: string
+          title: Uuid
+        display_name:
+          type: string
+          title: Display Name
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        metadata:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Metadata
+        has_active_jobs:
+          type: boolean
+          title: Has Active Jobs
+          default: false
+      type: object
+      required:
+      - uuid
+      - display_name
+      - created_at
+      - updated_at
+      title: ConversationSummary
+      description: A simplified version for list views
+    FeedbackResponse:
+      properties:
+        status:
+          type: string
+          title: Status
+      type: object
+      required:
+      - status
+      title: FeedbackResponse
+      description: Response after submitting feedback
     ConversationResponse:
       properties:
         uuid:
@@ -916,35 +925,25 @@ components:
       - created_at
       - updated_at
       title: ConversationResponse
-    NextBestActionResponse:
+    FeedbackRequest:
       properties:
-        has_suggestion:
-          type: boolean
-          title: Has Suggestion
-          default: false
-        suggestion_type:
-          type: string
-          title: Suggestion Type
-          default: none
-        thinking:
-          type: string
-          title: Thinking
-          default: ''
-        suggestion:
-          $ref: '#/components/schemas/NextBestActionSuggestion'
-      type: object
-      title: NextBestActionResponse
-      description: Response from next best action generation
-    FeedbackResponse:
-      properties:
-        status:
-          type: string
-          title: Status
+        rating:
+          type: integer
+          maximum: 1.0
+          minimum: 0.0
+          title: Rating
+          description: 0 for negative, 1 for positive
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Optional feedback note
       type: object
       required:
-      - status
-      title: FeedbackResponse
-      description: Response after submitting feedback
+      - rating
+      title: FeedbackRequest
+      description: User feedback on a conversation or message
   securitySchemes:
     HTTPBasic:
       type: http
@@ -952,6 +951,3 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
-servers:
-- url: https://api.adapter.com
-  description: Base URL reconciled from apis.yml

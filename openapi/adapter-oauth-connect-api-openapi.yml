@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Adapter Adapter API oauth-connect API
+  title: Adapter OAUTH Connect API
   version: 0.1.0
 tags:
 - name: oauth-connect
@@ -68,8 +68,11 @@ paths:
       tags:
       - oauth-connect
       summary: Oauth Callback Get
-      description: "GET callback - \nDirect OAuth provider redirect endpoint for specific provider\nExample:\
-        \ /oauth2-connect/callback/google"
+      description: 'GET callback -
+
+        Direct OAuth provider redirect endpoint for specific provider
+
+        Example: /oauth2-connect/callback/google'
       operationId: oauth_callback_get_oauth2_connect_callback__provider__get
       parameters:
       - name: provider
@@ -110,6 +113,81 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    OnboardingConfig:
+      properties:
+        start_date:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Date
+        include_labels:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Include Labels
+        include_domains:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Include Domains
+      type: object
+      title: OnboardingConfig
+      description: Configuration for auto-onboarding after OAuth success
+    OAuthCallbackRequest:
+      properties:
+        code:
+          type: string
+          title: Code
+        state:
+          type: string
+          title: State
+        provider:
+          $ref: '#/components/schemas/OAuthProvider'
+      type: object
+      required:
+      - code
+      - state
+      - provider
+      title: OAuthCallbackRequest
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     OAuthResponse:
       properties:
         authorization_url:
@@ -127,31 +205,6 @@ components:
       - oauth_state
       - provider
       title: OAuthResponse
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    OAuthCallbackRequest:
-      properties:
-        code:
-          type: string
-          title: Code
-        state:
-          type: string
-          title: State
-        provider:
-          $ref: '#/components/schemas/OAuthProvider'
-      type: object
-      required:
-      - code
-      - state
-      - provider
-      title: OAuthCallbackRequest
     OAuthCallbackResponse:
       properties:
         success:
@@ -188,32 +241,6 @@ components:
       - provider
       - email
       title: OAuthCallbackResponse
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     OAuthProvider:
       type: string
       enum:
@@ -223,30 +250,6 @@ components:
       - slack
       - twitter
       title: OAuthProvider
-    OnboardingConfig:
-      properties:
-        start_date:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Date
-        include_labels:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Include Labels
-        include_domains:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Include Domains
-      type: object
-      title: OnboardingConfig
-      description: Configuration for auto-onboarding after OAuth success
     OAuthInitiateRequest:
       properties:
         provider:
@@ -287,6 +290,3 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
-servers:
-- url: https://api.adapter.com
-  description: Base URL reconciled from apis.yml

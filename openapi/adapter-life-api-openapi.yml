@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Adapter Adapter API life API
+  title: Adapter Life API
   version: 0.1.0
 tags:
 - name: life
@@ -34,26 +34,29 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    LifeAskRequest:
+    LifeAskResponse:
       properties:
-        message:
+        responses:
+          items:
+            type: string
+          type: array
+          title: Responses
+          description: Each text message the agent produced, in order.
+        answer:
           type: string
-          maxLength: 4000
-          minLength: 1
-          title: Message
-          description: The message for your Adapter agent, exactly as you would text it.
+          title: Answer
+          description: All response messages joined into a single string.
         session_id:
           anyOf:
           - type: string
-            pattern: ^[A-Za-z0-9_-]{1,64}$
           - type: 'null'
           title: Session Id
-          description: Optional caller-chosen session id. Requests with the same session_id share conversation
-            history (kept for 7 days). Omit for a one-shot, stateless ask.
+          description: Echo of the session id this turn was recorded under, if any.
       type: object
       required:
-      - message
-      title: LifeAskRequest
+      - responses
+      - answer
+      title: LifeAskResponse
     HTTPValidationError:
       properties:
         detail:
@@ -89,29 +92,25 @@ components:
       - msg
       - type
       title: ValidationError
-    LifeAskResponse:
+    LifeAskRequest:
       properties:
-        responses:
-          items:
-            type: string
-          type: array
-          title: Responses
-          description: Each text message the agent produced, in order.
-        answer:
+        message:
           type: string
-          title: Answer
-          description: All response messages joined into a single string.
+          maxLength: 4000
+          minLength: 1
+          title: Message
+          description: The message for your Adapter agent, exactly as you would text it.
         session_id:
           anyOf:
           - type: string
+            pattern: ^[A-Za-z0-9_-]{1,64}$
           - type: 'null'
           title: Session Id
-          description: Echo of the session id this turn was recorded under, if any.
+          description: Optional caller-chosen session id. Requests with the same session_id share conversation history (kept for 7 days). Omit for a one-shot, stateless ask.
       type: object
       required:
-      - responses
-      - answer
-      title: LifeAskResponse
+      - message
+      title: LifeAskRequest
   securitySchemes:
     HTTPBasic:
       type: http
@@ -119,6 +118,3 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
-servers:
-- url: https://api.adapter.com
-  description: Base URL reconciled from apis.yml

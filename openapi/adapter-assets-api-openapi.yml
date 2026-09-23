@@ -1,14 +1,14 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Adapter Adapter API assets API
+  title: Adapter Assets API
   version: 0.1.0
 tags:
-- name: assets
+- name: Assets
 paths:
   /users/me/assets/upload:
     post:
       tags:
-      - assets
+      - Assets
       summary: Upload File
       description: Upload a file directly to the server (for files < 20MB)
       operationId: upload_file_users_me_assets_upload_post
@@ -42,7 +42,7 @@ paths:
   /users/me/assets/upload-stream:
     post:
       tags:
-      - assets
+      - Assets
       summary: Upload File Stream
       description: Upload a file using streaming (memory-efficient for large files)
       operationId: upload_file_stream_users_me_assets_upload_stream_post
@@ -76,7 +76,7 @@ paths:
   /users/me/assets/presigned-url:
     post:
       tags:
-      - assets
+      - Assets
       summary: Get Presigned Upload Url
       description: Generate a presigned URL for direct client-to-storage uploads (useful for larger files)
       operationId: get_presigned_upload_url_users_me_assets_presigned_url_post
@@ -110,7 +110,7 @@ paths:
   /users/me/assets/asset/{asset_id}:
     get:
       tags:
-      - assets
+      - Assets
       summary: Get File Metadata
       description: Get metadata for a specific file using asset ID
       operationId: get_file_metadata_users_me_assets_asset__asset_id__get
@@ -146,7 +146,7 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
     delete:
       tags:
-      - assets
+      - Assets
       summary: Delete File
       description: Delete a file
       operationId: delete_file_users_me_assets_asset__asset_id__delete
@@ -179,7 +179,7 @@ paths:
   /users/me/assets/asset/{asset_id}/download:
     get:
       tags:
-      - assets
+      - Assets
       summary: Download File
       description: Download a file directly
       operationId: download_file_users_me_assets_asset__asset_id__download_get
@@ -212,7 +212,7 @@ paths:
   /users/me/assets/asset/{asset_id}/thumbnail:
     get:
       tags:
-      - assets
+      - Assets
       summary: Get Thumbnail
       description: Download a file's thumbnail directly
       operationId: get_thumbnail_users_me_assets_asset__asset_id__thumbnail_get
@@ -245,7 +245,7 @@ paths:
   /users/me/assets:
     get:
       tags:
-      - assets
+      - Assets
       summary: List User Files
       description: List all files for the current user
       operationId: list_user_files_users_me_assets_get
@@ -284,7 +284,7 @@ paths:
   /users/me/assets/email/retrieve:
     post:
       tags:
-      - assets
+      - Assets
       summary: Get Email
       description: Retrieve an email
       operationId: get_email_users_me_assets_email_retrieve_post
@@ -317,6 +317,42 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    Body_upload_file_stream_users_me_assets_upload_stream_post:
+      properties:
+        file:
+          type: string
+          contentMediaType: application/octet-stream
+          title: File
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        generate_preview:
+          type: boolean
+          title: Generate Preview
+          default: false
+      type: object
+      required:
+      - file
+      title: Body_upload_file_stream_users_me_assets_upload_stream_post
+    GetEmailAssetResponse:
+      properties:
+        parsed_email:
+          title: Parsed Email
+      type: object
+      required:
+      - parsed_email
+      title: GetEmailAssetResponse
     Body_upload_file_users_me_assets_upload_post:
       properties:
         file:
@@ -336,63 +372,6 @@ components:
       required:
       - file
       title: Body_upload_file_users_me_assets_upload_post
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    GetEmailAssetRequest:
-      properties:
-        uri:
-          type: string
-          title: Uri
-      type: object
-      required:
-      - uri
-      title: GetEmailAssetRequest
-    PresignedUrlResponse:
-      properties:
-        url:
-          type: string
-          title: Url
-        file_key:
-          type: string
-          title: File Key
-        asset_id:
-          type: string
-          title: Asset Id
-        expires_at:
-          type: string
-          format: date-time
-          title: Expires At
-        content_type:
-          type: string
-          title: Content Type
-        filename:
-          type: string
-          title: Filename
-      type: object
-      required:
-      - url
-      - file_key
-      - asset_id
-      - expires_at
-      - content_type
-      - filename
-      title: PresignedUrlResponse
-      description: Response model for presigned URL generation
-    GetEmailAssetResponse:
-      properties:
-        parsed_email:
-          title: Parsed Email
-      type: object
-      required:
-      - parsed_email
-      title: GetEmailAssetResponse
     ValidationError:
       properties:
         loc:
@@ -419,38 +398,15 @@ components:
       - msg
       - type
       title: ValidationError
-    Body_get_presigned_upload_url_users_me_assets_presigned_url_post:
+    GetEmailAssetRequest:
       properties:
-        filename:
+        uri:
           type: string
-          title: Filename
-        content_type:
-          type: string
-          title: Content Type
+          title: Uri
       type: object
       required:
-      - filename
-      - content_type
-      title: Body_get_presigned_upload_url_users_me_assets_presigned_url_post
-    Body_upload_file_stream_users_me_assets_upload_stream_post:
-      properties:
-        file:
-          type: string
-          contentMediaType: application/octet-stream
-          title: File
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        generate_preview:
-          type: boolean
-          title: Generate Preview
-          default: false
-      type: object
-      required:
-      - file
-      title: Body_upload_file_stream_users_me_assets_upload_stream_post
+      - uri
+      title: GetEmailAssetRequest
     FileUploadResponse:
       properties:
         filename:
@@ -492,6 +448,50 @@ components:
       - file_size
       title: FileUploadResponse
       description: Response model for file uploads
+    Body_get_presigned_upload_url_users_me_assets_presigned_url_post:
+      properties:
+        filename:
+          type: string
+          title: Filename
+        content_type:
+          type: string
+          title: Content Type
+      type: object
+      required:
+      - filename
+      - content_type
+      title: Body_get_presigned_upload_url_users_me_assets_presigned_url_post
+    PresignedUrlResponse:
+      properties:
+        url:
+          type: string
+          title: Url
+        file_key:
+          type: string
+          title: File Key
+        asset_id:
+          type: string
+          title: Asset Id
+        expires_at:
+          type: string
+          format: date-time
+          title: Expires At
+        content_type:
+          type: string
+          title: Content Type
+        filename:
+          type: string
+          title: Filename
+      type: object
+      required:
+      - url
+      - file_key
+      - asset_id
+      - expires_at
+      - content_type
+      - filename
+      title: PresignedUrlResponse
+      description: Response model for presigned URL generation
   securitySchemes:
     HTTPBasic:
       type: http
@@ -499,6 +499,3 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
-servers:
-- url: https://api.adapter.com
-  description: Base URL reconciled from apis.yml

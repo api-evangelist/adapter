@@ -1,14 +1,14 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Adapter Adapter API radar API
+  title: Adapter Radar API
   version: 0.1.0
 tags:
-- name: radar
+- name: Radar
 paths:
   /radar/schema:
     get:
       tags:
-      - radar
+      - Radar
       summary: Get Radar Schema
       operationId: get_radar_schema_radar_schema_get
       responses:
@@ -22,7 +22,7 @@ paths:
   /radar/config:
     get:
       tags:
-      - radar
+      - Radar
       summary: Get Radar Config
       operationId: get_radar_config_radar_config_get
       responses:
@@ -35,7 +35,7 @@ paths:
       - HTTPBearer: []
     patch:
       tags:
-      - radar
+      - Radar
       summary: Update Radar Config
       operationId: update_radar_config_radar_config_patch
       requestBody:
@@ -60,6 +60,15 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     RadarConfigRequest:
       properties:
         enabled:
@@ -81,15 +90,23 @@ components:
           title: Notification Rules
       type: object
       title: RadarConfigRequest
-    HTTPValidationError:
+    NotificationRuleRequest:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        condition_field:
+          type: string
+          title: Condition Field
+        condition_value:
+          type: string
+          title: Condition Value
+        channel:
+          type: string
+          title: Channel
       type: object
-      title: HTTPValidationError
+      required:
+      - condition_field
+      - condition_value
+      - channel
+      title: NotificationRuleRequest
     ValidationError:
       properties:
         loc:
@@ -116,23 +133,6 @@ components:
       - msg
       - type
       title: ValidationError
-    NotificationRuleRequest:
-      properties:
-        condition_field:
-          type: string
-          title: Condition Field
-        condition_value:
-          type: string
-          title: Condition Value
-        channel:
-          type: string
-          title: Channel
-      type: object
-      required:
-      - condition_field
-      - condition_value
-      - channel
-      title: NotificationRuleRequest
   securitySchemes:
     HTTPBasic:
       type: http
@@ -140,6 +140,3 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
-servers:
-- url: https://api.adapter.com
-  description: Base URL reconciled from apis.yml

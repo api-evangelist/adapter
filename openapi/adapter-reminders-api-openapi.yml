@@ -1,14 +1,14 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Adapter Adapter API reminders API
+  title: Adapter Reminders API
   version: 0.1.0
 tags:
-- name: reminders
+- name: Reminders
 paths:
   /users/me/reminders:
     post:
       tags:
-      - reminders
+      - Reminders
       summary: Create Reminder
       operationId: create_reminder_users_me_reminders_post
       security:
@@ -33,7 +33,7 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
     get:
       tags:
-      - reminders
+      - Reminders
       summary: List Reminders
       description: List reminders for the authenticated user
       operationId: list_reminders_users_me_reminders_get
@@ -113,7 +113,7 @@ paths:
   /users/me/reminders/{reminder_id}:
     get:
       tags:
-      - reminders
+      - Reminders
       summary: Get Reminder
       operationId: get_reminder_users_me_reminders__reminder_id__get
       security:
@@ -141,7 +141,7 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
     delete:
       tags:
-      - reminders
+      - Reminders
       summary: Delete Reminder
       description: Delete a specific reminder by ID
       operationId: delete_reminder_users_me_reminders__reminder_id__delete
@@ -170,7 +170,7 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
     put:
       tags:
-      - reminders
+      - Reminders
       summary: Update Reminder
       description: Update a specific reminder by ID
       operationId: update_reminder_users_me_reminders__reminder_id__put
@@ -206,7 +206,7 @@ paths:
   /users/me/tasks:
     get:
       tags:
-      - reminders
+      - Reminders
       summary: List Task Configs
       description: List all task configurations for the authenticated user
       operationId: list_task_configs_users_me_tasks_get
@@ -220,15 +220,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     CreateReminderRequest:
       properties:
         message:
@@ -275,8 +266,7 @@ components:
           - work
           - generic
           title: Category
-          description: 'Category for the reminder. Valid values: ''health'', ''travel'', ''personal'',
-            ''leisure'', ''work'', ''generic''. Defaults to ''generic'''
+          description: 'Category for the reminder. Valid values: ''health'', ''travel'', ''personal'', ''leisure'', ''work'', ''generic''. Defaults to ''generic'''
           default: generic
         task_key:
           anyOf:
@@ -301,6 +291,15 @@ components:
       - message
       title: CreateReminderRequest
       description: Request model for creating a new reminder
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -334,23 +333,20 @@ components:
           - type: string
           - type: 'null'
           title: Status
-          description: 'New status for the reminder. ''paused'' only valid for recurring reminders. Valid
-            values: ''pending'', ''paused'''
+          description: 'New status for the reminder. ''paused'' only valid for recurring reminders. Valid values: ''pending'', ''paused'''
         execution_timestamp_iso_datestring:
           anyOf:
           - type: string
           - type: 'null'
           title: Execution Timestamp Iso Datestring
-          description: New execution timestamp in ISO format. Only valid for one-time reminders, not recurring
-            ones. (e.g., '2024-01-15T14:30:00-05:00')
+          description: New execution timestamp in ISO format. Only valid for one-time reminders, not recurring ones. (e.g., '2024-01-15T14:30:00-05:00')
         message:
           anyOf:
           - type: string
             maxLength: 1024
           - type: 'null'
           title: Message
-          description: New message content for the reminder. Cannot be updated for reminders with status
-            'scheduled'.
+          description: New message content for the reminder. Cannot be updated for reminders with status 'scheduled'.
         channel:
           anyOf:
           - type: string
@@ -381,8 +377,7 @@ components:
             - generic
           - type: 'null'
           title: Category
-          description: 'New category for the reminder. Valid values: ''health'', ''travel'', ''personal'',
-            ''leisure'', ''work'', ''generic'''
+          description: 'New category for the reminder. Valid values: ''health'', ''travel'', ''personal'', ''leisure'', ''work'', ''generic'''
       type: object
       title: UpdateReminderRequest
       description: Request model for updating an existing reminder
@@ -393,6 +388,3 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
-servers:
-- url: https://api.adapter.com
-  description: Base URL reconciled from apis.yml

@@ -1,14 +1,14 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Adapter Adapter API oauth2 API
+  title: Adapter Oauth2 API
   version: 0.1.0
 tags:
-- name: oauth2
+- name: OAuth2
 paths:
   /oauth2/authorize:
     get:
       tags:
-      - oauth2
+      - OAuth2
       summary: Authorize Consent
       description: 'Human-facing consent screen. The external app sends the user here (this is
 
@@ -88,7 +88,7 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
     post:
       tags:
-      - oauth2
+      - OAuth2
       summary: Authorize
       description: 'Mint a one-time authorization code for an OAuth client on behalf of the
 
@@ -120,7 +120,7 @@ paths:
   /oauth2/token:
     post:
       tags:
-      - oauth2
+      - OAuth2
       summary: Token
       description: OAuth2 token endpoint. Supports authorization_code and refresh_token grants.
       operationId: token_oauth2_token_post
@@ -153,6 +153,32 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     AuthorizeRequest:
       properties:
         client_id:
@@ -176,15 +202,6 @@ components:
       - client_id
       - redirect_uri
       title: AuthorizeRequest
-    AuthorizeResponse:
-      properties:
-        redirect_url:
-          type: string
-          title: Redirect Url
-      type: object
-      required:
-      - redirect_url
-      title: AuthorizeResponse
     Body_token_oauth2_token_post:
       properties:
         grant_type:
@@ -219,32 +236,15 @@ components:
       required:
       - grant_type
       title: Body_token_oauth2_token_post
-    ValidationError:
+    AuthorizeResponse:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        redirect_url:
           type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
+          title: Redirect Url
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - redirect_url
+      title: AuthorizeResponse
   securitySchemes:
     HTTPBasic:
       type: http
@@ -252,6 +252,3 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
-servers:
-- url: https://api.adapter.com
-  description: Base URL reconciled from apis.yml

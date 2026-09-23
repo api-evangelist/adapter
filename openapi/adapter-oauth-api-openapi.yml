@@ -1,9 +1,9 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Adapter Adapter API Oauth API
+  title: Adapter OAUTH API
   version: 0.1.0
 tags:
-- name: Oauth
+- name: OAuth
 paths:
   /oauth/insta:
     get:
@@ -16,7 +16,7 @@ paths:
             application/json:
               schema: {}
       tags:
-      - Oauth
+      - OAuth
     post:
       summary: Insta Oauth
       operationId: insta_oauth_oauth_insta_post
@@ -27,7 +27,7 @@ paths:
             application/json:
               schema: {}
       tags:
-      - Oauth
+      - OAuth
 components:
   securitySchemes:
     HTTPBasic:
@@ -36,6 +36,3 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
-servers:
-- url: https://api.adapter.com
-  description: Base URL reconciled from apis.yml

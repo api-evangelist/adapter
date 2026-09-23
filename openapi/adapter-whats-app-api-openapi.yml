@@ -1,9 +1,9 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Adapter Adapter API Whatsapp API
+  title: Adapter Whatsapp API
   version: 0.1.0
 tags:
-- name: Whatsapp
+- name: Whats App
 paths:
   /whatsapp/webhook:
     post:
@@ -16,7 +16,7 @@ paths:
             application/json:
               schema: {}
       tags:
-      - Whatsapp
+      - Whats App
   /whatsapp/status:
     post:
       summary: Whatsapp Status
@@ -28,7 +28,7 @@ paths:
             application/json:
               schema: {}
       tags:
-      - Whatsapp
+      - Whats App
 components:
   securitySchemes:
     HTTPBasic:
@@ -37,6 +37,3 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
-servers:
-- url: https://api.adapter.com
-  description: Base URL reconciled from apis.yml
