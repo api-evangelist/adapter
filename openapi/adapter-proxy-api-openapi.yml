@@ -343,15 +343,32 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    HTTPValidationError:
+    ValidationError:
       properties:
-        detail:
+        loc:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Detail
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
       type: object
-      title: HTTPValidationError
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     GenerateRequest:
       properties:
         system_prompt:
@@ -425,53 +442,15 @@ components:
       - suggestion_type
       title: PromptSuggestion
       description: Suggestion model for the API.
-    ValidationError:
+    HTTPValidationError:
       properties:
-        loc:
+        detail:
           items:
-            anyOf:
-            - type: string
-            - type: integer
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
+          title: Detail
       type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    WeatherCurrent:
-      properties:
-        time:
-          type: string
-          title: Time
-        temperature_2m:
-          type: number
-          title: Temperature 2M
-        weather_code:
-          type: integer
-          title: Weather Code
-        weather_description:
-          type: string
-          title: Weather Description
-      type: object
-      required:
-      - time
-      - temperature_2m
-      - weather_code
-      - weather_description
-      title: WeatherCurrent
+      title: HTTPValidationError
     WeatherResponse:
       properties:
         city:
@@ -513,6 +492,27 @@ components:
       - current
       - hourly
       title: WeatherResponse
+    WeatherCurrent:
+      properties:
+        time:
+          type: string
+          title: Time
+        temperature_2m:
+          type: number
+          title: Temperature 2M
+        weather_code:
+          type: integer
+          title: Weather Code
+        weather_description:
+          type: string
+          title: Weather Description
+      type: object
+      required:
+      - time
+      - temperature_2m
+      - weather_code
+      - weather_description
+      title: WeatherCurrent
     WeatherHourly:
       properties:
         time:

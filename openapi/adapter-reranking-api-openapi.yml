@@ -34,32 +34,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    RankedOption:
-      properties:
-        option:
-          title: Option
-        score:
-          type: number
-          title: Score
-        reasoning:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Reasoning
-      type: object
-      required:
-      - option
-      - score
-      title: RankedOption
     ValidationError:
       properties:
         loc:
@@ -117,6 +91,32 @@ components:
       - options
       - context
       title: RerankingRequest
+    RankedOption:
+      properties:
+        option:
+          title: Option
+        score:
+          type: number
+          title: Score
+        reasoning:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reasoning
+      type: object
+      required:
+      - option
+      - score
+      title: RankedOption
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     HTTPBasic:
       type: http

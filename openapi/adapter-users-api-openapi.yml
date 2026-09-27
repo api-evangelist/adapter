@@ -33,37 +33,6 @@ paths:
       - Users
 components:
   schemas:
-    QueryMessageRequest:
-      properties:
-        participant_id:
-          type: string
-          title: Participant Id
-        limit:
-          type: integer
-          title: Limit
-          default: 100
-        channel:
-          type: string
-          title: Channel
-        start_timestamp:
-          type: string
-          format: date-time
-          title: Start Timestamp
-        end_timestamp:
-          type: string
-          format: date-time
-          title: End Timestamp
-      type: object
-      title: QueryMessageRequest
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -90,6 +59,37 @@ components:
       - msg
       - type
       title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    QueryMessageRequest:
+      properties:
+        participant_id:
+          type: string
+          title: Participant Id
+        limit:
+          type: integer
+          title: Limit
+          default: 100
+        channel:
+          type: string
+          title: Channel
+        start_timestamp:
+          type: string
+          format: date-time
+          title: Start Timestamp
+        end_timestamp:
+          type: string
+          format: date-time
+          title: End Timestamp
+      type: object
+      title: QueryMessageRequest
   securitySchemes:
     HTTPBasic:
       type: http

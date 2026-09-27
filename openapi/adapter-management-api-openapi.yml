@@ -41,24 +41,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    KillSessionsRequest:
-      properties:
-        userId:
-          type: string
-          title: Userid
-      type: object
-      required:
-      - userId
-      title: KillSessionsRequest
     ValidationError:
       properties:
         loc:
@@ -85,6 +67,24 @@ components:
       - msg
       - type
       title: ValidationError
+    KillSessionsRequest:
+      properties:
+        userId:
+          type: string
+          title: Userid
+      type: object
+      required:
+      - userId
+      title: KillSessionsRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     HTTPBasic:
       type: http

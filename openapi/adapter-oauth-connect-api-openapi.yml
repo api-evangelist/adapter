@@ -113,55 +113,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    OnboardingConfig:
-      properties:
-        start_date:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Date
-        include_labels:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Include Labels
-        include_domains:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Include Domains
-      type: object
-      title: OnboardingConfig
-      description: Configuration for auto-onboarding after OAuth success
-    OAuthCallbackRequest:
-      properties:
-        code:
-          type: string
-          title: Code
-        state:
-          type: string
-          title: State
-        provider:
-          $ref: '#/components/schemas/OAuthProvider'
-      type: object
-      required:
-      - code
-      - state
-      - provider
-      title: OAuthCallbackRequest
     ValidationError:
       properties:
         loc:
@@ -188,6 +139,15 @@ components:
       - msg
       - type
       title: ValidationError
+    OAuthProvider:
+      type: string
+      enum:
+      - google
+      - microsoft
+      - github
+      - slack
+      - twitter
+      title: OAuthProvider
     OAuthResponse:
       properties:
         authorization_url:
@@ -241,15 +201,6 @@ components:
       - provider
       - email
       title: OAuthCallbackResponse
-    OAuthProvider:
-      type: string
-      enum:
-      - google
-      - microsoft
-      - github
-      - slack
-      - twitter
-      title: OAuthProvider
     OAuthInitiateRequest:
       properties:
         provider:
@@ -283,6 +234,55 @@ components:
       required:
       - provider
       title: OAuthInitiateRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    OAuthCallbackRequest:
+      properties:
+        code:
+          type: string
+          title: Code
+        state:
+          type: string
+          title: State
+        provider:
+          $ref: '#/components/schemas/OAuthProvider'
+      type: object
+      required:
+      - code
+      - state
+      - provider
+      title: OAuthCallbackRequest
+    OnboardingConfig:
+      properties:
+        start_date:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Date
+        include_labels:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Include Labels
+        include_domains:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Include Domains
+      type: object
+      title: OnboardingConfig
+      description: Configuration for auto-onboarding after OAuth success
   securitySchemes:
     HTTPBasic:
       type: http

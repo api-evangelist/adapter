@@ -613,6 +613,97 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    NextBestActionResponse:
+      properties:
+        has_suggestion:
+          type: boolean
+          title: Has Suggestion
+          default: false
+        suggestion_type:
+          type: string
+          title: Suggestion Type
+          default: none
+        thinking:
+          type: string
+          title: Thinking
+          default: ''
+        suggestion:
+          $ref: '#/components/schemas/NextBestActionSuggestion'
+      type: object
+      title: NextBestActionResponse
+      description: Response from next best action generation
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    CompletionRequest:
+      properties:
+        prompt:
+          type: string
+          title: Prompt
+        parent_message_uuid:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Parent Message Uuid
+        attachments:
+          items:
+            $ref: '#/components/schemas/FileAttachment'
+          type: array
+          title: Attachments
+          default: []
+        provider:
+          type: string
+          title: Provider
+          default: adapter-ensemble-3p-1
+      type: object
+      required:
+      - prompt
+      title: CompletionRequest
+      description: Send message to existing conversation
+    NextBestActionSuggestion:
+      properties:
+        title:
+          type: string
+          title: Title
+          default: ''
+        description:
+          type: string
+          title: Description
+          default: ''
+        action_type:
+          type: string
+          title: Action Type
+          default: none
+        confidence:
+          type: string
+          title: Confidence
+          default: low
+      type: object
+      title: NextBestActionSuggestion
+      description: Suggestion details for next best action
     FileAttachment:
       properties:
         filename:
@@ -672,132 +763,6 @@ components:
       - filename
       - content_type
       title: FileAttachment
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    StopResponseRequest:
-      properties:
-        stop_uuid:
-          type: string
-          title: Stop Uuid
-      type: object
-      required:
-      - stop_uuid
-      title: StopResponseRequest
-      description: Stop AI message generation
-    NextBestActionResponse:
-      properties:
-        has_suggestion:
-          type: boolean
-          title: Has Suggestion
-          default: false
-        suggestion_type:
-          type: string
-          title: Suggestion Type
-          default: none
-        thinking:
-          type: string
-          title: Thinking
-          default: ''
-        suggestion:
-          $ref: '#/components/schemas/NextBestActionSuggestion'
-      type: object
-      title: NextBestActionResponse
-      description: Response from next best action generation
-    CompletionRequest:
-      properties:
-        prompt:
-          type: string
-          title: Prompt
-        parent_message_uuid:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Parent Message Uuid
-        attachments:
-          items:
-            $ref: '#/components/schemas/FileAttachment'
-          type: array
-          title: Attachments
-          default: []
-        provider:
-          type: string
-          title: Provider
-          default: adapter-ensemble-3p-1
-      type: object
-      required:
-      - prompt
-      title: CompletionRequest
-      description: Send message to existing conversation
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    UpdateConversationRequest:
-      properties:
-        display_name:
-          anyOf:
-          - type: string
-            maxLength: 256
-          - type: 'null'
-          title: Display Name
-        metadata:
-          anyOf:
-          - {}
-          - type: 'null'
-          title: Metadata
-      type: object
-      title: UpdateConversationRequest
-      description: Request to update a conversation
-    NextBestActionSuggestion:
-      properties:
-        title:
-          type: string
-          title: Title
-          default: ''
-        description:
-          type: string
-          title: Description
-          default: ''
-        action_type:
-          type: string
-          title: Action Type
-          default: none
-        confidence:
-          type: string
-          title: Confidence
-          default: low
-      type: object
-      title: NextBestActionSuggestion
-      description: Suggestion details for next best action
     ConversationConfig:
       properties:
         agent:
@@ -823,37 +788,16 @@ components:
           title: Thinking Budget Tokens
       type: object
       title: ConversationConfig
-    CreateConversationRequest:
+    StopResponseRequest:
       properties:
-        uuid:
+        stop_uuid:
           type: string
-          title: Uuid
-        name:
-          type: string
-          title: Name
-          default: ''
-        metadata:
-          anyOf:
-          - $ref: '#/components/schemas/ConversationConfig'
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metadata
-        message:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Message
-        attachments:
-          items:
-            $ref: '#/components/schemas/FileAttachment'
-          type: array
-          title: Attachments
-          default: []
+          title: Stop Uuid
       type: object
       required:
-      - uuid
-      title: CreateConversationRequest
+      - stop_uuid
+      title: StopResponseRequest
+      description: Stop AI message generation
     ConversationSummary:
       properties:
         uuid:
@@ -887,16 +831,25 @@ components:
       - updated_at
       title: ConversationSummary
       description: A simplified version for list views
-    FeedbackResponse:
+    FeedbackRequest:
       properties:
-        status:
-          type: string
-          title: Status
+        rating:
+          type: integer
+          maximum: 1.0
+          minimum: 0.0
+          title: Rating
+          description: 0 for negative, 1 for positive
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Optional feedback note
       type: object
       required:
-      - status
-      title: FeedbackResponse
-      description: Response after submitting feedback
+      - rating
+      title: FeedbackRequest
+      description: User feedback on a conversation or message
     ConversationResponse:
       properties:
         uuid:
@@ -925,25 +878,72 @@ components:
       - created_at
       - updated_at
       title: ConversationResponse
-    FeedbackRequest:
+    UpdateConversationRequest:
       properties:
-        rating:
-          type: integer
-          maximum: 1.0
-          minimum: 0.0
-          title: Rating
-          description: 0 for negative, 1 for positive
-        note:
+        display_name:
+          anyOf:
+          - type: string
+            maxLength: 256
+          - type: 'null'
+          title: Display Name
+        metadata:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Metadata
+      type: object
+      title: UpdateConversationRequest
+      description: Request to update a conversation
+    FeedbackResponse:
+      properties:
+        status:
+          type: string
+          title: Status
+      type: object
+      required:
+      - status
+      title: FeedbackResponse
+      description: Response after submitting feedback
+    CreateConversationRequest:
+      properties:
+        uuid:
+          type: string
+          title: Uuid
+        name:
+          type: string
+          title: Name
+          default: ''
+        metadata:
+          anyOf:
+          - $ref: '#/components/schemas/ConversationConfig'
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+        message:
           anyOf:
           - type: string
           - type: 'null'
-          title: Note
-          description: Optional feedback note
+          title: Message
+        attachments:
+          items:
+            $ref: '#/components/schemas/FileAttachment'
+          type: array
+          title: Attachments
+          default: []
       type: object
       required:
-      - rating
-      title: FeedbackRequest
-      description: User feedback on a conversation or message
+      - uuid
+      title: CreateConversationRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     HTTPBasic:
       type: http

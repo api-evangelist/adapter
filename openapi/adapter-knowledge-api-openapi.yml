@@ -730,6 +730,214 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
+    SourceEmail:
+      properties:
+        blobURI:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Bloburi
+        subject:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Subject
+        sender:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sender
+        threadId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Threadid
+        emailTimestamp:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Emailtimestamp
+      type: object
+      title: SourceEmail
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    SourceCalendarEvent:
+      properties:
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Title
+        startDatetime:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Startdatetime
+        endDatetime:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Enddatetime
+        location:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Location
+      type: object
+      title: SourceCalendarEvent
+    GraphQLQueryResponse:
+      properties:
+        data:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Data
+          description: GraphQL response data
+        errors:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Errors
+          description: GraphQL errors if any
+      type: object
+      title: GraphQLQueryResponse
+    UpdateLifeRadarEventRequest:
+      properties:
+        status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status
+        suggested_date:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Suggested Date
+        suggested_time:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Suggested Time
+      type: object
+      title: UpdateLifeRadarEventRequest
+    PerspectiveInsight:
+      properties:
+        type:
+          type: string
+          title: Type
+          description: 'Type: observation, pattern, trend, concern, opportunity'
+        title:
+          type: string
+          title: Title
+        description:
+          type: string
+          title: Description
+        confidence:
+          type: string
+          title: Confidence
+          description: 'Confidence level: high, medium, low'
+      type: object
+      required:
+      - type
+      - title
+      - description
+      - confidence
+      title: PerspectiveInsight
+    PerspectiveRequest:
+      properties:
+        date:
+          type: string
+          title: Date
+          description: Date to analyze in YYYY-MM-DD format
+        work_mode:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Work Mode
+          description: Work mode for LLM (ludicrous, beast, or default) not sure what this si
+        focus_areas:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Focus Areas
+          description: Optional focus areas for analysi,not used propbably
+      type: object
+      required:
+      - date
+      title: PerspectiveRequest
+    LifeRadarEventResponse:
+      properties:
+        event:
+          $ref: '#/components/schemas/RadarEvent'
+        message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Message
+      type: object
+      required:
+      - event
+      title: LifeRadarEventResponse
+    SyncDataRequest:
+      properties:
+        account_names:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Account Names
+          description: Account names to sync. If not provided, will sync all connected accounts.
+        date:
+          type: string
+          title: Date
+          description: Date to sync in YYYY-MM-DD format
+        event_types:
+          items:
+            type: string
+          type: array
+          title: Event Types
+          description: Event types to sync
+          default:
+          - email
+          - calendar
+      type: object
+      title: SyncDataRequest
     RadarEvent:
       properties:
         id:
@@ -819,23 +1027,6 @@ components:
       - updatedAt
       - synthesizedAt
       title: RadarEvent
-    GraphQLQueryRequest:
-      properties:
-        query:
-          type: string
-          title: Query
-          description: GraphQL query string
-        variables:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Variables
-          description: Optional GraphQL query variables
-      type: object
-      required:
-      - query
-      title: GraphQLQueryRequest
     PerspectiveRecommendation:
       properties:
         type:
@@ -864,269 +1055,6 @@ components:
       - priority
       - effort
       title: PerspectiveRecommendation
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    UpdateLifeRadarEventRequest:
-      properties:
-        status:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Status
-        suggested_date:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Suggested Date
-        suggested_time:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Suggested Time
-      type: object
-      title: UpdateLifeRadarEventRequest
-    PerspectiveInsight:
-      properties:
-        type:
-          type: string
-          title: Type
-          description: 'Type: observation, pattern, trend, concern, opportunity'
-        title:
-          type: string
-          title: Title
-        description:
-          type: string
-          title: Description
-        confidence:
-          type: string
-          title: Confidence
-          description: 'Confidence level: high, medium, low'
-      type: object
-      required:
-      - type
-      - title
-      - description
-      - confidence
-      title: PerspectiveInsight
-    PerspectiveRequest:
-      properties:
-        date:
-          type: string
-          title: Date
-          description: Date to analyze in YYYY-MM-DD format
-        work_mode:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Work Mode
-          description: Work mode for LLM (ludicrous, beast, or default) not sure what this si
-        focus_areas:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Focus Areas
-          description: Optional focus areas for analysi,not used propbably
-      type: object
-      required:
-      - date
-      title: PerspectiveRequest
-    PerspectiveAnalysisResponse:
-      properties:
-        analysis_type:
-          type: string
-          title: Analysis Type
-        summary:
-          type: string
-          title: Summary
-        insights:
-          items:
-            $ref: '#/components/schemas/PerspectiveInsight'
-          type: array
-          title: Insights
-        recommendations:
-          items:
-            $ref: '#/components/schemas/PerspectiveRecommendation'
-          type: array
-          title: Recommendations
-        metadata:
-          $ref: '#/components/schemas/PerspectiveMetadata'
-      type: object
-      required:
-      - analysis_type
-      - summary
-      - insights
-      - recommendations
-      - metadata
-      title: PerspectiveAnalysisResponse
-    DeepSyncCalendarRequest:
-      properties:
-        start_date:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Date
-          description: Start date for sync in YYYY-MM-DD format
-        end_date:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: End Date
-          description: End date for sync in YYYY-MM-DD format
-        dry_run:
-          type: boolean
-          title: Dry Run
-          description: If true, performs a dry run without making changes
-          default: false
-        relabel_events:
-          type: boolean
-          title: Relabel Events
-          description: If true, relabels events during sync
-          default: false
-      type: object
-      title: DeepSyncCalendarRequest
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    SourceCalendarEvent:
-      properties:
-        id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Id
-        title:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Title
-        startDatetime:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Startdatetime
-        endDatetime:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Enddatetime
-        location:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Location
-      type: object
-      title: SourceCalendarEvent
-    PerspectiveMetadata:
-      properties:
-        generated_at:
-          type: string
-          title: Generated At
-        analysis_duration_ms:
-          type: integer
-          title: Analysis Duration Ms
-          default: 0
-        data_points_analyzed:
-          type: integer
-          title: Data Points Analyzed
-          default: 0
-      type: object
-      required:
-      - generated_at
-      title: PerspectiveMetadata
-    SourceEmail:
-      properties:
-        blobURI:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Bloburi
-        subject:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Subject
-        sender:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Sender
-        threadId:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Threadid
-        emailTimestamp:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Emailtimestamp
-      type: object
-      title: SourceEmail
-    LifeRadarEventResponse:
-      properties:
-        event:
-          $ref: '#/components/schemas/RadarEvent'
-        message:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Message
-      type: object
-      required:
-      - event
-      title: LifeRadarEventResponse
-    GraphQLQueryResponse:
-      properties:
-        data:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Data
-          description: GraphQL response data
-        errors:
-          anyOf:
-          - items:
-              additionalProperties: true
-              type: object
-            type: array
-          - type: 'null'
-          title: Errors
-          description: GraphQL errors if any
-      type: object
-      title: GraphQLQueryResponse
     RelevantPerson:
       properties:
         id:
@@ -1156,31 +1084,103 @@ components:
           title: Jobtitle
       type: object
       title: RelevantPerson
-    SyncDataRequest:
+    HTTPValidationError:
       properties:
-        account_names:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Account Names
-          description: Account names to sync. If not provided, will sync all connected accounts.
-        date:
-          type: string
-          title: Date
-          description: Date to sync in YYYY-MM-DD format
-        event_types:
+        detail:
           items:
-            type: string
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Event Types
-          description: Event types to sync
-          default:
-          - email
-          - calendar
+          title: Detail
       type: object
-      title: SyncDataRequest
+      title: HTTPValidationError
+    DeepSyncCalendarRequest:
+      properties:
+        start_date:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Date
+          description: Start date for sync in YYYY-MM-DD format
+        end_date:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Date
+          description: End date for sync in YYYY-MM-DD format
+        dry_run:
+          type: boolean
+          title: Dry Run
+          description: If true, performs a dry run without making changes
+          default: false
+        relabel_events:
+          type: boolean
+          title: Relabel Events
+          description: If true, relabels events during sync
+          default: false
+      type: object
+      title: DeepSyncCalendarRequest
+    PerspectiveMetadata:
+      properties:
+        generated_at:
+          type: string
+          title: Generated At
+        analysis_duration_ms:
+          type: integer
+          title: Analysis Duration Ms
+          default: 0
+        data_points_analyzed:
+          type: integer
+          title: Data Points Analyzed
+          default: 0
+      type: object
+      required:
+      - generated_at
+      title: PerspectiveMetadata
+    GraphQLQueryRequest:
+      properties:
+        query:
+          type: string
+          title: Query
+          description: GraphQL query string
+        variables:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Variables
+          description: Optional GraphQL query variables
+      type: object
+      required:
+      - query
+      title: GraphQLQueryRequest
+    PerspectiveAnalysisResponse:
+      properties:
+        analysis_type:
+          type: string
+          title: Analysis Type
+        summary:
+          type: string
+          title: Summary
+        insights:
+          items:
+            $ref: '#/components/schemas/PerspectiveInsight'
+          type: array
+          title: Insights
+        recommendations:
+          items:
+            $ref: '#/components/schemas/PerspectiveRecommendation'
+          type: array
+          title: Recommendations
+        metadata:
+          $ref: '#/components/schemas/PerspectiveMetadata'
+      type: object
+      required:
+      - analysis_type
+      - summary
+      - insights
+      - recommendations
+      - metadata
+      title: PerspectiveAnalysisResponse
     ListRadarResponse:
       properties:
         events:

@@ -73,7 +73,7 @@ apis:
   - type: OpenAPI
     url: openapi/adapter-adapter-api-api-openapi.yml
 - aid: adapter:adapter-assets-api
-  name: Adapter assets API
+  name: Adapter Assets API
   description: The assets API from Adapter — 8 operation(s) for assets.
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
@@ -85,7 +85,7 @@ apis:
   - type: OpenAPI
     url: openapi/adapter-assets-api-openapi.yml
 - aid: adapter:adapter-auth-api
-  name: Adapter auth API
+  name: Adapter Auth API
   description: The auth API from Adapter — 23 operation(s) for auth.
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
@@ -97,7 +97,7 @@ apis:
   - type: OpenAPI
     url: openapi/adapter-auth-api-openapi.yml
 - aid: adapter:adapter-conversations-api
-  name: Adapter conversations API
+  name: Adapter Conversations API
   description: The conversations API from Adapter — 11 operation(s) for conversations.
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
@@ -131,7 +131,7 @@ apis:
   - type: OpenAPI
     url: openapi/adapter-imessage-api-openapi.yml
 - aid: adapter:adapter-knowledge-api
-  name: Adapter knowledge API
+  name: Adapter Knowledge API
   description: The knowledge API from Adapter — 11 operation(s) for knowledge.
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
@@ -143,7 +143,7 @@ apis:
   - type: OpenAPI
     url: openapi/adapter-knowledge-api-openapi.yml
 - aid: adapter:adapter-life-api
-  name: Adapter life API
+  name: Adapter Life API
   description: The life API from Adapter — 1 operation(s) for life.
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
@@ -163,7 +163,7 @@ apis:
   - type: OpenAPI
     url: openapi/adapter-line-api-openapi.yml
 - aid: adapter:adapter-location-api
-  name: Adapter location API
+  name: Adapter Location API
   description: The location API from Adapter — 1 operation(s) for location.
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
@@ -175,7 +175,7 @@ apis:
   - type: OpenAPI
     url: openapi/adapter-location-api-openapi.yml
 - aid: adapter:adapter-management-api
-  name: Adapter management API
+  name: Adapter Management API
   description: The management API from Adapter — 1 operation(s) for management.
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
@@ -187,7 +187,7 @@ apis:
   - type: OpenAPI
     url: openapi/adapter-management-api-openapi.yml
 - aid: adapter:adapter-oauth-connect-api
-  name: Adapter oauth-connect API
+  name: Adapter OAUTH Connect API
   description: The oauth-connect API from Adapter — 3 operation(s) for oauth-connect.
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
@@ -207,7 +207,7 @@ apis:
   - type: OpenAPI
     url: openapi/adapter-openapi-json-api-openapi.yml
 - aid: adapter:adapter-proxy-api
-  name: Adapter proxy API
+  name: Adapter Proxy API
   description: The proxy API from Adapter — 13 operation(s) for proxy.
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
@@ -219,7 +219,7 @@ apis:
   - type: OpenAPI
     url: openapi/adapter-proxy-api-openapi.yml
 - aid: adapter:adapter-radar-api
-  name: Adapter radar API
+  name: Adapter Radar API
   description: The radar API from Adapter — 2 operation(s) for radar.
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
@@ -241,7 +241,7 @@ apis:
   - type: OpenAPI
     url: openapi/adapter-redoc-api-openapi.yml
 - aid: adapter:adapter-reminders-api
-  name: Adapter reminders API
+  name: Adapter Reminders API
   description: The reminders API from Adapter — 3 operation(s) for reminders.
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
@@ -253,7 +253,7 @@ apis:
   - type: OpenAPI
     url: openapi/adapter-reminders-api-openapi.yml
 - aid: adapter:adapter-reranking-api
-  name: Adapter reranking API
+  name: Adapter Reranking API
   description: The reranking API from Adapter — 1 operation(s) for reranking.
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
@@ -287,7 +287,7 @@ apis:
   - type: OpenAPI
     url: openapi/adapter-sms-api-openapi.yml
 - aid: adapter:adapter-support-api
-  name: Adapter support API
+  name: Adapter Support API
   description: The support API from Adapter — 1 operation(s) for support.
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
@@ -350,8 +350,6 @@ apis:
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
   tags:
-  - WhatsApp
-  tags_raw:
   - Whats App
   properties:
   - type: OpenAPI

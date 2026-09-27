@@ -60,15 +60,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     RadarConfigRequest:
       properties:
         enabled:
@@ -90,23 +81,6 @@ components:
           title: Notification Rules
       type: object
       title: RadarConfigRequest
-    NotificationRuleRequest:
-      properties:
-        condition_field:
-          type: string
-          title: Condition Field
-        condition_value:
-          type: string
-          title: Condition Value
-        channel:
-          type: string
-          title: Channel
-      type: object
-      required:
-      - condition_field
-      - condition_value
-      - channel
-      title: NotificationRuleRequest
     ValidationError:
       properties:
         loc:
@@ -133,6 +107,32 @@ components:
       - msg
       - type
       title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    NotificationRuleRequest:
+      properties:
+        condition_field:
+          type: string
+          title: Condition Field
+        condition_value:
+          type: string
+          title: Condition Value
+        channel:
+          type: string
+          title: Channel
+      type: object
+      required:
+      - condition_field
+      - condition_value
+      - channel
+      title: NotificationRuleRequest
   securitySchemes:
     HTTPBasic:
       type: http
