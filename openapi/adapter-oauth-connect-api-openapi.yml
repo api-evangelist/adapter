@@ -139,32 +139,15 @@ components:
       - msg
       - type
       title: ValidationError
-    OAuthProvider:
-      type: string
-      enum:
-      - google
-      - microsoft
-      - github
-      - slack
-      - twitter
-      title: OAuthProvider
-    OAuthResponse:
+    HTTPValidationError:
       properties:
-        authorization_url:
-          type: string
-          title: Authorization Url
-        oauth_state:
-          type: string
-          title: Oauth State
-        provider:
-          type: string
-          title: Provider
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      required:
-      - authorization_url
-      - oauth_state
-      - provider
-      title: OAuthResponse
+      title: HTTPValidationError
     OAuthCallbackResponse:
       properties:
         success:
@@ -201,48 +184,15 @@ components:
       - provider
       - email
       title: OAuthCallbackResponse
-    OAuthInitiateRequest:
-      properties:
-        provider:
-          $ref: '#/components/schemas/OAuthProvider'
-        scopes:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Scopes
-        provider_params:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Provider Params
-        onboarding_config:
-          anyOf:
-          - $ref: '#/components/schemas/OnboardingConfig'
-          - type: 'null'
-        auto_execute:
-          type: boolean
-          title: Auto Execute
-          default: false
-        is_initial_onboarding:
-          type: boolean
-          title: Is Initial Onboarding
-          default: false
-      type: object
-      required:
-      - provider
-      title: OAuthInitiateRequest
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+    OAuthProvider:
+      type: string
+      enum:
+      - google
+      - microsoft
+      - github
+      - slack
+      - twitter
+      title: OAuthProvider
     OAuthCallbackRequest:
       properties:
         code:
@@ -283,6 +233,56 @@ components:
       type: object
       title: OnboardingConfig
       description: Configuration for auto-onboarding after OAuth success
+    OAuthInitiateRequest:
+      properties:
+        provider:
+          $ref: '#/components/schemas/OAuthProvider'
+        scopes:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Scopes
+        provider_params:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Provider Params
+        onboarding_config:
+          anyOf:
+          - $ref: '#/components/schemas/OnboardingConfig'
+          - type: 'null'
+        auto_execute:
+          type: boolean
+          title: Auto Execute
+          default: false
+        is_initial_onboarding:
+          type: boolean
+          title: Is Initial Onboarding
+          default: false
+      type: object
+      required:
+      - provider
+      title: OAuthInitiateRequest
+    OAuthResponse:
+      properties:
+        authorization_url:
+          type: string
+          title: Authorization Url
+        oauth_state:
+          type: string
+          title: Oauth State
+        provider:
+          type: string
+          title: Provider
+      type: object
+      required:
+      - authorization_url
+      - oauth_state
+      - provider
+      title: OAuthResponse
   securitySchemes:
     HTTPBasic:
       type: http

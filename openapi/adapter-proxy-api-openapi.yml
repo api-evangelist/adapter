@@ -343,56 +343,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    GenerateRequest:
-      properties:
-        system_prompt:
-          type: string
-          title: System Prompt
-        user_message:
-          type: string
-          title: User Message
-        work_mode:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Work Mode
-        provider:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Provider
-          default: xai
-      type: object
-      required:
-      - system_prompt
-      - user_message
-      title: GenerateRequest
     PromptSuggestion:
       properties:
         uuid:
@@ -442,15 +392,6 @@ components:
       - suggestion_type
       title: PromptSuggestion
       description: Suggestion model for the API.
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     WeatherResponse:
       properties:
         city:
@@ -492,6 +433,15 @@ components:
       - current
       - hourly
       title: WeatherResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     WeatherCurrent:
       properties:
         time:
@@ -542,6 +492,56 @@ components:
       - weather_code
       - weather_description
       title: WeatherHourly
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    GenerateRequest:
+      properties:
+        system_prompt:
+          type: string
+          title: System Prompt
+        user_message:
+          type: string
+          title: User Message
+        work_mode:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Work Mode
+        provider:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Provider
+          default: xai
+      type: object
+      required:
+      - system_prompt
+      - user_message
+      title: GenerateRequest
   securitySchemes:
     HTTPBasic:
       type: http

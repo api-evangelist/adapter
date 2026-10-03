@@ -317,32 +317,19 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    ValidationError:
+    Body_get_presigned_upload_url_users_me_assets_presigned_url_post:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        filename:
           type: string
-          title: Message
-        type:
+          title: Filename
+        content_type:
           type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
+          title: Content Type
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - filename
+      - content_type
+      title: Body_get_presigned_upload_url_users_me_assets_presigned_url_post
     Body_upload_file_users_me_assets_upload_post:
       properties:
         file:
@@ -362,46 +349,15 @@ components:
       required:
       - file
       title: Body_upload_file_users_me_assets_upload_post
-    Body_get_presigned_upload_url_users_me_assets_presigned_url_post:
+    HTTPValidationError:
       properties:
-        filename:
-          type: string
-          title: Filename
-        content_type:
-          type: string
-          title: Content Type
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      required:
-      - filename
-      - content_type
-      title: Body_get_presigned_upload_url_users_me_assets_presigned_url_post
-    GetEmailAssetResponse:
-      properties:
-        parsed_email:
-          title: Parsed Email
-      type: object
-      required:
-      - parsed_email
-      title: GetEmailAssetResponse
-    Body_upload_file_stream_users_me_assets_upload_stream_post:
-      properties:
-        file:
-          type: string
-          contentMediaType: application/octet-stream
-          title: File
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        generate_preview:
-          type: boolean
-          title: Generate Preview
-          default: false
-      type: object
-      required:
-      - file
-      title: Body_upload_file_stream_users_me_assets_upload_stream_post
+      title: HTTPValidationError
     FileUploadResponse:
       properties:
         filename:
@@ -443,15 +399,68 @@ components:
       - file_size
       title: FileUploadResponse
       description: Response model for file uploads
-    HTTPValidationError:
+    GetEmailAssetResponse:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        parsed_email:
+          title: Parsed Email
       type: object
-      title: HTTPValidationError
+      required:
+      - parsed_email
+      title: GetEmailAssetResponse
+    Body_upload_file_stream_users_me_assets_upload_stream_post:
+      properties:
+        file:
+          type: string
+          contentMediaType: application/octet-stream
+          title: File
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        generate_preview:
+          type: boolean
+          title: Generate Preview
+          default: false
+      type: object
+      required:
+      - file
+      title: Body_upload_file_stream_users_me_assets_upload_stream_post
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    GetEmailAssetRequest:
+      properties:
+        uri:
+          type: string
+          title: Uri
+      type: object
+      required:
+      - uri
+      title: GetEmailAssetRequest
     PresignedUrlResponse:
       properties:
         url:
@@ -483,15 +492,6 @@ components:
       - filename
       title: PresignedUrlResponse
       description: Response model for presigned URL generation
-    GetEmailAssetRequest:
-      properties:
-        uri:
-          type: string
-          title: Uri
-      type: object
-      required:
-      - uri
-      title: GetEmailAssetRequest
   securitySchemes:
     HTTPBasic:
       type: http

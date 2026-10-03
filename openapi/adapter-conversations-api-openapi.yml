@@ -613,25 +613,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    NextBestActionResponse:
-      properties:
-        has_suggestion:
-          type: boolean
-          title: Has Suggestion
-          default: false
-        suggestion_type:
-          type: string
-          title: Suggestion Type
-          default: none
-        thinking:
-          type: string
-          title: Thinking
-          default: ''
-        suggestion:
-          $ref: '#/components/schemas/NextBestActionSuggestion'
-      type: object
-      title: NextBestActionResponse
-      description: Response from next best action generation
     ValidationError:
       properties:
         loc:
@@ -658,6 +639,60 @@ components:
       - msg
       - type
       title: ValidationError
+    ConversationSummary:
+      properties:
+        uuid:
+          type: string
+          title: Uuid
+        display_name:
+          type: string
+          title: Display Name
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        metadata:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Metadata
+        has_active_jobs:
+          type: boolean
+          title: Has Active Jobs
+          default: false
+      type: object
+      required:
+      - uuid
+      - display_name
+      - created_at
+      - updated_at
+      title: ConversationSummary
+      description: A simplified version for list views
+    NextBestActionSuggestion:
+      properties:
+        title:
+          type: string
+          title: Title
+          default: ''
+        description:
+          type: string
+          title: Description
+          default: ''
+        action_type:
+          type: string
+          title: Action Type
+          default: none
+        confidence:
+          type: string
+          title: Confidence
+          default: low
+      type: object
+      title: NextBestActionSuggestion
+      description: Suggestion details for next best action
     CompletionRequest:
       properties:
         prompt:
@@ -683,27 +718,114 @@ components:
       - prompt
       title: CompletionRequest
       description: Send message to existing conversation
-    NextBestActionSuggestion:
+    HTTPValidationError:
       properties:
-        title:
-          type: string
-          title: Title
-          default: ''
-        description:
-          type: string
-          title: Description
-          default: ''
-        action_type:
-          type: string
-          title: Action Type
-          default: none
-        confidence:
-          type: string
-          title: Confidence
-          default: low
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      title: NextBestActionSuggestion
-      description: Suggestion details for next best action
+      title: HTTPValidationError
+    StopResponseRequest:
+      properties:
+        stop_uuid:
+          type: string
+          title: Stop Uuid
+      type: object
+      required:
+      - stop_uuid
+      title: StopResponseRequest
+      description: Stop AI message generation
+    FeedbackResponse:
+      properties:
+        status:
+          type: string
+          title: Status
+      type: object
+      required:
+      - status
+      title: FeedbackResponse
+      description: Response after submitting feedback
+    FeedbackRequest:
+      properties:
+        rating:
+          type: integer
+          maximum: 1.0
+          minimum: 0.0
+          title: Rating
+          description: 0 for negative, 1 for positive
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Optional feedback note
+      type: object
+      required:
+      - rating
+      title: FeedbackRequest
+      description: User feedback on a conversation or message
+    ConversationConfig:
+      properties:
+        agent:
+          type: string
+          title: Agent
+          default: default
+        multimodal_enabled:
+          type: boolean
+          title: Multimodal Enabled
+          default: false
+        provider:
+          type: string
+          title: Provider
+          default: adapter-ensemble-3p-1
+        enable_extended_thinking:
+          type: boolean
+          title: Enable Extended Thinking
+          default: false
+        thinking_budget_tokens:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Thinking Budget Tokens
+      type: object
+      title: ConversationConfig
+    NextBestActionResponse:
+      properties:
+        has_suggestion:
+          type: boolean
+          title: Has Suggestion
+          default: false
+        suggestion_type:
+          type: string
+          title: Suggestion Type
+          default: none
+        thinking:
+          type: string
+          title: Thinking
+          default: ''
+        suggestion:
+          $ref: '#/components/schemas/NextBestActionSuggestion'
+      type: object
+      title: NextBestActionResponse
+      description: Response from next best action generation
+    UpdateConversationRequest:
+      properties:
+        display_name:
+          anyOf:
+          - type: string
+            maxLength: 256
+          - type: 'null'
+          title: Display Name
+        metadata:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Metadata
+      type: object
+      title: UpdateConversationRequest
+      description: Request to update a conversation
     FileAttachment:
       properties:
         filename:
@@ -763,93 +885,6 @@ components:
       - filename
       - content_type
       title: FileAttachment
-    ConversationConfig:
-      properties:
-        agent:
-          type: string
-          title: Agent
-          default: default
-        multimodal_enabled:
-          type: boolean
-          title: Multimodal Enabled
-          default: false
-        provider:
-          type: string
-          title: Provider
-          default: adapter-ensemble-3p-1
-        enable_extended_thinking:
-          type: boolean
-          title: Enable Extended Thinking
-          default: false
-        thinking_budget_tokens:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Thinking Budget Tokens
-      type: object
-      title: ConversationConfig
-    StopResponseRequest:
-      properties:
-        stop_uuid:
-          type: string
-          title: Stop Uuid
-      type: object
-      required:
-      - stop_uuid
-      title: StopResponseRequest
-      description: Stop AI message generation
-    ConversationSummary:
-      properties:
-        uuid:
-          type: string
-          title: Uuid
-        display_name:
-          type: string
-          title: Display Name
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-        metadata:
-          anyOf:
-          - {}
-          - type: 'null'
-          title: Metadata
-        has_active_jobs:
-          type: boolean
-          title: Has Active Jobs
-          default: false
-      type: object
-      required:
-      - uuid
-      - display_name
-      - created_at
-      - updated_at
-      title: ConversationSummary
-      description: A simplified version for list views
-    FeedbackRequest:
-      properties:
-        rating:
-          type: integer
-          maximum: 1.0
-          minimum: 0.0
-          title: Rating
-          description: 0 for negative, 1 for positive
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Optional feedback note
-      type: object
-      required:
-      - rating
-      title: FeedbackRequest
-      description: User feedback on a conversation or message
     ConversationResponse:
       properties:
         uuid:
@@ -878,32 +913,6 @@ components:
       - created_at
       - updated_at
       title: ConversationResponse
-    UpdateConversationRequest:
-      properties:
-        display_name:
-          anyOf:
-          - type: string
-            maxLength: 256
-          - type: 'null'
-          title: Display Name
-        metadata:
-          anyOf:
-          - {}
-          - type: 'null'
-          title: Metadata
-      type: object
-      title: UpdateConversationRequest
-      description: Request to update a conversation
-    FeedbackResponse:
-      properties:
-        status:
-          type: string
-          title: Status
-      type: object
-      required:
-      - status
-      title: FeedbackResponse
-      description: Response after submitting feedback
     CreateConversationRequest:
       properties:
         uuid:
@@ -935,15 +944,6 @@ components:
       required:
       - uuid
       title: CreateConversationRequest
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
   securitySchemes:
     HTTPBasic:
       type: http

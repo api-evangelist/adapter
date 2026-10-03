@@ -573,53 +573,21 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    VerifyPhoneRequest:
+    Vendor:
+      type: string
+      enum:
+      - google
+      - microsoft
+      title: Vendor
+    HTTPValidationError:
       properties:
-        passcode:
-          type: string
-          title: Passcode
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      required:
-      - passcode
-      title: VerifyPhoneRequest
-    CompleteOnboardingResponse:
-      properties:
-        success:
-          type: boolean
-          title: Success
-        message:
-          type: string
-          title: Message
-        account_status:
-          type: string
-          title: Account Status
-      type: object
-      required:
-      - success
-      - message
-      - account_status
-      title: CompleteOnboardingResponse
-    CheckInviteRequest:
-      properties:
-        code:
-          type: string
-          title: Code
-      type: object
-      required:
-      - code
-      title: CheckInviteRequest
-    DisconnectAccountRequest:
-      properties:
-        accountEmail:
-          type: string
-          title: Accountemail
-        accountVendor:
-          $ref: '#/components/schemas/Vendor'
-      type: object
-      required:
-      - accountEmail
-      - accountVendor
-      title: DisconnectAccountRequest
+      title: HTTPValidationError
     CheckInviteResponse:
       properties:
         valid:
@@ -638,160 +606,6 @@ components:
       - valid
       - message
       title: CheckInviteResponse
-    Vendor:
-      type: string
-      enum:
-      - google
-      - microsoft
-      title: Vendor
-    AuthRefreshRequest:
-      properties:
-        refresh_token:
-          type: string
-          title: Refresh Token
-      type: object
-      required:
-      - refresh_token
-      title: AuthRefreshRequest
-    UpdateUserSettingsRequest:
-      properties:
-        account_status:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Account Status
-        mobile_enabled:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Mobile Enabled
-        enabled_channels:
-          anyOf:
-          - items: {}
-            type: array
-            uniqueItems: true
-          - type: 'null'
-          title: Enabled Channels
-        primary_channel:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Primary Channel
-      type: object
-      title: UpdateUserSettingsRequest
-    UserResponse:
-      properties:
-        user_id:
-          type: string
-          title: User Id
-        email:
-          type: string
-          title: Email
-        phone_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Phone Number
-        given_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Given Name
-        family_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Family Name
-        email_verified:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Email Verified
-        phone_verified:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Phone Verified
-        totp_verified:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Totp Verified
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metadata
-          default: {}
-      type: object
-      required:
-      - user_id
-      - email
-      title: UserResponse
-    UserInvitesResponse:
-      properties:
-        codes:
-          items:
-            type: string
-          type: array
-          title: Codes
-        total_invites:
-          type: integer
-          title: Total Invites
-        invites_used:
-          type: integer
-          title: Invites Used
-      type: object
-      required:
-      - codes
-      - total_invites
-      - invites_used
-      title: UserInvitesResponse
-    EmailVerifiedRequest:
-      properties:
-        token:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Token
-      type: object
-      title: EmailVerifiedRequest
-    LoginRequest:
-      properties:
-        user_access_token:
-          type: string
-          title: User Access Token
-      type: object
-      required:
-      - user_access_token
-      title: LoginRequest
-    VerificationStatusResponse:
-      properties:
-        is_verified:
-          type: boolean
-          title: Is Verified
-      type: object
-      required:
-      - is_verified
-      title: VerificationStatusResponse
-    ValidateInviteResponse:
-      properties:
-        success:
-          type: boolean
-          title: Success
-        message:
-          type: string
-          title: Message
-        onboarding_step:
-          type: string
-          title: Onboarding Step
-      type: object
-      required:
-      - success
-      - message
-      - onboarding_step
-      title: ValidateInviteResponse
     GenerateMagicLinkResponse:
       properties:
         magic_link:
@@ -809,15 +623,15 @@ components:
       - expires_in_days
       - invitation_code
       title: GenerateMagicLinkResponse
-    SendPhoneVerificationRequest:
+    LoginRequest:
       properties:
-        phone_number:
+        user_access_token:
           type: string
-          title: Phone Number
+          title: User Access Token
       type: object
       required:
-      - phone_number
-      title: SendPhoneVerificationRequest
+      - user_access_token
+      title: LoginRequest
     ChannelInfo:
       properties:
         qr_code:
@@ -837,6 +651,63 @@ components:
       type: object
       title: ChannelInfo
       description: Channel-specific information like QR codes and contact details.
+    ValidateInviteResponse:
+      properties:
+        success:
+          type: boolean
+          title: Success
+        message:
+          type: string
+          title: Message
+        onboarding_step:
+          type: string
+          title: Onboarding Step
+      type: object
+      required:
+      - success
+      - message
+      - onboarding_step
+      title: ValidateInviteResponse
+    AuthRefreshRequest:
+      properties:
+        refresh_token:
+          type: string
+          title: Refresh Token
+      type: object
+      required:
+      - refresh_token
+      title: AuthRefreshRequest
+    SendPhoneVerificationRequest:
+      properties:
+        phone_number:
+          type: string
+          title: Phone Number
+      type: object
+      required:
+      - phone_number
+      title: SendPhoneVerificationRequest
+    LogoutResponse:
+      properties:
+        message:
+          type: string
+          title: Message
+        success:
+          type: boolean
+          title: Success
+      type: object
+      required:
+      - message
+      - success
+      title: LogoutResponse
+    VerificationStatusResponse:
+      properties:
+        is_verified:
+          type: boolean
+          title: Is Verified
+      type: object
+      required:
+      - is_verified
+      title: VerificationStatusResponse
     ValidationError:
       properties:
         loc:
@@ -863,28 +734,44 @@ components:
       - msg
       - type
       title: ValidationError
-    LogoutResponse:
+    VerifyPhoneRequest:
       properties:
-        message:
+        passcode:
           type: string
-          title: Message
+          title: Passcode
+      type: object
+      required:
+      - passcode
+      title: VerifyPhoneRequest
+    CompleteOnboardingResponse:
+      properties:
         success:
           type: boolean
           title: Success
-      type: object
-      required:
-      - message
-      - success
-      title: LogoutResponse
-    ValidateInviteRequest:
-      properties:
-        invitation_code:
+        message:
           type: string
-          title: Invitation Code
+          title: Message
+        account_status:
+          type: string
+          title: Account Status
       type: object
       required:
-      - invitation_code
-      title: ValidateInviteRequest
+      - success
+      - message
+      - account_status
+      title: CompleteOnboardingResponse
+    DisconnectAccountRequest:
+      properties:
+        accountEmail:
+          type: string
+          title: Accountemail
+        accountVendor:
+          $ref: '#/components/schemas/Vendor'
+      type: object
+      required:
+      - accountEmail
+      - accountVendor
+      title: DisconnectAccountRequest
     UserSettings:
       properties:
         user_id:
@@ -935,6 +822,59 @@ components:
       required:
       - user_id
       title: UserSettings
+    UpdateUserSettingsRequest:
+      properties:
+        account_status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Account Status
+        mobile_enabled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Mobile Enabled
+        enabled_channels:
+          anyOf:
+          - items: {}
+            type: array
+            uniqueItems: true
+          - type: 'null'
+          title: Enabled Channels
+        primary_channel:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Primary Channel
+      type: object
+      title: UpdateUserSettingsRequest
+    GenerateMagicLinkRequest:
+      properties:
+        invitation_code:
+          type: string
+          title: Invitation Code
+      type: object
+      required:
+      - invitation_code
+      title: GenerateMagicLinkRequest
+    ValidateInviteRequest:
+      properties:
+        invitation_code:
+          type: string
+          title: Invitation Code
+      type: object
+      required:
+      - invitation_code
+      title: ValidateInviteRequest
+    EmailVerifiedRequest:
+      properties:
+        token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Token
+      type: object
+      title: EmailVerifiedRequest
     ResendEmailRequest:
       properties:
         token:
@@ -944,6 +884,34 @@ components:
           title: Token
       type: object
       title: ResendEmailRequest
+    UserInvitesResponse:
+      properties:
+        codes:
+          items:
+            type: string
+          type: array
+          title: Codes
+        total_invites:
+          type: integer
+          title: Total Invites
+        invites_used:
+          type: integer
+          title: Invites Used
+      type: object
+      required:
+      - codes
+      - total_invites
+      - invites_used
+      title: UserInvitesResponse
+    CheckInviteRequest:
+      properties:
+        code:
+          type: string
+          title: Code
+      type: object
+      required:
+      - code
+      title: CheckInviteRequest
     UpdateUserRequest:
       properties:
         given_name:
@@ -974,24 +942,56 @@ components:
           title: Metadata
       type: object
       title: UpdateUserRequest
-    GenerateMagicLinkRequest:
+    UserResponse:
       properties:
-        invitation_code:
+        user_id:
           type: string
-          title: Invitation Code
+          title: User Id
+        email:
+          type: string
+          title: Email
+        phone_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phone Number
+        given_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Given Name
+        family_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Family Name
+        email_verified:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Email Verified
+        phone_verified:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Phone Verified
+        totp_verified:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Totp Verified
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+          default: {}
       type: object
       required:
-      - invitation_code
-      title: GenerateMagicLinkRequest
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+      - user_id
+      - email
+      title: UserResponse
   securitySchemes:
     HTTPBasic:
       type: http

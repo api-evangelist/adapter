@@ -60,27 +60,15 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    RadarConfigRequest:
+    HTTPValidationError:
       properties:
-        enabled:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Enabled
-        notification_config_enabled:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Notification Config Enabled
-        notification_rules:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/NotificationRuleRequest'
-            type: array
-          - type: 'null'
-          title: Notification Rules
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      title: RadarConfigRequest
+      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -107,15 +95,27 @@ components:
       - msg
       - type
       title: ValidationError
-    HTTPValidationError:
+    RadarConfigRequest:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        enabled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Enabled
+        notification_config_enabled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Notification Config Enabled
+        notification_rules:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/NotificationRuleRequest'
+            type: array
+          - type: 'null'
+          title: Notification Rules
       type: object
-      title: HTTPValidationError
+      title: RadarConfigRequest
     NotificationRuleRequest:
       properties:
         condition_field:
