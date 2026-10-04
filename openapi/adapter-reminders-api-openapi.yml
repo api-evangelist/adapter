@@ -220,15 +220,61 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    HTTPValidationError:
+    UpdateReminderRequest:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status
+          description: 'New status for the reminder. ''paused'' only valid for recurring reminders. Valid values: ''pending'', ''paused'''
+        execution_timestamp_iso_datestring:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Execution Timestamp Iso Datestring
+          description: New execution timestamp in ISO format. Only valid for one-time reminders, not recurring ones. (e.g., '2024-01-15T14:30:00-05:00')
+        message:
+          anyOf:
+          - type: string
+            maxLength: 1024
+          - type: 'null'
+          title: Message
+          description: New message content for the reminder. Cannot be updated for reminders with status 'scheduled'.
+        channel:
+          anyOf:
+          - type: string
+            enum:
+            - sms
+            - imessage
+            - line
+            - whatsapp
+            - default
+          - type: 'null'
+          title: Channel
+          description: 'New channel for the reminder. Valid values: ''sms'', ''imessage'', ''line'', ''whatsapp'''
+        cron_string:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Cron String
+          description: New updated cron string, minimum interval of 15 minutes
+        category:
+          anyOf:
+          - type: string
+            enum:
+            - health
+            - travel
+            - personal
+            - leisure
+            - work
+            - generic
+          - type: 'null'
+          title: Category
+          description: 'New category for the reminder. Valid values: ''health'', ''travel'', ''personal'', ''leisure'', ''work'', ''generic'''
       type: object
-      title: HTTPValidationError
+      title: UpdateReminderRequest
+      description: Request model for updating an existing reminder
     ValidationError:
       properties:
         loc:
@@ -255,6 +301,15 @@ components:
       - msg
       - type
       title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     CreateReminderRequest:
       properties:
         message:
@@ -326,61 +381,6 @@ components:
       - message
       title: CreateReminderRequest
       description: Request model for creating a new reminder
-    UpdateReminderRequest:
-      properties:
-        status:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Status
-          description: 'New status for the reminder. ''paused'' only valid for recurring reminders. Valid values: ''pending'', ''paused'''
-        execution_timestamp_iso_datestring:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Execution Timestamp Iso Datestring
-          description: New execution timestamp in ISO format. Only valid for one-time reminders, not recurring ones. (e.g., '2024-01-15T14:30:00-05:00')
-        message:
-          anyOf:
-          - type: string
-            maxLength: 1024
-          - type: 'null'
-          title: Message
-          description: New message content for the reminder. Cannot be updated for reminders with status 'scheduled'.
-        channel:
-          anyOf:
-          - type: string
-            enum:
-            - sms
-            - imessage
-            - line
-            - whatsapp
-            - default
-          - type: 'null'
-          title: Channel
-          description: 'New channel for the reminder. Valid values: ''sms'', ''imessage'', ''line'', ''whatsapp'''
-        cron_string:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Cron String
-          description: New updated cron string, minimum interval of 15 minutes
-        category:
-          anyOf:
-          - type: string
-            enum:
-            - health
-            - travel
-            - personal
-            - leisure
-            - work
-            - generic
-          - type: 'null'
-          title: Category
-          description: 'New category for the reminder. Valid values: ''health'', ''travel'', ''personal'', ''leisure'', ''work'', ''generic'''
-      type: object
-      title: UpdateReminderRequest
-      description: Request model for updating an existing reminder
   securitySchemes:
     HTTPBasic:
       type: http

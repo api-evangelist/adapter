@@ -144,47 +144,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    AuthorizeResponse:
-      properties:
-        redirect_url:
-          type: string
-          title: Redirect Url
-      type: object
-      required:
-      - redirect_url
-      title: AuthorizeResponse
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    AuthorizeRequest:
-      properties:
-        client_id:
-          type: string
-          title: Client Id
-        redirect_uri:
-          type: string
-          title: Redirect Uri
-        scope:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Scope
-        state:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: State
-      type: object
-      required:
-      - client_id
-      - redirect_uri
-      title: AuthorizeRequest
     ValidationError:
       properties:
         loc:
@@ -211,6 +170,47 @@ components:
       - msg
       - type
       title: ValidationError
+    AuthorizeRequest:
+      properties:
+        client_id:
+          type: string
+          title: Client Id
+        redirect_uri:
+          type: string
+          title: Redirect Uri
+        scope:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Scope
+        state:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: State
+      type: object
+      required:
+      - client_id
+      - redirect_uri
+      title: AuthorizeRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    AuthorizeResponse:
+      properties:
+        redirect_url:
+          type: string
+          title: Redirect Url
+      type: object
+      required:
+      - redirect_url
+      title: AuthorizeResponse
     Body_token_oauth2_token_post:
       properties:
         grant_type:

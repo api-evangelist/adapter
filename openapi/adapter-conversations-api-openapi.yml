@@ -639,6 +639,46 @@ components:
       - msg
       - type
       title: ValidationError
+    NextBestActionResponse:
+      properties:
+        has_suggestion:
+          type: boolean
+          title: Has Suggestion
+          default: false
+        suggestion_type:
+          type: string
+          title: Suggestion Type
+          default: none
+        thinking:
+          type: string
+          title: Thinking
+          default: ''
+        suggestion:
+          $ref: '#/components/schemas/NextBestActionSuggestion'
+      type: object
+      title: NextBestActionResponse
+      description: Response from next best action generation
+    NextBestActionSuggestion:
+      properties:
+        title:
+          type: string
+          title: Title
+          default: ''
+        description:
+          type: string
+          title: Description
+          default: ''
+        action_type:
+          type: string
+          title: Action Type
+          default: none
+        confidence:
+          type: string
+          title: Confidence
+          default: low
+      type: object
+      title: NextBestActionSuggestion
+      description: Suggestion details for next best action
     ConversationSummary:
       properties:
         uuid:
@@ -672,52 +712,37 @@ components:
       - updated_at
       title: ConversationSummary
       description: A simplified version for list views
-    NextBestActionSuggestion:
+    CreateConversationRequest:
       properties:
-        title:
+        uuid:
           type: string
-          title: Title
+          title: Uuid
+        name:
+          type: string
+          title: Name
           default: ''
-        description:
-          type: string
-          title: Description
-          default: ''
-        action_type:
-          type: string
-          title: Action Type
-          default: none
-        confidence:
-          type: string
-          title: Confidence
-          default: low
-      type: object
-      title: NextBestActionSuggestion
-      description: Suggestion details for next best action
-    CompletionRequest:
-      properties:
-        prompt:
-          type: string
-          title: Prompt
-        parent_message_uuid:
+        metadata:
+          anyOf:
+          - $ref: '#/components/schemas/ConversationConfig'
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+        message:
           anyOf:
           - type: string
           - type: 'null'
-          title: Parent Message Uuid
+          title: Message
         attachments:
           items:
             $ref: '#/components/schemas/FileAttachment'
           type: array
           title: Attachments
           default: []
-        provider:
-          type: string
-          title: Provider
-          default: adapter-ensemble-3p-1
       type: object
       required:
-      - prompt
-      title: CompletionRequest
-      description: Send message to existing conversation
+      - uuid
+      title: CreateConversationRequest
     HTTPValidationError:
       properties:
         detail:
@@ -727,16 +752,6 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    StopResponseRequest:
-      properties:
-        stop_uuid:
-          type: string
-          title: Stop Uuid
-      type: object
-      required:
-      - stop_uuid
-      title: StopResponseRequest
-      description: Stop AI message generation
     FeedbackResponse:
       properties:
         status:
@@ -747,25 +762,6 @@ components:
       - status
       title: FeedbackResponse
       description: Response after submitting feedback
-    FeedbackRequest:
-      properties:
-        rating:
-          type: integer
-          maximum: 1.0
-          minimum: 0.0
-          title: Rating
-          description: 0 for negative, 1 for positive
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Optional feedback note
-      type: object
-      required:
-      - rating
-      title: FeedbackRequest
-      description: User feedback on a conversation or message
     ConversationConfig:
       properties:
         agent:
@@ -791,41 +787,6 @@ components:
           title: Thinking Budget Tokens
       type: object
       title: ConversationConfig
-    NextBestActionResponse:
-      properties:
-        has_suggestion:
-          type: boolean
-          title: Has Suggestion
-          default: false
-        suggestion_type:
-          type: string
-          title: Suggestion Type
-          default: none
-        thinking:
-          type: string
-          title: Thinking
-          default: ''
-        suggestion:
-          $ref: '#/components/schemas/NextBestActionSuggestion'
-      type: object
-      title: NextBestActionResponse
-      description: Response from next best action generation
-    UpdateConversationRequest:
-      properties:
-        display_name:
-          anyOf:
-          - type: string
-            maxLength: 256
-          - type: 'null'
-          title: Display Name
-        metadata:
-          anyOf:
-          - {}
-          - type: 'null'
-          title: Metadata
-      type: object
-      title: UpdateConversationRequest
-      description: Request to update a conversation
     FileAttachment:
       properties:
         filename:
@@ -885,6 +846,76 @@ components:
       - filename
       - content_type
       title: FileAttachment
+    CompletionRequest:
+      properties:
+        prompt:
+          type: string
+          title: Prompt
+        parent_message_uuid:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Parent Message Uuid
+        attachments:
+          items:
+            $ref: '#/components/schemas/FileAttachment'
+          type: array
+          title: Attachments
+          default: []
+        provider:
+          type: string
+          title: Provider
+          default: adapter-ensemble-3p-1
+      type: object
+      required:
+      - prompt
+      title: CompletionRequest
+      description: Send message to existing conversation
+    StopResponseRequest:
+      properties:
+        stop_uuid:
+          type: string
+          title: Stop Uuid
+      type: object
+      required:
+      - stop_uuid
+      title: StopResponseRequest
+      description: Stop AI message generation
+    UpdateConversationRequest:
+      properties:
+        display_name:
+          anyOf:
+          - type: string
+            maxLength: 256
+          - type: 'null'
+          title: Display Name
+        metadata:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Metadata
+      type: object
+      title: UpdateConversationRequest
+      description: Request to update a conversation
+    FeedbackRequest:
+      properties:
+        rating:
+          type: integer
+          maximum: 1.0
+          minimum: 0.0
+          title: Rating
+          description: 0 for negative, 1 for positive
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Optional feedback note
+      type: object
+      required:
+      - rating
+      title: FeedbackRequest
+      description: User feedback on a conversation or message
     ConversationResponse:
       properties:
         uuid:
@@ -913,37 +944,6 @@ components:
       - created_at
       - updated_at
       title: ConversationResponse
-    CreateConversationRequest:
-      properties:
-        uuid:
-          type: string
-          title: Uuid
-        name:
-          type: string
-          title: Name
-          default: ''
-        metadata:
-          anyOf:
-          - $ref: '#/components/schemas/ConversationConfig'
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metadata
-        message:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Message
-        attachments:
-          items:
-            $ref: '#/components/schemas/FileAttachment'
-          type: array
-          title: Attachments
-          default: []
-      type: object
-      required:
-      - uuid
-      title: CreateConversationRequest
   securitySchemes:
     HTTPBasic:
       type: http

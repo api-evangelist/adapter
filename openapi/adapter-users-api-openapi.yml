@@ -33,15 +33,6 @@ paths:
       - Users
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     QueryMessageRequest:
       properties:
         participant_id:
@@ -90,6 +81,15 @@ components:
       - msg
       - type
       title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     HTTPBasic:
       type: http

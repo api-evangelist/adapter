@@ -573,56 +573,91 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    Vendor:
-      type: string
-      enum:
-      - google
-      - microsoft
-      title: Vendor
-    HTTPValidationError:
+    CompleteOnboardingResponse:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    CheckInviteResponse:
-      properties:
-        valid:
+        success:
           type: boolean
-          title: Valid
+          title: Success
         message:
           type: string
           title: Message
+        account_status:
+          type: string
+          title: Account Status
+      type: object
+      required:
+      - success
+      - message
+      - account_status
+      title: CompleteOnboardingResponse
+    ValidateInviteRequest:
+      properties:
         invitation_code:
+          type: string
+          title: Invitation Code
+      type: object
+      required:
+      - invitation_code
+      title: ValidateInviteRequest
+    UserResponse:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+        email:
+          type: string
+          title: Email
+        phone_number:
           anyOf:
           - type: string
           - type: 'null'
-          title: Invitation Code
+          title: Phone Number
+        given_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Given Name
+        family_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Family Name
+        email_verified:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Email Verified
+        phone_verified:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Phone Verified
+        totp_verified:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Totp Verified
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+          default: {}
       type: object
       required:
-      - valid
-      - message
-      title: CheckInviteResponse
-    GenerateMagicLinkResponse:
+      - user_id
+      - email
+      title: UserResponse
+    EmailVerifiedRequest:
       properties:
-        magic_link:
-          type: string
-          title: Magic Link
-        expires_in_days:
-          type: integer
-          title: Expires In Days
-        invitation_code:
-          type: string
-          title: Invitation Code
+        token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Token
       type: object
-      required:
-      - magic_link
-      - expires_in_days
-      - invitation_code
-      title: GenerateMagicLinkResponse
+      title: EmailVerifiedRequest
     LoginRequest:
       properties:
         user_access_token:
@@ -632,6 +667,45 @@ components:
       required:
       - user_access_token
       title: LoginRequest
+    ValidateInviteResponse:
+      properties:
+        success:
+          type: boolean
+          title: Success
+        message:
+          type: string
+          title: Message
+        onboarding_step:
+          type: string
+          title: Onboarding Step
+      type: object
+      required:
+      - success
+      - message
+      - onboarding_step
+      title: ValidateInviteResponse
+    VerifyPhoneRequest:
+      properties:
+        passcode:
+          type: string
+          title: Passcode
+      type: object
+      required:
+      - passcode
+      title: VerifyPhoneRequest
+    LogoutResponse:
+      properties:
+        message:
+          type: string
+          title: Message
+        success:
+          type: boolean
+          title: Success
+      type: object
+      required:
+      - message
+      - success
+      title: LogoutResponse
     ChannelInfo:
       properties:
         qr_code:
@@ -651,54 +725,24 @@ components:
       type: object
       title: ChannelInfo
       description: Channel-specific information like QR codes and contact details.
-    ValidateInviteResponse:
+    GenerateMagicLinkRequest:
       properties:
-        success:
-          type: boolean
-          title: Success
-        message:
+        invitation_code:
           type: string
-          title: Message
-        onboarding_step:
-          type: string
-          title: Onboarding Step
+          title: Invitation Code
       type: object
       required:
-      - success
-      - message
-      - onboarding_step
-      title: ValidateInviteResponse
-    AuthRefreshRequest:
+      - invitation_code
+      title: GenerateMagicLinkRequest
+    ResendEmailRequest:
       properties:
-        refresh_token:
-          type: string
-          title: Refresh Token
+        token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Token
       type: object
-      required:
-      - refresh_token
-      title: AuthRefreshRequest
-    SendPhoneVerificationRequest:
-      properties:
-        phone_number:
-          type: string
-          title: Phone Number
-      type: object
-      required:
-      - phone_number
-      title: SendPhoneVerificationRequest
-    LogoutResponse:
-      properties:
-        message:
-          type: string
-          title: Message
-        success:
-          type: boolean
-          title: Success
-      type: object
-      required:
-      - message
-      - success
-      title: LogoutResponse
+      title: ResendEmailRequest
     VerificationStatusResponse:
       properties:
         is_verified:
@@ -708,70 +752,25 @@ components:
       required:
       - is_verified
       title: VerificationStatusResponse
-    ValidationError:
+    UserInvitesResponse:
       properties:
-        loc:
+        codes:
           items:
-            anyOf:
-            - type: string
-            - type: integer
+            type: string
           type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
+          title: Codes
+        total_invites:
+          type: integer
+          title: Total Invites
+        invites_used:
+          type: integer
+          title: Invites Used
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    VerifyPhoneRequest:
-      properties:
-        passcode:
-          type: string
-          title: Passcode
-      type: object
-      required:
-      - passcode
-      title: VerifyPhoneRequest
-    CompleteOnboardingResponse:
-      properties:
-        success:
-          type: boolean
-          title: Success
-        message:
-          type: string
-          title: Message
-        account_status:
-          type: string
-          title: Account Status
-      type: object
-      required:
-      - success
-      - message
-      - account_status
-      title: CompleteOnboardingResponse
-    DisconnectAccountRequest:
-      properties:
-        accountEmail:
-          type: string
-          title: Accountemail
-        accountVendor:
-          $ref: '#/components/schemas/Vendor'
-      type: object
-      required:
-      - accountEmail
-      - accountVendor
-      title: DisconnectAccountRequest
+      - codes
+      - total_invites
+      - invites_used
+      title: UserInvitesResponse
     UserSettings:
       properties:
         user_id:
@@ -848,61 +847,94 @@ components:
           title: Primary Channel
       type: object
       title: UpdateUserSettingsRequest
-    GenerateMagicLinkRequest:
+    GenerateMagicLinkResponse:
       properties:
+        magic_link:
+          type: string
+          title: Magic Link
+        expires_in_days:
+          type: integer
+          title: Expires In Days
         invitation_code:
           type: string
           title: Invitation Code
       type: object
       required:
+      - magic_link
+      - expires_in_days
       - invitation_code
-      title: GenerateMagicLinkRequest
-    ValidateInviteRequest:
+      title: GenerateMagicLinkResponse
+    ValidationError:
       properties:
-        invitation_code:
-          type: string
-          title: Invitation Code
-      type: object
-      required:
-      - invitation_code
-      title: ValidateInviteRequest
-    EmailVerifiedRequest:
-      properties:
-        token:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Token
-      type: object
-      title: EmailVerifiedRequest
-    ResendEmailRequest:
-      properties:
-        token:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Token
-      type: object
-      title: ResendEmailRequest
-    UserInvitesResponse:
-      properties:
-        codes:
+        loc:
           items:
-            type: string
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Codes
-        total_invites:
-          type: integer
-          title: Total Invites
-        invites_used:
-          type: integer
-          title: Invites Used
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
       type: object
       required:
-      - codes
-      - total_invites
-      - invites_used
-      title: UserInvitesResponse
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    Vendor:
+      type: string
+      enum:
+      - google
+      - microsoft
+      title: Vendor
+    CheckInviteResponse:
+      properties:
+        valid:
+          type: boolean
+          title: Valid
+        message:
+          type: string
+          title: Message
+        invitation_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Invitation Code
+      type: object
+      required:
+      - valid
+      - message
+      title: CheckInviteResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    DisconnectAccountRequest:
+      properties:
+        accountEmail:
+          type: string
+          title: Accountemail
+        accountVendor:
+          $ref: '#/components/schemas/Vendor'
+      type: object
+      required:
+      - accountEmail
+      - accountVendor
+      title: DisconnectAccountRequest
     CheckInviteRequest:
       properties:
         code:
@@ -912,6 +944,15 @@ components:
       required:
       - code
       title: CheckInviteRequest
+    SendPhoneVerificationRequest:
+      properties:
+        phone_number:
+          type: string
+          title: Phone Number
+      type: object
+      required:
+      - phone_number
+      title: SendPhoneVerificationRequest
     UpdateUserRequest:
       properties:
         given_name:
@@ -942,56 +983,15 @@ components:
           title: Metadata
       type: object
       title: UpdateUserRequest
-    UserResponse:
+    AuthRefreshRequest:
       properties:
-        user_id:
+        refresh_token:
           type: string
-          title: User Id
-        email:
-          type: string
-          title: Email
-        phone_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Phone Number
-        given_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Given Name
-        family_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Family Name
-        email_verified:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Email Verified
-        phone_verified:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Phone Verified
-        totp_verified:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Totp Verified
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metadata
-          default: {}
+          title: Refresh Token
       type: object
       required:
-      - user_id
-      - email
-      title: UserResponse
+      - refresh_token
+      title: AuthRefreshRequest
   securitySchemes:
     HTTPBasic:
       type: http

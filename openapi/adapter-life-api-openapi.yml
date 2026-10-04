@@ -34,15 +34,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -69,6 +60,34 @@ components:
       - msg
       - type
       title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    LifeAskRequest:
+      properties:
+        message:
+          type: string
+          maxLength: 4000
+          minLength: 1
+          title: Message
+          description: The message for your Adapter agent, exactly as you would text it.
+        session_id:
+          anyOf:
+          - type: string
+            pattern: ^[A-Za-z0-9_-]{1,64}$
+          - type: 'null'
+          title: Session Id
+          description: Optional caller-chosen session id. Requests with the same session_id share conversation history (kept for 7 days). Omit for a one-shot, stateless ask.
+      type: object
+      required:
+      - message
+      title: LifeAskRequest
     LifeAskResponse:
       properties:
         responses:
@@ -92,25 +111,6 @@ components:
       - responses
       - answer
       title: LifeAskResponse
-    LifeAskRequest:
-      properties:
-        message:
-          type: string
-          maxLength: 4000
-          minLength: 1
-          title: Message
-          description: The message for your Adapter agent, exactly as you would text it.
-        session_id:
-          anyOf:
-          - type: string
-            pattern: ^[A-Za-z0-9_-]{1,64}$
-          - type: 'null'
-          title: Session Id
-          description: Optional caller-chosen session id. Requests with the same session_id share conversation history (kept for 7 days). Omit for a one-shot, stateless ask.
-      type: object
-      required:
-      - message
-      title: LifeAskRequest
   securitySchemes:
     HTTPBasic:
       type: http

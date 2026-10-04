@@ -139,15 +139,32 @@ components:
       - msg
       - type
       title: ValidationError
-    HTTPValidationError:
+    OAuthProvider:
+      type: string
+      enum:
+      - google
+      - microsoft
+      - github
+      - slack
+      - twitter
+      title: OAuthProvider
+    OAuthResponse:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        authorization_url:
+          type: string
+          title: Authorization Url
+        oauth_state:
+          type: string
+          title: Oauth State
+        provider:
+          type: string
+          title: Provider
       type: object
-      title: HTTPValidationError
+      required:
+      - authorization_url
+      - oauth_state
+      - provider
+      title: OAuthResponse
     OAuthCallbackResponse:
       properties:
         success:
@@ -184,31 +201,6 @@ components:
       - provider
       - email
       title: OAuthCallbackResponse
-    OAuthProvider:
-      type: string
-      enum:
-      - google
-      - microsoft
-      - github
-      - slack
-      - twitter
-      title: OAuthProvider
-    OAuthCallbackRequest:
-      properties:
-        code:
-          type: string
-          title: Code
-        state:
-          type: string
-          title: State
-        provider:
-          $ref: '#/components/schemas/OAuthProvider'
-      type: object
-      required:
-      - code
-      - state
-      - provider
-      title: OAuthCallbackRequest
     OnboardingConfig:
       properties:
         start_date:
@@ -233,6 +225,15 @@ components:
       type: object
       title: OnboardingConfig
       description: Configuration for auto-onboarding after OAuth success
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     OAuthInitiateRequest:
       properties:
         provider:
@@ -266,23 +267,22 @@ components:
       required:
       - provider
       title: OAuthInitiateRequest
-    OAuthResponse:
+    OAuthCallbackRequest:
       properties:
-        authorization_url:
+        code:
           type: string
-          title: Authorization Url
-        oauth_state:
+          title: Code
+        state:
           type: string
-          title: Oauth State
+          title: State
         provider:
-          type: string
-          title: Provider
+          $ref: '#/components/schemas/OAuthProvider'
       type: object
       required:
-      - authorization_url
-      - oauth_state
+      - code
+      - state
       - provider
-      title: OAuthResponse
+      title: OAuthCallbackRequest
   securitySchemes:
     HTTPBasic:
       type: http
