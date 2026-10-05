@@ -1,0 +1,12 @@
+{
+ "url": "https://api.adapter.com/openapi.json",
+ "requested_url": "https://api.adapter.com/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 119082,
+ "sha256": "6724433e25b766f396f72c050748fdda55a410c73a85d2969c82d24f9b80d889",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 0.973), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
