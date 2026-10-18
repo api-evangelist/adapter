@@ -350,6 +350,8 @@ apis:
   humanURL: https://www.adapter.com
   baseURL: https://api.adapter.com
   tags:
+  - WhatsApp
+  tags_raw:
   - Whats App
   properties:
   - type: OpenAPI
